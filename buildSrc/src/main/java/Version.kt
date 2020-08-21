@@ -71,8 +71,8 @@ object Version {
     const val RX_JAVA2_ANDROID_VERSION = "2.1.1"
 
     // RxJava3
-    const val RXJAVA3_VERSION = "3.0.0"
-    const val RXJAVA3_ANDROID_VERSION = "3.0.0"
+    const val RX_JAVA3_VERSION = "3.0.0"
+    const val RX_JAVA3_ANDROID_VERSION = "3.0.0"
 
     // Coroutines
     const val COROUTINES_VERSION = "1.3.5"

@@ -61,9 +61,9 @@ object Deps {
         "io.reactivex.rxjava2:rxandroid:${Version.RX_JAVA2_ANDROID_VERSION}"
 
     // RxJava3
-    const val RX_JAVA3 = "io.reactivex.rxjava3:rxjava:${Version.RXJAVA3_VERSION}"
+    const val RX_JAVA3 = "io.reactivex.rxjava3:rxjava:${Version.RX_JAVA3_VERSION}"
     // RxJava3 Android
-    const val RX_JAVA3_ANDROID = "io.reactivex.rxjava3:rxandroid:${Version.RXJAVA3_ANDROID_VERSION}"
+    const val RX_JAVA3_ANDROID = "io.reactivex.rxjava3:rxandroid:${Version.RX_JAVA3_ANDROID_VERSION}"
 
     // Coroutines
     const val COROUTINES_CORE =

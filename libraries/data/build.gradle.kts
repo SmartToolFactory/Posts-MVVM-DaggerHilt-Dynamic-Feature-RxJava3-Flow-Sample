@@ -37,18 +37,21 @@ android {
         jvmTarget = "1.8"
     }
 
-//    sourceSets {
+    // Specifies one flavor dimension. Intend to use both reactive libraries as flavors as project develops
+
+//    flavorDimensions("reactive")
 //
-//        val sharedTestDir =
-//            "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test-shared/java"
+//    productFlavors {
 //
-//        getByName("test") {
-//            java.srcDir(sharedTestDir)
+//        create("rxjava") {
+//            dimension = "reactive"
+//            applicationIdSuffix = ".rxjava"
+//            versionNameSuffix  = "-rxjava"
 //        }
-//
-//        getByName("androidTest") {
-//            java.srcDir(sharedTestDir)
-//            resources.srcDir("${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test/resources")
+//        create("coroutines") {
+//            dimension = "reactive"
+//            applicationIdSuffix =".coroutines"
+//            versionNameSuffix = "-coroutines"
 //        }
 //    }
 }
@@ -97,4 +100,6 @@ dependencies {
     testImplementation(TestDeps.MOCK_WEB_SERVER)
 
     addInstrumentationTestDependencies()
+    androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
+
 }
