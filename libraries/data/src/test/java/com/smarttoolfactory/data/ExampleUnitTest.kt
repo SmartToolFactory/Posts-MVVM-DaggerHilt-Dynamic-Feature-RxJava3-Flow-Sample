@@ -13,10 +13,6 @@ import org.junit.Test
  */
 class ExampleUnitTest {
 
-    private val postList by lazy {
-        convertFromJsonToObjectList<PostDTO>(getResourceAsText("response.json"))!!
-    }
-
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)

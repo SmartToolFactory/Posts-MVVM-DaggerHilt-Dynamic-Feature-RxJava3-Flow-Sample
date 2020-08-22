@@ -50,8 +50,11 @@ object Version {
     // Retrofit
     const val RETROFIT_VERSION = "2.8.1"
 
+    // Retrofit RxJava3 Adapter
+    const val RETROFIT_RXJAVA3_ADAPTER ="2.9.0"
+
     // OkHttpClient
-    const val OK_HTTP_VERSION = "3.7.0"
+    const val OK_HTTP3_VERSION = "4.8.1"
 
     // MockWebServer
     const val MOCK_WEB_SERVER_VERSION = "3.7.0"
@@ -116,7 +119,7 @@ object TestVersion {
     const val coroutinesTestVersion = "1.3.7"
 
     // MockWebServer
-    const val mockWebServerVersion = "3.7.0"
+    const val mockWebServerVersion = "4.8.1"
 
     // Truth Assertion
     const val truthVersion = "1.0.1"

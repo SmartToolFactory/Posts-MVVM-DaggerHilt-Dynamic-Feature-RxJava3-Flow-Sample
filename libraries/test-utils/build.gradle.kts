@@ -58,18 +58,24 @@ dependencies {
     implementation(Deps.KOTLIN)
     implementation(Deps.ANDROIDX_CORE_KTX)
 
+
     implementation(Deps.RX_JAVA3)
     implementation(Deps.RX_JAVA3_ANDROID)
     implementation(Deps.COROUTINES_CORE)
     implementation(Deps.COROUTINES_ANDROID)
 
-//    implementation(TestDeps.ANDROIDX_CORE_KTX)
-//    implementation(TestDeps.ANDROIDX_CORE_TESTING)
 
     // Lifecycle, LiveData, ViewModel
     implementation(Deps.LIFECYCLE_LIVEDATA_KTX)
     implementation(Deps.LIFECYCLE_VIEWMODEL_KTX)
     implementation(Deps.LIFECYCLE_EXTENSIONS)
+
+//    implementation(TestDeps.ANDROIDX_CORE_KTX)
+//    implementation(TestDeps.ANDROIDX_CORE_TESTING)
+
+    implementation(TestDeps.JUNIT5_API)
+    implementation(TestDeps.JUNIT5_ENGINE)
+
 
     // GSon
     implementation(Deps.GSON)

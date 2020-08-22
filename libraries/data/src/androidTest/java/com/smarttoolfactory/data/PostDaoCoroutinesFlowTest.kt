@@ -8,6 +8,7 @@ import com.google.common.truth.Truth
 import com.smarttoolfactory.data.db.PostDao
 import com.smarttoolfactory.data.db.PostDatabase
 import com.smarttoolfactory.data.model.PostEntity
+import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
 import com.smarttoolfactory.test_utils.rule.TestCoroutineRule
 import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
 import com.smarttoolfactory.test_utils.util.getResourceAsText
@@ -23,7 +24,7 @@ class PostDaoCoroutinesFlowTest {
 
     companion object {
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText("response.json"))!!
+            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @get:Rule
