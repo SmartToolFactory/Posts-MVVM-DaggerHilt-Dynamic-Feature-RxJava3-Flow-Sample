@@ -129,7 +129,7 @@ object TestDeps {
     const val ROBOLECTRIC = "org.robolectric:robolectric:${TestVersion.robolectricVersion}"
 
     // AndroidX Test - JVM testing
-    const val ANDROIDX_CORE_KTX = "androidx.test:core-ktx:${TestVersion.androidXTestCoreVersion}"
+    const val ANDROIDX_TEST_CORE_KTX = "androidx.test:core-ktx:${TestVersion.androidXTestCoreVersion}"
     const val ANDROIDX_JUNIT =
         "androidx.test.ext:junit:${TestVersion.androidXTestExtKotlinRunnerVersion}"
 

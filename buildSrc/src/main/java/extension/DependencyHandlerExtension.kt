@@ -137,22 +137,9 @@ fun DependencyHandler.addUnitTestDependencies() {
     testImplementation(TestDeps.ROBOLECTRIC)
 
     // AndroidX Test - JVM testing
-//    testImplementation(TestDeps.ANDRIODX_CORE_KTX)
+    testImplementation(TestDeps.ANDROIDX_TEST_CORE_KTX)
 //    testImplementation(TestDeps.ANDROIDX_JUNIT)
 
-    // MockK
-    testImplementation(TestDeps.MOCK_K)
-    // Truth
-    testImplementation(TestDeps.TRUTH)
-
-    // RxJava
-    testImplementation(Deps.RX_JAVA3)
-    // RxAndroid
-    testImplementation(Deps.RX_JAVA3_ANDROID)
-
-    // Coroutines
-    testImplementation(Deps.COROUTINES_CORE)
-    testImplementation(Deps.COROUTINES_ANDROID)
     // Coroutines Test
     testImplementation(TestDeps.COROUTINES_TEST)
 
@@ -161,14 +148,28 @@ fun DependencyHandler.addUnitTestDependencies() {
 
     // Gson
     testImplementation(TestDeps.GSON)
+
+    // MockK
+    testImplementation(TestDeps.MOCK_K)
+    // Truth
+    testImplementation(TestDeps.TRUTH)
 }
 
 fun DependencyHandler.addInstrumentationTestDependencies() {
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation(TestDeps.ANDROIDX_JUNIT)
+    androidTestImplementation(TestDeps.ANDROIDX_CORE_TESTING)
+
     // Espresso
     androidTestImplementation(TestDeps.ANDROIDX_ESPRESSO)
+
+    // Testing Navigation
+    androidTestImplementation(TestDeps.NAVIGATION_TEST)
+
+    // Coroutines Test
+    androidTestImplementation(TestDeps.COROUTINES_TEST)
+
     // MockWebServer
     androidTestImplementation(TestDeps.MOCK_WEB_SERVER)
     // Gson
@@ -176,17 +177,8 @@ fun DependencyHandler.addInstrumentationTestDependencies() {
 
     // MockK
     androidTestImplementation(TestDeps.MOCK_K)
-    // Testing Navigation
-    androidTestImplementation(TestDeps.NAVIGATION_TEST)
-
-    // RxJava
-    androidTestImplementation(Deps.RX_JAVA3)
-    // RxAndroid
-    androidTestImplementation(Deps.RX_JAVA3_ANDROID)
-
-    // Coroutines
-    androidTestImplementation(Deps.COROUTINES_CORE)
-    androidTestImplementation(Deps.COROUTINES_ANDROID)
+    // Truth
+    androidTestImplementation(TestDeps.TRUTH)
 }
 
 /*

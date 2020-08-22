@@ -16,19 +16,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets {
-
-        val sharedTestDir = "src/test-shared/java"
-
-        getByName("test") {
-            java.srcDir(sharedTestDir)
-        }
-
-        getByName("androidTest") {
-            java.srcDir(sharedTestDir)
-            resources.srcDir("src/test/resources")
-        }
-    }
+//    sourceSets {
+//
+//        val sharedTestDir = "src/test-shared/java"
+//
+//        getByName("test") {
+//            java.srcDir(sharedTestDir)
+//        }
+//
+//        getByName("androidTest") {
+//            java.srcDir(sharedTestDir)
+//            resources.srcDir("src/test/resources")
+//        }
+//    }
 
     buildTypes {
         getByName("release") {
@@ -49,6 +49,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+//    configurations.all {
+//        resolutionStrategy {
+//            exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-debug")
+//        }
+//    }
 }
 
 dependencies {
@@ -63,8 +69,8 @@ dependencies {
     implementation(Deps.COROUTINES_CORE)
     implementation(Deps.COROUTINES_ANDROID)
 
-    implementation(TestDeps.ANDROIDX_CORE_KTX)
-    implementation(TestDeps.ANDROIDX_CORE_TESTING)
+//    implementation(TestDeps.ANDROIDX_CORE_KTX)
+//    implementation(TestDeps.ANDROIDX_CORE_TESTING)
 
     // Lifecycle, LiveData, ViewModel
     implementation(Deps.LIFECYCLE_LIVEDATA_KTX)
@@ -74,9 +80,6 @@ dependencies {
     // GSon
     implementation(Deps.GSON)
 
-    // Coroutines
-    implementation(Deps.COROUTINES_CORE)
-    implementation(Deps.COROUTINES_ANDROID)
     // Coroutines Test
     implementation(TestDeps.COROUTINES_TEST)
 
