@@ -109,7 +109,7 @@ dependencies {
     // Retrofit
     implementation(Deps.RETROFIT)
     implementation(Deps.RETROFIT_GSON_CONVERTER)
-    implementation(Deps.RETROFIT_RXJAVA3_ADAPTER)
+    implementation(Deps.RETROFIT_RX_JAVA3_ADAPTER)
     // change base url runtime
     implementation(Deps.RETROFIT_URL_MANAGER)
     // Gson
@@ -120,5 +120,4 @@ dependencies {
 
     addInstrumentationTestDependencies()
     androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
-
 }

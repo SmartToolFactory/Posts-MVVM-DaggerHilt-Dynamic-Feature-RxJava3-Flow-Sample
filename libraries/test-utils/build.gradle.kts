@@ -49,12 +49,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-//    configurations.all {
-//        resolutionStrategy {
-//            exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-debug")
-//        }
-//    }
 }
 
 dependencies {

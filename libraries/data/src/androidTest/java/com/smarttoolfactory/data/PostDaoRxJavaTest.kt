@@ -7,20 +7,19 @@ import com.google.common.truth.Truth
 import com.smarttoolfactory.data.db.PostDaoRxJava
 import com.smarttoolfactory.data.db.PostDatabase
 import com.smarttoolfactory.data.model.PostEntity
-import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
 import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
 import com.smarttoolfactory.test_utils.util.getResourceAsText
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class PostDaoRxJavaTest {
 
     companion object {
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToObjectList<PostEntity>(getResourceAsText("response.json"))!!
     }
 
     @get:Rule
@@ -35,44 +34,50 @@ class PostDaoRxJavaTest {
 
 
     @Test
-    fun shouldInsertSinglePost() = runBlockingTest {
-
-        // GIVEN
-        val initialCount = postDao.getPostCount()
-
-        // WHEN
-        val insertedId = postDao.insert(PostDaoCoroutinesFlowTest.postEntityList.first())
-
-        // THEN
-        val postCount = postDao.getPostCount()
-
-
-        Truth.assertThat(initialCount).isEqualTo(0)
-        Truth.assertThat(insertedId).isEqualTo(1)
-        Truth.assertThat(postCount).isEqualTo(1)
-    }
-
-    @Test
-    fun shouldInsertMultiplePosts() = runBlockingTest {
+    fun shouldInsertSinglePost() {
 
         // GIVEN
         val initialCount = postDao.getPostCount().blockingGet()
 
         // WHEN
-        val ids = postDao.insert(PostDaoCoroutinesFlowTest.postEntityList)
+        val testObserver = postDao.insert(postEntityList.first()).test()
 
         // THEN
-        val postCount = postDao.getPostCount()
+        testObserver.assertComplete()
+            .assertNoErrors()
+
+        val postCount = postDao.getPostCount().blockingGet()
         Truth.assertThat(initialCount).isEqualTo(0)
-        Truth.assertThat(postCount).isEqualTo(PostDaoCoroutinesFlowTest.postEntityList.size)
+        Truth.assertThat(postCount).isEqualTo(1)
+
+        testObserver.dispose()
+    }
+
+    @Test
+    fun shouldInsertMultiplePosts() {
+
+        // GIVEN
+        val initialCount = postDao.getPostCount().blockingGet()
+
+        // WHEN
+        val testObserver = postDao.insert(postEntityList).test()
+
+        // THEN
+        testObserver.assertComplete()
+            .assertNoErrors()
+
+        val postCount = postDao.getPostCount().blockingGet()
+        Truth.assertThat(initialCount).isEqualTo(0)
+        Truth.assertThat(postCount).isEqualTo(postEntityList.size)
+
+        testObserver.dispose()
     }
 
     /*
-        Get Post List Suspend
+        Get Post List Single
      */
-
     @Test
-    fun givenDBEmptyShouldReturnEmptyList() = runBlockingTest {
+    fun givenDBEmptyShouldReturnEmptyListWithSingle() {
 
         // GIVEN
         val postCount = postDao.getPostCount().blockingGet()
@@ -86,11 +91,11 @@ class PostDaoRxJavaTest {
     }
 
     @Test
-    fun giveDBPopulatedShouldReturnCorrecList() = runBlockingTest {
+    fun giveDBPopulatedShouldReturnCorrectListWithSingle() {
 
         // GIVEN
-        val expected = PostDaoCoroutinesFlowTest.postEntityList[0]
-        postDao.insert(expected)
+        val expected = postEntityList[0]
+        postDao.insert(expected).blockingAwait()
 
         // WHEN
         val postEntityList = postDao.getPostsSingle().blockingGet()
@@ -100,24 +105,127 @@ class PostDaoRxJavaTest {
         Truth.assertThat(actual).isEqualTo(expected)
     }
 
+    /*
+        Get Post List Maybe
+     */
+    @Test
+    fun givenDBEmptyShouldReturnEmptyListWithMaybe() {
+
+        // GIVEN
+        val expected = listOf<PostEntity>()
+
+        // WHEN
+        val testObserver = postDao.getPostsMaybe().test()
+
+        // THEN
+        testObserver
+            .assertNoErrors()
+            .assertComplete()
+            .assertValue {
+                it.size == expected.size
+            }
+            .dispose()
+    }
+
+    @Test
+    fun giveDBPopulatedShouldReturnCorrectListWithMaybe() {
+
+        // GIVEN
+        val expected = postEntityList[0]
+        postDao.insert(expected).blockingAwait()
+
+        // WHEN
+        val testObserver = postDao.getPostsMaybe().test()
+
+        // THEN
+        testObserver
+            .assertNoErrors()
+            .assertComplete()
+            .assertValue {
+                it.size == 1
+            }
+            .dispose()
+    }
+
+    /*
+        Get Post List Observable
+     */
+
+    @Test
+    fun givenDBEmptyShouldReturnEmptyListWithObservable() {
+
+        // GIVEN
+        val expected = listOf<PostEntity>()
+
+        // TODO await() not work with Observable
+//        // WHEN
+//        val testObserver = postDao.getPosts().test()
+//
+//        // THEN
+//        testObserver.await()
+//
+//        testObserver
+//            .assertNoErrors()
+//            .assertComplete()
+//            .assertValue {
+//                it.size == expected.size
+//            }
+//            .dispose()
+
+        // WHEN
+        val posts = postDao.getPosts().blockingFirst()
+
+        // THEN
+        Truth.assertThat(posts.size).isEqualTo(expected.size)
+    }
+
+    @Test
+    fun giveDBPopulatedShouldReturnCorrectListWithObservable() {
+
+        // GIVEN
+        val expected = postEntityList
+        postDao.insert(expected).blockingAwait()
+
+        // TODO await() not work with Observable
+//         // WHEN
+//        val testObserver = postDao.getPosts().test()
+//
+//         // THEN
+//        testObserver.await()
+//
+//        testObserver
+//            .assertNoErrors()
+//            .assertComplete()
+//            .assertValue {
+//                it.size == expected.size
+//            }
+//            .dispose()
+
+        // WHEN
+        val posts = postDao.getPosts().blockingFirst()
+
+        // THEN
+        Truth.assertThat(posts.size).isEqualTo(postEntityList.size)
+        Truth.assertThat(posts).containsExactlyElementsIn(postEntityList)
+    }
 
     /*
         Delete Suspend
      */
 
     @Test
-    fun givenEveryPostDeletedShouldReturnEmptyList() = runBlockingTest {
+    fun givenEveryPostDeletedShouldReturnEmptyList() {
 
         // GIVEN
-        postDao.insert(PostDaoCoroutinesFlowTest.postEntityList)
+        postDao.insert(postEntityList).blockingAwait()
         val initialPostCount = postDao.getPostCount().blockingGet()
 
         // WHEN
         postDao.deleteAll().blockingAwait()
 
         // THEN
-        val postCount = postDao.getPostCount()
-        Truth.assertThat(initialPostCount).isEqualTo(PostDaoCoroutinesFlowTest.postEntityList.size)
+        val postCount = postDao.getPostCount().blockingGet()
+        Truth.assertThat(initialPostCount).isEqualTo(postEntityList.size)
         Truth.assertThat(postCount).isEqualTo(0)
     }
 

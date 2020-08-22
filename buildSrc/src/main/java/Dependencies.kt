@@ -76,7 +76,7 @@ object Deps {
     const val RETROFIT_GSON_CONVERTER =
         "com.squareup.retrofit2:converter-gson:${Version.RETROFIT_VERSION}"
     const val RETROFIT_RX_JAVA2_ADAPTER = "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
-    const val RETROFIT_RXJAVA3_ADAPTER = "com.squareup.retrofit2:adapter-rxjava3:2.9.0"
+    const val RETROFIT_RX_JAVA3_ADAPTER = "com.squareup.retrofit2:adapter-rxjava3:2.9.0"
 
     // Retrofit change base url runtime
     const val RETROFIT_URL_MANAGER = "me.jessyan:retrofit-url-manager:1.4.0"
