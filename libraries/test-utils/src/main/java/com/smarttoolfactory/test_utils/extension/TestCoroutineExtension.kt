@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
-
 /**
  * LifeCycle
  *
@@ -51,5 +50,4 @@ class TestCoroutineExtension : BeforeEachCallback, AfterEachCallback {
 
     fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
         testCoroutineScope.runBlockingTest { block() }
-
 }

@@ -35,11 +35,9 @@ class PostDataSourceCoroutinesTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class RemoteDataSourceTest {
 
-
         private val postApi = mockk<PostApi>()
 
         private lateinit var remotePostDataSource: RemotePostDataSource
-
 
         @Test
         fun `given network error occurred, should throw Exception`() = runBlockingTest {
@@ -57,9 +55,7 @@ class PostDataSourceCoroutinesTest {
             // THEN
             Truth.assertThat(expected).isInstanceOf(Exception::class.java)
             coVerify(exactly = 1) { postApi.getPosts() }
-
         }
-
 
         @Test
         fun `given Http 200, should return DTO list`() = runBlockingTest {
@@ -76,7 +72,6 @@ class PostDataSourceCoroutinesTest {
             coVerify(exactly = 1) { postApi.getPosts() }
         }
 
-
         @BeforeEach
         fun setUp() {
             remotePostDataSource = RemotePostDataSourceImpl(postApi)
@@ -86,7 +81,6 @@ class PostDataSourceCoroutinesTest {
         fun tearDown() {
             clearMocks(postApi)
         }
-
     }
 
     @Nested

@@ -17,7 +17,6 @@ interface Mapper<I, O> {
  */
 interface ListMapper<I, O> : Mapper<List<I>, List<O>>
 
-
 class DTOtoEntityMapper : ListMapper<PostDTO, PostEntity> {
 
     override fun map(input: List<PostDTO>): List<PostEntity> {

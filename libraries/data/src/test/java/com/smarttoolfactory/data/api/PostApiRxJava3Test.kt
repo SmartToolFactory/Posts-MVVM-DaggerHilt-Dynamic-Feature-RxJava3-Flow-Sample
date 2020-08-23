@@ -38,7 +38,6 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
 
         // THEN
         Truth.assertThat(request.path).isEqualTo("/posts")
-
     }
 
     @Test
@@ -55,9 +54,7 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
         // THEN
         Truth.assertThat(expected.size).isEqualTo(postList.size)
         Truth.assertThat(expected).containsExactlyElementsIn(postList)
-
     }
-
 
     /**
      * ✅ This test PASSES when [TestObserver] used with [TestObserver.await]
@@ -81,7 +78,6 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
             }
 
         testObserver.dispose()
-
     }
 
     @Test
@@ -100,7 +96,6 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
         Truth.assertThat(expected).containsExactlyElementsIn(postList)
         testObserver.dispose()
     }
-
 
     /*
        HttpException is wrapped in RuntimeException by RxJava
@@ -124,9 +119,7 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
         // THEN
         Truth.assertThat(exception).isInstanceOf(HttpException::class.java)
         Truth.assertThat(exception.message).isEqualTo("HTTP 500 Server Error")
-
     }
-
 
     @Test
     fun `When page not found should return 404 error`() {
@@ -146,7 +139,6 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
         testObserver.assertNotComplete()
 
         testObserver.dispose()
-
     }
 
     @BeforeEach
@@ -166,12 +158,8 @@ class PostApiRxJava3Test : AbstractPostApiTest() {
             .create(PostApiRxJava::class.java)
     }
 
-
     @AfterEach
     override fun tearDown() {
         super.tearDown()
     }
-
 }
-
-

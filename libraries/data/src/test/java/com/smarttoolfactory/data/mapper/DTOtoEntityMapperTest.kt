@@ -31,7 +31,5 @@ class DTOtoEntityMapperTest {
 
         // THEN
         Truth.assertThat(actual).containsExactlyElementsIn(expected)
-
     }
-
 }

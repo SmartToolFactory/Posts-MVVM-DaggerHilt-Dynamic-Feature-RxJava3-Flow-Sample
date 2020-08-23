@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth
-import com.smarttoolfactory.data.db.PostDaoRxJava
+import com.smarttoolfactory.data.db.PostDaoRxJava3
 import com.smarttoolfactory.data.db.PostDatabase
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
@@ -14,7 +14,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
 class PostDaoRxJavaTest {
 
@@ -31,8 +30,7 @@ class PostDaoRxJavaTest {
     /**
      * This is the SUT
      */
-    private lateinit var postDao: PostDaoRxJava
-
+    private lateinit var postDao: PostDaoRxJava3
 
     @Test
     fun shouldInsertSinglePost() {
@@ -242,7 +240,6 @@ class PostDaoRxJavaTest {
             .build()
 
         postDao = database.postDaoRxJava()
-
     }
 
     @After

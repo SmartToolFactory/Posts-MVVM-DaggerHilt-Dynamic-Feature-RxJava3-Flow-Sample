@@ -3,9 +3,6 @@ package com.smarttoolfactory.data.api
 import com.google.common.truth.Truth
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.test_utils.extension.TestCoroutineExtension
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.junit.jupiter.api.AfterEach
@@ -31,7 +28,6 @@ class PostApiCoroutinesTest : AbstractPostApiTest() {
      */
     private lateinit var api: PostApi
 
-
     /**
      * ❌ This test FAILS, with launch builder sometimes fail, sometimes PASS
      */
@@ -42,7 +38,6 @@ class PostApiCoroutinesTest : AbstractPostApiTest() {
             // GIVEN
             enqueueResponse(HttpURLConnection.HTTP_OK)
             println("⏰ First job ${Thread.currentThread().name}")
-
 
             println("⏰ Second job START in thread: ${Thread.currentThread().name}")
             launch(this.coroutineContext) {
@@ -57,7 +52,6 @@ class PostApiCoroutinesTest : AbstractPostApiTest() {
             // THEN
             println("🎃 THEN in thread: ${Thread.currentThread().name}")
             Truth.assertThat(request.path).isEqualTo("/posts")
-
         }
 
     /**
@@ -85,9 +79,7 @@ class PostApiCoroutinesTest : AbstractPostApiTest() {
             println("🎃 THEN in thread: ${Thread.currentThread().name}")
             Truth.assertThat(postList).isNotNull()
             Truth.assertThat(postList?.size).isEqualTo(100)
-
         }
-
 
     @BeforeEach
     override fun setUp() {
@@ -104,7 +96,6 @@ class PostApiCoroutinesTest : AbstractPostApiTest() {
             .build()
             .create(PostApi::class.java)
     }
-
 
     @AfterEach
     override fun tearDown() {

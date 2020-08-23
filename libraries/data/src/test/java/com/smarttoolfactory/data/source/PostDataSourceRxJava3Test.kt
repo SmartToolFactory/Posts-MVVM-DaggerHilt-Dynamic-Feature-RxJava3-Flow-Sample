@@ -45,16 +45,13 @@ class PostDataSourceRxJava3Test {
             // WHEN
             val testObserver = remotePostDataSource.getPostDTOs().test()
 
-
             // THEN
             testObserver.assertError {
                 it.message == "Network Exception"
             }
             verify(exactly = 1) { postApi.getPostsSingle() }
             testObserver.dispose()
-
         }
-
 
         @Test
         fun `given Http 200, should return DTO list`() {
@@ -71,7 +68,6 @@ class PostDataSourceRxJava3Test {
             verify(exactly = 1) { postApi.getPostsSingle() }
         }
 
-
         @BeforeEach
         fun setUp() {
             remotePostDataSource = RemoteDataSourceRxJava3Impl(postApi)
@@ -81,8 +77,5 @@ class PostDataSourceRxJava3Test {
         fun tearDown() {
             clearMocks(postApi)
         }
-
     }
-
-
 }

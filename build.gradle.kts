@@ -1,7 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    val kotlin_version by extra("1.4.0")
     repositories {
         google()
         jcenter()
@@ -26,9 +25,6 @@ allprojects {
         google()
         jcenter()
     }
-}
-
-subprojects {
 
     // KtLint
     apply(plugin = Plugins.KTLINT) // Version should be inherited from parent

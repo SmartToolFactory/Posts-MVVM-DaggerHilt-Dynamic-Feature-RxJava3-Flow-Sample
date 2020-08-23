@@ -3,7 +3,6 @@ package com.smarttoolfactory.data.source
 import com.smarttoolfactory.data.api.PostApi
 import com.smarttoolfactory.data.api.PostApiRxJava
 import com.smarttoolfactory.data.db.PostDao
-import com.smarttoolfactory.data.db.*
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
 import io.reactivex.rxjava3.core.Completable
@@ -25,13 +24,11 @@ interface LocalPostDataSource : PostDataSource {
     suspend fun deletePostEntities()
 }
 
-
 class RemotePostDataSourceImpl(private val postApi: PostApi) : RemotePostDataSource {
 
     override suspend fun getPostDTOs(): List<PostDTO> {
         return postApi.getPosts()
     }
-
 }
 
 class LocalPostDataSourceImpl(private val postDao: PostDao) :
@@ -49,7 +46,6 @@ class LocalPostDataSourceImpl(private val postDao: PostDao) :
     override suspend fun deletePostEntities() {
         postDao.deleteAll()
     }
-
 }
 
 /*
@@ -73,5 +69,3 @@ class RemoteDataSourceRxJava3Impl(private val postApi: PostApiRxJava) :
         return postApi.getPostsSingle()
     }
 }
-
-

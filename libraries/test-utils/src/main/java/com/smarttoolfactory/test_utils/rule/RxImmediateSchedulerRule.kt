@@ -1,6 +1,5 @@
 package com.smarttoolfactory.test_utils.rule
 
-
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.internal.schedulers.ExecutorScheduler

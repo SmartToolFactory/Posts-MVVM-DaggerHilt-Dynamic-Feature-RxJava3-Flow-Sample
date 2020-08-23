@@ -10,7 +10,6 @@ import androidx.room.RoomDatabase
 import com.smarttoolfactory.data.model.PostEntity
 import kotlinx.coroutines.flow.Flow
 
-
 const val DATABASE_NAME = "post.db"
 
 @Database(
@@ -20,7 +19,7 @@ const val DATABASE_NAME = "post.db"
 )
 abstract class PostDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao
-    abstract fun postDaoRxJava(): PostDaoRxJava
+    abstract fun postDaoRxJava(): PostDaoRxJava3
 }
 
 @Dao
@@ -65,6 +64,4 @@ interface PostDao {
     // Flow
     @Query("SELECT * FROM post")
     fun getPostListFlow(): Flow<List<PostEntity>>
-
 }
-

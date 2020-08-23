@@ -10,9 +10,8 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-
 @Dao
-interface PostDaoRxJava {
+interface PostDaoRxJava3 {
 
     @Insert
     fun insert(postEntity: PostEntity): Completable
@@ -30,7 +29,7 @@ interface PostDaoRxJava {
      * Get number of posts in db
      */
     @Query("SELECT COUNT(*) FROM post")
-     fun getPostCount(): Maybe<Int>
+    fun getPostCount(): Maybe<Int>
 
     /**
      *
@@ -43,7 +42,6 @@ interface PostDaoRxJava {
      */
     @Query("SELECT * FROM post")
     fun getPostsMaybe(): Maybe<List<PostEntity>>
-
 
     /**
      * Get list of [PostEntity]s to from database.

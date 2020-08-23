@@ -56,7 +56,6 @@ class PostDaoCoroutinesFlowTest {
         // THEN
         val postCount = postDao.getPostCount()
 
-
         Truth.assertThat(initialCount).isEqualTo(0)
         Truth.assertThat(insertedId).isEqualTo(1)
         Truth.assertThat(postCount).isEqualTo(1)
@@ -110,7 +109,6 @@ class PostDaoCoroutinesFlowTest {
         Truth.assertThat(actual).isEqualTo(expected)
     }
 
-
     /*
         Delete Suspend
      */
@@ -131,7 +129,6 @@ class PostDaoCoroutinesFlowTest {
         Truth.assertThat(postCount).isEqualTo(0)
     }
 
-
     @Before
     fun setUp() {
 
@@ -144,7 +141,6 @@ class PostDaoCoroutinesFlowTest {
             .build()
 
         postDao = database.postDao()
-
     }
 
     @After
