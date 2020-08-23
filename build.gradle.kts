@@ -29,9 +29,20 @@ allprojects {
     // KtLint
     apply(plugin = Plugins.KTLINT) // Version should be inherited from parent
 
-    // Optionally configure plugin
+    // KtLint Configurations
     ktlint {
         debug.set(true)
+        verbose.set(true)
+        android.set(true)
+        outputToConsole.set(true)
+    }
+
+}
+
+subprojects {
+
+    tasks.withType<Test> {
+        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
     }
 
     // Detekt
@@ -57,7 +68,6 @@ allprojects {
         }
     }
 }
-
 // JVM target applied to all Kotlin tasks across all sub-projects
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8.toString()
