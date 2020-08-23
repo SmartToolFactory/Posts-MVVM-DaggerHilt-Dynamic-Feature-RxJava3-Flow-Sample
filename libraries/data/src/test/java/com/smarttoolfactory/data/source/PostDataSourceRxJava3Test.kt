@@ -2,6 +2,7 @@ package com.smarttoolfactory.data.source
 
 import com.google.common.truth.Truth
 import com.smarttoolfactory.data.api.PostApiRxJava
+import com.smarttoolfactory.data.db.PostDaoRxJava3
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
@@ -77,5 +78,26 @@ class PostDataSourceRxJava3Test {
         fun tearDown() {
             clearMocks(postApi)
         }
+    }
+
+    @Nested
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class LocalDataSourceTest {
+
+        private val postDao = mockk<PostDaoRxJava3>()
+
+        private lateinit var localPostDataSource: LocalPostDataSourceRxJava3
+
+        @BeforeEach
+        fun setUp() {
+            localPostDataSource = LocalDataSourceRxJava3Impl(postDao)
+        }
+
+        @AfterEach
+        fun tearDown() {
+            clearMocks(postDao)
+        }
+
+
     }
 }
