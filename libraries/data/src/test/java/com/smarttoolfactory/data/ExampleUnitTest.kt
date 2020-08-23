@@ -1,8 +1,5 @@
 package com.smarttoolfactory.data
 
-import com.smarttoolfactory.data.model.PostDTO
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
-import com.smarttoolfactory.test_utils.util.getResourceAsText
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
