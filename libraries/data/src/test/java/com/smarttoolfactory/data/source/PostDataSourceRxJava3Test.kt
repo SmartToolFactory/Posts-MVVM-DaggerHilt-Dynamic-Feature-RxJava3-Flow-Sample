@@ -97,7 +97,5 @@ class PostDataSourceRxJava3Test {
         fun tearDown() {
             clearMocks(postDao)
         }
-
-
     }
 }
