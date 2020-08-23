@@ -1,7 +1,9 @@
 package com.smarttoolfactory.data.source
 
 import com.smarttoolfactory.data.api.PostApi
+import com.smarttoolfactory.data.api.PostApiRxJava
 import com.smarttoolfactory.data.db.PostDao
+import com.smarttoolfactory.data.db.*
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
 import io.reactivex.rxjava3.core.Completable
@@ -63,4 +65,13 @@ interface LocalPostDataSourceRxJava3 : PostDataSource {
     fun saveEntities(posts: List<PostEntity>): Completable
     fun deletePostEntities(): Completable
 }
+
+class RemoteDataSourceRxJava3Impl(private val postApi: PostApiRxJava) :
+    RemotePostDataSourceRxJava3 {
+
+    override fun getPostDTOs(): Single<List<PostDTO>> {
+        return postApi.getPostsSingle()
+    }
+}
+
 
