@@ -11,7 +11,9 @@ import com.smarttoolfactory.test_utils.util.getResourceAsText
 import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -20,7 +22,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 class PostDataSourceCoroutinesTest {
-
 
     companion object {
         val PostDTOList =
@@ -32,7 +33,7 @@ class PostDataSourceCoroutinesTest {
 
     @Nested
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    inner class RemotePostDataSourceTest {
+    inner class RemoteDataSourceTest {
 
 
         private val postApi = mockk<PostApi>()
@@ -61,7 +62,7 @@ class PostDataSourceCoroutinesTest {
 
 
         @Test
-        fun `given Http 200, should return postDTO list`() = runBlockingTest {
+        fun `given Http 200, should return DTO list`() = runBlockingTest {
 
             // GIVEN
             val actual = PostDTOList
@@ -88,4 +89,81 @@ class PostDataSourceCoroutinesTest {
 
     }
 
+    @Nested
+    inner class LocalDataSourceTest {
+
+        private val postDao = mockk<PostDao>()
+
+        private lateinit var localPostDataSource: LocalPostDataSourceImpl
+
+        @Test
+        fun `given DB is empty should return an empty list`() = runBlockingTest {
+
+            // GIVEN
+            val expected = listOf<PostEntity>()
+            coEvery { postDao.getPostList() } returns expected
+
+            // WHEN
+            val actual = localPostDataSource.getPostEntities()
+
+            // THEN
+            Truth.assertThat(actual).isEmpty()
+            coVerify(exactly = 1) { postDao.getPostList() }
+        }
+
+        @Test
+        fun `given DB is populated should return data list`() = runBlockingTest {
+
+            // GIVEN
+            coEvery { postDao.getPostList() } returns postEntityList
+
+            // WHEN
+            val actual = localPostDataSource.getPostEntities()
+
+            // THEN
+            Truth.assertThat(actual).containsExactlyElementsIn(postEntityList)
+            coVerify(exactly = 1) { postDao.getPostList() }
+        }
+
+        @Test
+        fun `given entities, should save entities to DB`() = runBlockingTest {
+
+            // GIVEN
+            val idList = postEntityList.map {
+                it.id.toLong()
+            }
+
+            coEvery { postDao.insert(postEntityList) } returns idList
+
+            // WHEN
+            val result = localPostDataSource.saveEntities(postEntityList)
+
+            // THEN
+            Truth.assertThat(result).containsExactlyElementsIn(idList)
+            coVerify(exactly = 1) { postDao.insert(postEntityList) }
+        }
+
+        @Test
+        fun `given no error should delete entities`() = runBlockingTest {
+
+            // GIVEN
+            coEvery { postDao.deleteAll() } just runs
+
+            // WHEN
+            localPostDataSource.deletePostEntities()
+
+            // THEN
+            coVerify(exactly = 1) { postDao.deleteAll() }
+        }
+
+        @BeforeEach
+        fun setUp() {
+            localPostDataSource = LocalPostDataSourceImpl(postDao)
+        }
+
+        @AfterEach
+        fun tearDown() {
+            clearMocks(postDao)
+        }
+    }
 }

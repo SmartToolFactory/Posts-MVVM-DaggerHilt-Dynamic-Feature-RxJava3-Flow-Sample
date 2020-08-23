@@ -32,19 +32,20 @@ class RemotePostDataSourceImpl(private val postApi: PostApi) : RemotePostDataSou
 
 }
 
-class LocalPostDataSourceImpl(private val postDao: PostDao, private val cache: Cache) :
+class LocalPostDataSourceImpl(private val postDao: PostDao) :
     LocalPostDataSource {
 
     override suspend fun getPostEntities(): List<PostEntity> {
-        TODO("Not yet implemented")
+        return postDao.getPostList()
     }
 
     override suspend fun saveEntities(posts: List<PostEntity>): List<Long> {
-        TODO("Not yet implemented")
+
+        return postDao.insert(posts)
     }
 
     override suspend fun deletePostEntities() {
-        TODO("Not yet implemented")
+        postDao.deleteAll()
     }
 
 }
@@ -63,15 +64,3 @@ interface LocalPostDataSourceRxJava3 : PostDataSource {
     fun deletePostEntities(): Completable
 }
 
-/*
-    Cache
- */
-interface Cache {
-
-    var expireDuration: Int
-
-    fun saveCacheTime()
-
-    fun getCacheSaveTime(): Long
-
-}
