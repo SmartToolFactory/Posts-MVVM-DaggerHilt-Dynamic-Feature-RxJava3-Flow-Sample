@@ -159,7 +159,10 @@ fun <T> Observable<T>.logLifeCycleEvents(): Observable<T> {
             println("⏱ doOnSubscribe() thread: ${Thread.currentThread().name}")
         }
         .doOnEach {
-            println("🎃 doOnEach() thread: ${Thread.currentThread().name}, event: $it, val: ${it.value}")
+            println(
+                "🎃 doOnEach() thread: ${Thread.currentThread().name}," +
+                    " event: $it, val: ${it.value}"
+            )
         }
         .doOnNext {
             println("🥶 doOnNext() thread: ${Thread.currentThread().name}, val: $it")

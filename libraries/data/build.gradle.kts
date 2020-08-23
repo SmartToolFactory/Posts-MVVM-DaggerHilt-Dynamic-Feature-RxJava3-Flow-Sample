@@ -66,7 +66,10 @@ android {
 
         getByName("androidTest") {
             java.srcDir(sharedTestDir)
-            resources.srcDir("${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test/resources")
+            resources.srcDir(
+                "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
+                    "/src/test/resources"
+            )
         }
     }
 

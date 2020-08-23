@@ -3,6 +3,7 @@ package com.smarttoolfactory.data.api
 import com.google.common.truth.Truth
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.test_utils.extension.TestCoroutineExtension
+import java.net.HttpURLConnection
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.junit.jupiter.api.AfterEach
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.HttpURLConnection
 
 class PostApiCoroutinesTest : AbstractPostApiTest() {
 

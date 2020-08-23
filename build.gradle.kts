@@ -25,6 +25,13 @@ allprojects {
         google()
         jcenter()
     }
+}
+
+subprojects {
+
+    tasks.withType<Test> {
+        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+    }
 
     // KtLint
     apply(plugin = Plugins.KTLINT) // Version should be inherited from parent
@@ -35,13 +42,6 @@ allprojects {
         verbose.set(true)
         android.set(true)
         outputToConsole.set(true)
-    }
-}
-
-subprojects {
-
-    tasks.withType<Test> {
-        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
     }
 
     // Detekt

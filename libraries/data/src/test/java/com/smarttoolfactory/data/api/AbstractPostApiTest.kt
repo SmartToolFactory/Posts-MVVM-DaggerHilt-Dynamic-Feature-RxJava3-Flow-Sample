@@ -4,11 +4,11 @@ import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
 import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
 import com.smarttoolfactory.test_utils.util.getResourceAsText
+import java.io.IOException
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import java.io.IOException
 
 /**
  * Abstract class fo testing api with [MockWebServer] and [JUnit5]
@@ -65,7 +65,10 @@ abstract class AbstractPostApiTest {
         mockWebServer.enqueue(
             mockResponse.setBody(responseAsString)
         )
-        println("🍏 enqueueResponse() ${Thread.currentThread().name} ${responseAsString.length} $mockResponse")
+        println(
+            "🍏 enqueueResponse() ${Thread.currentThread().name}," +
+                " ${responseAsString.length} $mockResponse"
+        )
         return mockResponse
     }
 

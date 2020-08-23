@@ -121,7 +121,10 @@ class FlowTestObserver<T>(
                 errorNotNull.message == throwable.message
             )
         )
-            throw AssertionError("Assertion Error! throwable: $throwable does not match $errorNotNull")
+            throw AssertionError(
+                "Assertion Error! " +
+                    "throwable: $throwable does not match $errorNotNull"
+            )
         return this
     }
 
@@ -132,7 +135,10 @@ class FlowTestObserver<T>(
         val errorNotNull = exceptionNotNull()
 
         if (errorNotNull::class.java != errorClass)
-            throw AssertionError("Assertion Error! errorClass $errorClass does not match ${errorNotNull::class.java}")
+            throw AssertionError(
+                "Assertion Error! errorClass $errorClass" +
+                    " does not match ${errorNotNull::class.java}"
+            )
         return this
     }
 
@@ -162,7 +168,10 @@ class FlowTestObserver<T>(
         initialize()
 
         testValues.forEach {
-            if (it != null) throw AssertionError("Assertion Error! There are more than one item that is not null")
+            if (it != null) throw AssertionError(
+                "Assertion Error! " +
+                    "There are more than one item that is not null"
+            )
         }
 
         return this
@@ -172,7 +181,10 @@ class FlowTestObserver<T>(
 
         initialize()
 
-        if (!isCompleted) throw AssertionError("Assertion Error! Job is not completed yet!")
+        if (!isCompleted) throw AssertionError(
+            "Assertion Error!" +
+                " Job is not completed yet!"
+        )
         return this
     }
 
@@ -214,7 +226,8 @@ class FlowTestObserver<T>(
  *
  * * Set waitForDelay true for testing delay.
  *
- * ###  Note: waiting for delay with a channel that sends values throw TimeoutCancellationException, don't use timeout with channel
+ * ###  Note: waiting for delay with a channel that sends values throw TimeoutCancellationException,
+ * don't use timeout with channel
  * TODO Fix channel issue
  */
 suspend fun <T> Flow<T>.test(
