@@ -1,5 +1,6 @@
 package com.smarttoolfactory.test_utils.util
 
+import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import kotlin.coroutines.coroutineContext
 
 class FlowTestObserver<T>(
     private val coroutineScope: CoroutineScope,

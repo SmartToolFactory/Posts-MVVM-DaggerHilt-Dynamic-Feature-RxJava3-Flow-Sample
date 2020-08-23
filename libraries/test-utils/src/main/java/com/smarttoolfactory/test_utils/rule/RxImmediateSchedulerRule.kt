@@ -4,10 +4,10 @@ import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.internal.schedulers.ExecutorScheduler
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import java.util.concurrent.Executor
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import java.util.concurrent.Executor
 
 class RxImmediateSchedulerRule : TestRule {
 

@@ -36,7 +36,6 @@ allprojects {
         android.set(true)
         outputToConsole.set(true)
     }
-
 }
 
 subprojects {
