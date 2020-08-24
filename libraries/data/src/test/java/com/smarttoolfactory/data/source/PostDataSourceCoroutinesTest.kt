@@ -24,7 +24,7 @@ import org.junit.jupiter.api.TestInstance
 class PostDataSourceCoroutinesTest {
 
     companion object {
-        val PostDTOList =
+        val postDTOList =
             convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
         val postEntityList =
@@ -61,7 +61,7 @@ class PostDataSourceCoroutinesTest {
         fun `given Http 200, should return DTO list`() = runBlockingTest {
 
             // GIVEN
-            val actual = PostDTOList
+            val actual = postDTOList
             coEvery { postApi.getPosts() } returns actual
 
             // WHEN

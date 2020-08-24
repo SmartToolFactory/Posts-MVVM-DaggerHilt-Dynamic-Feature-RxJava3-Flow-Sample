@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
 /**
- * RxJava2 style [Observer] for [LiveData] to test multiple values or states in container.
+ * RxJava style [Observer] for [LiveData] to test multiple values or states in container.
  *
  * This class is useful for testing view or action states or order of states if you are using
  * stateful machine.
@@ -48,16 +48,6 @@ class LiveDataTestObserver<T> constructor(
         if (!testValues.containsAll(predicates.asList())) throw AssertionError("Assertion error!")
         return this
     }
-
-//    fun assertValues(predicate: List<T>.() -> Boolean): TestObserver<T> {
-//        testValues.predicate()
-//        return this
-//    }
-//
-//    fun values(predicate: List<T>.() -> Unit): TestObserver<T> {
-//        testValues.predicate()
-//        return this
-//    }
 
     fun assertValues(predicate: (List<T>) -> Boolean): LiveDataTestObserver<T> {
         predicate(testValues)

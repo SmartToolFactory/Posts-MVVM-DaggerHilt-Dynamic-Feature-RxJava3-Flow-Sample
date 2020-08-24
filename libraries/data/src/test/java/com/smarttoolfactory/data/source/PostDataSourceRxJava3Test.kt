@@ -24,7 +24,7 @@ import org.junit.jupiter.api.TestInstance
 class PostDataSourceRxJava3Test {
 
     companion object {
-        val PostDTOList =
+        val postDTOList =
             convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
         val postEntityList =
@@ -60,7 +60,7 @@ class PostDataSourceRxJava3Test {
         fun `given Http 200, should return DTO list`() {
 
             // GIVEN
-            val actual = PostDTOList
+            val actual = postDTOList
             every { postApi.getPostsSingle() } returns Single.just(actual)
 
             // WHEN
