@@ -47,9 +47,6 @@ fun DependencyHandler.addAppModuleDependencies() {
 
     // Leak Canary
     debugImplementation(Deps.LEAK_CANARY)
-
-    // Chucker
-    debugImplementation(Deps.CHUCKER_DEBUG)
 }
 
 /**

@@ -62,23 +62,24 @@ internal class PostRepositoryCoroutinesTest {
     }
 
     @Test
-    fun `given Http 200, should return DTO list`() = runBlockingTest {
+    fun `given remote data source return PostDTO list, should return PostEntity list`() =
+        runBlockingTest {
 
-        // GIVEN
-        val actual = postEntityList
-        coEvery { remotePostDataSource.getPostDTOs() } returns postDTOList
-        every { mapper.map(postDTOList) } returns postEntityList
+            // GIVEN
+            val actual = postEntityList
+            coEvery { remotePostDataSource.getPostDTOs() } returns postDTOList
+            every { mapper.map(postDTOList) } returns postEntityList
 
-        // WHEN
-        val expected = repository.fetchEntitiesFromRemote()
+            // WHEN
+            val expected = repository.fetchEntitiesFromRemote()
 
-        // THEN
-        Truth.assertThat(expected).isEqualTo(actual)
-        coVerifyOrder {
-            remotePostDataSource.getPostDTOs()
-            mapper.map(postDTOList)
+            // THEN
+            Truth.assertThat(expected).isEqualTo(actual)
+            coVerifyOrder {
+                remotePostDataSource.getPostDTOs()
+                mapper.map(postDTOList)
+            }
         }
-    }
 
     @Test
     fun `given DB is empty should return an empty list`() = runBlockingTest {
@@ -111,7 +112,7 @@ internal class PostRepositoryCoroutinesTest {
     }
 
     @Test
-    fun `given entities, should save entities to DB`() = runBlockingTest {
+    fun `given entities, should save entities`() = runBlockingTest {
 
         // GIVEN
         val idList = postEntityList.map {

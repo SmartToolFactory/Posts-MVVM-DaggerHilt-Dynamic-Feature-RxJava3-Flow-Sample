@@ -14,3 +14,5 @@ interface PostApiRxJava {
     @GET("/posts")
     fun getPostsSingle(): Single<List<PostDTO>>
 }
+
+const val BASE_URL = "https://jsonplaceholder.typicode.com"

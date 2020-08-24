@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Single
  *
  * All business logic for creating offline-first or offline-last approach is moved to UseCase
  */
-interface PostRepository {
+interface PostRepositoryCoroutines {
 
     suspend fun fetchEntitiesFromRemote(): List<PostEntity>
 

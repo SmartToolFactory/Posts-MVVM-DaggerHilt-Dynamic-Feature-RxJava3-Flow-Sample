@@ -21,14 +21,14 @@ import io.reactivex.rxjava3.core.Single
  * logic to set order of retrieving, saving or deleting data operations.
  *
  * All business logic is delegated to a UseCase/Interactor class that injects
- * this [PostRepository] as dependency.
+ * this [PostRepositoryCoroutines] as dependency.
  *
  */
 class PostRepositoryCoroutinesImpl(
     private val localPostDataSource: LocalPostDataSourceCoroutines,
     private val remotePostDataSource: RemotePostDataSourceCoroutines,
     private val mapper: DTOtoEntityMapper
-) : PostRepository {
+) : PostRepositoryCoroutines {
 
     override suspend fun fetchEntitiesFromRemote(): List<PostEntity> {
         val postDTOList = remotePostDataSource.getPostDTOs()
