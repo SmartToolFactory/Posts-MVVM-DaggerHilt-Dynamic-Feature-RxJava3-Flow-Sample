@@ -12,7 +12,9 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -87,6 +89,68 @@ class PostDataSourceRxJava3Test {
         private val postDao = mockk<PostDaoRxJava3>()
 
         private lateinit var localPostDataSource: LocalPostDataSourceRxJava3
+
+        @Test
+        fun `given DB is empty should return an empty list`() = runBlockingTest {
+
+            // GIVEN
+            val expected = listOf<PostEntity>()
+            every { postDao.getPostsSingle() } returns Single.just(expected)
+
+            // WHEN
+            val actual = localPostDataSource.getPostEntities().blockingGet()
+
+            // THEN
+            Truth.assertThat(actual).isEmpty()
+            verify(exactly = 1) { postDao.getPostsSingle() }
+        }
+
+        @Test
+        fun `given DB is populated should return data list`() = runBlockingTest {
+
+            // GIVEN
+            every { postDao.getPostsSingle() } returns Single.just(postEntityList)
+
+            // WHEN
+            val actual = localPostDataSource.getPostEntities().blockingGet()
+
+            // THEN
+            Truth.assertThat(actual)
+                .containsExactlyElementsIn(postEntityList)
+            verify(exactly = 1) { postDao.getPostsSingle() }
+        }
+
+        @Test
+        fun `given entities, should save entities to DB`() = runBlockingTest {
+
+            // GIVEN
+            every { postDao.insert(postEntityList) } returns Completable.complete()
+
+            // WHEN
+            val testObserver = localPostDataSource.saveEntities(postEntityList).test()
+
+            // THEN
+            testObserver.assertComplete()
+                .assertNoErrors()
+                .dispose()
+            verify(exactly = 1) { postDao.insert(postEntityList) }
+        }
+
+        @Test
+        fun `given no error should delete entities`() = runBlockingTest {
+
+            // GIVEN
+            every { postDao.deleteAll() } returns Completable.complete()
+
+            // WHEN
+            val testObserver = localPostDataSource.deletePostEntities().test()
+
+            // THEN
+            testObserver.assertComplete()
+                .assertNoErrors()
+                .dispose()
+            verify(exactly = 1) { postDao.deleteAll() }
+        }
 
         @BeforeEach
         fun setUp() {
