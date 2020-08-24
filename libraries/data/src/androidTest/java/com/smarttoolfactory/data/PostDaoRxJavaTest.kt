@@ -8,7 +8,7 @@ import com.smarttoolfactory.data.db.PostDaoRxJava3
 import com.smarttoolfactory.data.db.PostDatabase
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
+import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import org.junit.After
 import org.junit.Before
@@ -19,7 +19,7 @@ class PostDaoRxJavaTest {
 
     companion object {
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @get:Rule

@@ -2,7 +2,7 @@ package com.smarttoolfactory.data.api
 
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
+import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import java.io.IOException
 import okhttp3.mockwebserver.MockResponse
@@ -22,7 +22,7 @@ abstract class AbstractPostApiTest {
     }
 
     val postList by lazy {
-        convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
+        convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @BeforeEach

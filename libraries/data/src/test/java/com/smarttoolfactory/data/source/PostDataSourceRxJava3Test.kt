@@ -6,7 +6,7 @@ import com.smarttoolfactory.data.db.PostDaoRxJava3
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
+import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import io.mockk.clearMocks
 import io.mockk.every
@@ -25,10 +25,10 @@ class PostDataSourceRxJava3Test {
 
     companion object {
         val PostDTOList =
-            convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @Nested
@@ -37,7 +37,7 @@ class PostDataSourceRxJava3Test {
 
         private val postApi = mockk<PostApiRxJava>()
 
-        private lateinit var remotePostDataSource: RemotePostDataSourceRxJava3
+        private lateinit var remotePostDataSource: RemoteDataSourceRxJava3Impl
 
         @Test
         fun `given network error occurred, should return Single with error`() {
@@ -88,7 +88,7 @@ class PostDataSourceRxJava3Test {
 
         private val postDao = mockk<PostDaoRxJava3>()
 
-        private lateinit var localPostDataSource: LocalPostDataSourceRxJava3
+        private lateinit var localPostDataSource: LocalDataSourceRxJava3Impl
 
         @Test
         fun `given DB is empty should return an empty list`() = runBlockingTest {
