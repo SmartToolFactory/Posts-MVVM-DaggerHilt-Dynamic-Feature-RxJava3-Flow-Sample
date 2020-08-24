@@ -31,7 +31,7 @@ inline fun <reified T> convertToObjectFromJson(json: String): T? {
  *
  * * This function returns for some items as [LinkedTreeMap]
  */
-inline fun <reified T> convertToObjectListFromJson(json: String): List<T> {
+inline fun <reified T> fromJsonToListOf(json: String): List<T> {
     return GsonBuilder().create().fromJson(json, Array<T>::class.java).asList()
 }
 
@@ -42,11 +42,11 @@ fun <T> Gson.mapFromLinkedTreeMap(map: Map<String, Any?>?, type: Class<T>): T? {
     return fromJson(json, type)
 }
 
-inline fun <reified T : Any> convertFromJsonToObjectList(json: String): List<T>? {
+inline fun <reified T : Any> convertFromJsonToListOf(json: String): List<T>? {
 
     val gson = GsonBuilder().create()
 
-    val itemList = convertToObjectListFromJson<T>(json)
+    val itemList = fromJsonToListOf<T>(json)
 
     if (itemList.first() !is LinkedTreeMap<*, *>)
         return itemList

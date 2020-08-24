@@ -10,11 +10,11 @@ interface PostDataSource
 /*
     Coroutines
  */
-interface RemotePostDataSource : PostDataSource {
+interface RemotePostDataSourceCoroutines : PostDataSource {
     suspend fun getPostDTOs(): List<PostDTO>
 }
 
-interface LocalPostDataSource : PostDataSource {
+interface LocalPostDataSourceCoroutines : PostDataSource {
     suspend fun getPostEntities(): List<PostEntity>
     suspend fun saveEntities(posts: List<PostEntity>): List<Long>
     suspend fun deletePostEntities()

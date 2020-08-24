@@ -6,7 +6,7 @@ import com.smarttoolfactory.data.db.PostDao
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
+import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -24,11 +24,11 @@ import org.junit.jupiter.api.TestInstance
 class PostDataSourceCoroutinesTest {
 
     companion object {
-        val postDTOList =
-            convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
+        val PostDTOList =
+            convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @Nested
@@ -37,7 +37,7 @@ class PostDataSourceCoroutinesTest {
 
         private val postApi = mockk<PostApi>()
 
-        private lateinit var remotePostDataSource: RemotePostDataSource
+        private lateinit var remotePostDataSource: RemotePostDataSourceCoroutinesImpl
 
         @Test
         fun `given network error occurred, should throw Exception`() = runBlockingTest {
@@ -61,7 +61,7 @@ class PostDataSourceCoroutinesTest {
         fun `given Http 200, should return DTO list`() = runBlockingTest {
 
             // GIVEN
-            val actual = postDTOList
+            val actual = PostDTOList
             coEvery { postApi.getPosts() } returns actual
 
             // WHEN
@@ -74,7 +74,7 @@ class PostDataSourceCoroutinesTest {
 
         @BeforeEach
         fun setUp() {
-            remotePostDataSource = RemotePostDataSourceImpl(postApi)
+            remotePostDataSource = RemotePostDataSourceCoroutinesImpl(postApi)
         }
 
         @AfterEach
@@ -88,7 +88,7 @@ class PostDataSourceCoroutinesTest {
 
         private val postDao = mockk<PostDao>()
 
-        private lateinit var localPostDataSource: LocalPostDataSourceImpl
+        private lateinit var localPostDataSource: LocalPostDataSourceCoroutinesImpl
 
         @Test
         fun `given DB is empty should return an empty list`() = runBlockingTest {
@@ -152,7 +152,7 @@ class PostDataSourceCoroutinesTest {
 
         @BeforeEach
         fun setUp() {
-            localPostDataSource = LocalPostDataSourceImpl(postDao)
+            localPostDataSource = LocalPostDataSourceCoroutinesImpl(postDao)
         }
 
         @AfterEach

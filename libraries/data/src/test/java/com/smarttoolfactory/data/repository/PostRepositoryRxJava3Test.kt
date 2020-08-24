@@ -7,7 +7,7 @@ import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.data.source.LocalPostDataSourceRxJava3
 import com.smarttoolfactory.data.source.RemotePostDataSourceRxJava3
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
+import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import io.mockk.clearMocks
 import io.mockk.every
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PostRepositoryRxJava3Test {
 
-    private lateinit var repository: PostRepoRxJava3Impl
+    private lateinit var repository: PostRepositoryRxJava3Impl
 
     private val localPostDataSource: LocalPostDataSourceRxJava3 = mockk()
     private val remotePostDataSource: RemotePostDataSourceRxJava3 = mockk()
@@ -32,10 +32,10 @@ class PostRepositoryRxJava3Test {
 
     companion object {
         val postDTOList =
-            convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @Test
@@ -145,7 +145,7 @@ class PostRepositoryRxJava3Test {
 
     @BeforeEach
     fun setUp() {
-        repository = PostRepoRxJava3Impl(localPostDataSource, remotePostDataSource, mapper)
+        repository = PostRepositoryRxJava3Impl(localPostDataSource, remotePostDataSource, mapper)
     }
 
     @AfterEach

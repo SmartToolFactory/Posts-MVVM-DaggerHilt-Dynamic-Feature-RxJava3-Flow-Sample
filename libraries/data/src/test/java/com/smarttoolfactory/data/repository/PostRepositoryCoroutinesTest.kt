@@ -4,11 +4,10 @@ import com.google.common.truth.Truth
 import com.smarttoolfactory.data.mapper.DTOtoEntityMapper
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
-import com.smarttoolfactory.data.source.LocalPostDataSource
-import com.smarttoolfactory.data.source.PostDataSourceCoroutinesTest
-import com.smarttoolfactory.data.source.RemotePostDataSource
+import com.smarttoolfactory.data.source.LocalPostDataSourceCoroutines
+import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutines
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
-import com.smarttoolfactory.test_utils.util.convertFromJsonToObjectList
+import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -26,20 +25,20 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PostRepositoryCoroutinesTest {
+internal class PostRepositoryCoroutinesTest {
 
     private lateinit var repository: PostRepositoryCoroutinesImpl
 
-    private val localPostDataSource: LocalPostDataSource = mockk()
-    private val remotePostDataSource: RemotePostDataSource = mockk()
+    private val localPostDataSource: LocalPostDataSourceCoroutines = mockk()
+    private val remotePostDataSource: RemotePostDataSourceCoroutines = mockk()
     private val mapper: DTOtoEntityMapper = mockk()
 
     companion object {
         val postDTOList =
-            convertFromJsonToObjectList<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
         val postEntityList =
-            convertFromJsonToObjectList<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
     }
 
     @Test
@@ -63,23 +62,23 @@ class PostRepositoryCoroutinesTest {
     }
 
     @Test
-    fun `given remote data source return PostDTO list, should return PostEntity list`() =
-        runBlockingTest {
+    fun `given Http 200, should return DTO list`() = runBlockingTest {
 
-            // GIVEN
-            coEvery { remotePostDataSource.getPostDTOs() } returns postDTOList
-            every { mapper.map(postDTOList) } returns postEntityList
+        // GIVEN
+        val actual = postEntityList
+        coEvery { remotePostDataSource.getPostDTOs() } returns postDTOList
+        every { mapper.map(postDTOList) } returns postEntityList
 
-            // WHEN
-            val expected = repository.fetchEntitiesFromRemote()
+        // WHEN
+        val expected = repository.fetchEntitiesFromRemote()
 
-            // THEN
-            Truth.assertThat(expected).containsExactlyElementsIn(postEntityList)
-            coVerifyOrder {
-                remotePostDataSource.getPostDTOs()
-                mapper.map(postDTOList)
-            }
+        // THEN
+        Truth.assertThat(expected).isEqualTo(actual)
+        coVerifyOrder {
+            remotePostDataSource.getPostDTOs()
+            mapper.map(postDTOList)
         }
+    }
 
     @Test
     fun `given DB is empty should return an empty list`() = runBlockingTest {
@@ -100,38 +99,35 @@ class PostRepositoryCoroutinesTest {
     fun `given DB is populated should return data list`() = runBlockingTest {
 
         // GIVEN
-        coEvery {
-            localPostDataSource.getPostEntities()
-        } returns PostDataSourceCoroutinesTest.postEntityList
+        coEvery { localPostDataSource.getPostEntities() } returns postEntityList
 
         // WHEN
         val actual = repository.getPostEntitiesFromLocal()
 
         // THEN
         Truth.assertThat(actual)
-            .containsExactlyElementsIn(PostDataSourceCoroutinesTest.postEntityList)
+            .containsExactlyElementsIn(postEntityList)
         coVerify(exactly = 1) { localPostDataSource.getPostEntities() }
     }
 
     @Test
-    fun `given entities, should save entities`() = runBlockingTest {
+    fun `given entities, should save entities to DB`() = runBlockingTest {
 
         // GIVEN
-        val idList = PostDataSourceCoroutinesTest.postEntityList.map {
+        val idList = postEntityList.map {
             it.id.toLong()
         }
 
         coEvery {
-            localPostDataSource.saveEntities(PostDataSourceCoroutinesTest.postEntityList)
+            localPostDataSource.saveEntities(postEntityList)
         } returns idList
 
         // WHEN
-        repository.savePostEntities(PostDataSourceCoroutinesTest.postEntityList)
+        val result = localPostDataSource.saveEntities(postEntityList)
 
         // THEN
-        coVerify(exactly = 1) {
-            localPostDataSource.saveEntities(PostDataSourceCoroutinesTest.postEntityList)
-        }
+        Truth.assertThat(result).containsExactlyElementsIn(idList)
+        coVerify(exactly = 1) { localPostDataSource.saveEntities(postEntityList) }
     }
 
     @Test
@@ -141,10 +137,12 @@ class PostRepositoryCoroutinesTest {
         coEvery { localPostDataSource.deletePostEntities() } just runs
 
         // WHEN
-        localPostDataSource.deletePostEntities()
+        repository.deletePostEntities()
 
         // THEN
-        coVerify(exactly = 1) { localPostDataSource.deletePostEntities() }
+        coVerify(exactly = 1) {
+            localPostDataSource.deletePostEntities()
+        }
     }
 
     @BeforeEach

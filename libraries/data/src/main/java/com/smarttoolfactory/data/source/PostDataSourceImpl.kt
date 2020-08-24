@@ -13,16 +13,16 @@ import javax.inject.Inject
 /*
     *** Coroutines Implementations for PostDataSources ***
  */
-class RemotePostDataSourceImpl @Inject constructor(private val postApi: PostApi) :
-    RemotePostDataSource {
+class RemotePostDataSourceCoroutinesImpl @Inject constructor(private val postApi: PostApi) :
+    RemotePostDataSourceCoroutines {
 
     override suspend fun getPostDTOs(): List<PostDTO> {
         return postApi.getPosts()
     }
 }
 
-class LocalPostDataSourceImpl @Inject constructor(private val postDao: PostDao) :
-    LocalPostDataSource {
+class LocalPostDataSourceCoroutinesImpl @Inject constructor(private val postDao: PostDao) :
+    LocalPostDataSourceCoroutines {
 
     override suspend fun getPostEntities(): List<PostEntity> {
         return postDao.getPostList()
