@@ -4,9 +4,6 @@ import com.smarttoolfactory.data.model.PostEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
-
-
-
 /**
  * This repository contains no data save, delete or fetch logic with Coroutines.
  *
@@ -21,7 +18,6 @@ interface PostRepository {
     suspend fun savePostEntities(postEntities: List<PostEntity>)
 
     suspend fun deletePostEntities()
-
 }
 
 /**

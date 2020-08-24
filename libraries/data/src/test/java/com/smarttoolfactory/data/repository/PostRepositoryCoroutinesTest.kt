@@ -72,7 +72,6 @@ internal class PostRepositoryCoroutinesTest {
         // WHEN
         val expected = repository.fetchEntitiesFromRemote()
 
-
         // THEN
         Truth.assertThat(expected).isEqualTo(actual)
         coVerifyOrder {
@@ -145,7 +144,6 @@ internal class PostRepositoryCoroutinesTest {
             localPostDataSource.deletePostEntities()
         }
     }
-
 
     @BeforeEach
     fun setUp() {
