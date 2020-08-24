@@ -75,14 +75,14 @@ class LocalDataSourceRxJava3Impl(private val postDaoRxJava3: PostDaoRxJava3) :
     LocalPostDataSourceRxJava3 {
 
     override fun getPostEntities(): Single<List<PostEntity>> {
-        TODO("Not yet implemented")
+        return postDaoRxJava3.getPostsSingle()
     }
 
     override fun saveEntities(posts: List<PostEntity>): Completable {
-        TODO("Not yet implemented")
+        return postDaoRxJava3.insert(posts)
     }
 
     override fun deletePostEntities(): Completable {
-        TODO("Not yet implemented")
+        return postDaoRxJava3.deleteAll()
     }
 }
