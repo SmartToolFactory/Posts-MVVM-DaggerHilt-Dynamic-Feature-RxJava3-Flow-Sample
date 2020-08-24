@@ -9,9 +9,9 @@ import com.smarttoolfactory.data.model.PostEntity
  */
 interface PostRepository {
 
-    suspend fun getPostEntitiesFromLocal(): List<PostEntity>
-
     suspend fun fetchEntitiesFromRemote(): List<PostEntity>
+
+    suspend fun getPostEntitiesFromLocal(): List<PostEntity>
 
     suspend fun savePostEntities(postEntities: List<PostEntity>)
 

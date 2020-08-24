@@ -4,6 +4,7 @@ import com.smarttoolfactory.data.mapper.DTOtoEntityMapper
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.data.source.LocalPostDataSourceCoroutines
 import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutines
+import javax.inject.Inject
 
 /**
  * Repository for persistence layer. Local Data source acts as Single Source of Truth
@@ -20,26 +21,27 @@ import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutines
  * this [PostRepository] as dependency.
  *
  */
-class PostRepositoryCoroutinesImpl(
+class PostRepositoryCoroutinesImpl @Inject constructor(
     private val localPostDataSource: LocalPostDataSourceCoroutines,
     private val remotePostDataSource: RemotePostDataSourceCoroutines,
     private val mapper: DTOtoEntityMapper
 ) : PostRepository {
 
-    override suspend fun getPostEntitiesFromLocal(): List<PostEntity> {
-        TODO("Not yet implemented")
+    override suspend fun fetchEntitiesFromRemote(): List<PostEntity> {
+        val postDTOList = remotePostDataSource.getPostDTOs()
+        return mapper.map(postDTOList)
     }
 
-    override suspend fun fetchEntitiesFromRemote(): List<PostEntity> {
-        TODO("Not yet implemented")
+    override suspend fun getPostEntitiesFromLocal(): List<PostEntity> {
+        return localPostDataSource.getPostEntities()
     }
 
     override suspend fun savePostEntities(postEntities: List<PostEntity>) {
-        TODO("Not yet implemented")
+        localPostDataSource.saveEntities(postEntities)
     }
 
     override suspend fun deletePostEntities() {
-        TODO("Not yet implemented")
+        localPostDataSource.deletePostEntities()
     }
 }
 
