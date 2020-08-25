@@ -1,4 +1,4 @@
-package com.smarttoolfactory.domain.viewstate
+package com.smarttoolfactory.core.viewstate
 
 class ViewState<T>(
     val status: Status,

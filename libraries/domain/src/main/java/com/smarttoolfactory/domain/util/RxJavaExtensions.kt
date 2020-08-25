@@ -1,7 +1,5 @@
 package com.smarttoolfactory.domain.util
 
-import com.smarttoolfactory.domain.viewstate.Status
-import com.smarttoolfactory.domain.viewstate.ViewState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
@@ -60,33 +58,6 @@ fun <T> Observable<T>.observeResultOnIO(
                 }
             }
         )
-}
-
-fun <T> Observable<T>.convertToObservableViewState(): Observable<ViewState<T>> {
-    return this
-        .map { data ->
-            ViewState(status = Status.SUCCESS, data = data)
-        }
-        .onErrorResumeNext { throwable: Throwable ->
-            Observable.just(ViewState(status = Status.ERROR, error = throwable))
-        }
-        .startWith(Observable.just(ViewState(status = Status.LOADING)))
-}
-
-fun <T> Single<T>.convertFromSingleToObservableViewState(): Observable<ViewState<T>> {
-    return this
-        .toObservable()
-        .convertToObservableViewState()
-}
-
-fun <T> Single<T>.convertToSingleViewState(): Single<ViewState<T>> {
-    return this
-        .map { data ->
-            ViewState(status = Status.SUCCESS, data = data)
-        }
-        .onErrorResumeNext { throwable: Throwable ->
-            Single.just(ViewState(status = Status.ERROR, error = throwable))
-        }
 }
 
 fun Disposable.addTo(disposables: CompositeDisposable) {
