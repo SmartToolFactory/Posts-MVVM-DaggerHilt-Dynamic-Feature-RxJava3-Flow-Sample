@@ -8,6 +8,11 @@ import com.smarttoolfactory.domain.mapper.EntityToPostMapper
 import com.smarttoolfactory.domain.model.Post
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 /**
@@ -43,6 +48,27 @@ class GetPostListUseCaseFlow @Inject constructor(
      *
      */
     fun getPostFlowOfflineLast(): Flow<List<Post>> {
+        return flow { emit(repository.fetchEntitiesFromRemote()) }
+            .map {
+
+                if (it.isNullOrEmpty()) {
+                    throw EmptyDataException("No Data is available in remote source!")
+                } else {
+                    repository.deletePostEntities()
+                    repository.savePostEntities(it)
+                    repository.getPostEntitiesFromLocal()
+                }
+            }
+            .flowOn(dispatcherProvider.ioDispatcher)
+            .catch { cause ->
+                emitAll(flowOf(repository.getPostEntitiesFromLocal()))
+            }
+            .map {
+                mapToPostListOrError(it)
+            }
+    }
+
+    fun getPostFlowOfflineFirst(): Flow<List<Post>> {
         TODO()
     }
 

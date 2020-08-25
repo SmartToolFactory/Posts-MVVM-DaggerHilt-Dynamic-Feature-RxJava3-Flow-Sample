@@ -36,7 +36,6 @@ class FlowTestObserver<T>(
     private suspend fun initialize() {
 
         if (!isInitialized) {
-            isInitialized = true
 
             if (waitForDelay) {
                 try {
@@ -55,7 +54,7 @@ class FlowTestObserver<T>(
     private fun createJob(scope: CoroutineScope): Job {
 
         val job = flow
-            .onStart {}
+            .onStart { isInitialized = true }
             .onCompletion {
                 isCompleted = true
             }
@@ -128,7 +127,7 @@ class FlowTestObserver<T>(
         return this
     }
 
-    suspend fun assertError(errorClass: Class<Throwable>): FlowTestObserver<T> {
+    suspend fun assertError(errorClass: Class<out Throwable>): FlowTestObserver<T> {
 
         initialize()
 

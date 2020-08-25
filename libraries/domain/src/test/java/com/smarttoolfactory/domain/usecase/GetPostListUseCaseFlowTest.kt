@@ -1,21 +1,30 @@
 package com.smarttoolfactory.domain.usecase
 
+import android.database.SQLException
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.data.repository.PostRepositoryCoroutines
 import com.smarttoolfactory.domain.dispatcher.UseCaseDispatchers
+import com.smarttoolfactory.domain.error.EmptyDataException
 import com.smarttoolfactory.domain.mapper.EntityToPostMapper
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
 import com.smarttoolfactory.test_utils.extension.TestCoroutineExtension
+import com.smarttoolfactory.test_utils.test_observer.test
 import com.smarttoolfactory.test_utils.util.convertFromJsonToListOf
 import com.smarttoolfactory.test_utils.util.getResourceAsText
 import io.mockk.clearMocks
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.coVerifyOrder
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -57,78 +66,180 @@ class GetPostListUseCaseFlowTest {
 
     private lateinit var useCase: GetPostListUseCaseFlow
 
-    /*
-       Offline Last Scenarios
+    /***
+     *
+     *   Test class for testing offline-last data fetch with [GetPostListUseCaseFlow]
+     *
+     *  * Offline Last Scenarios
+     *
+     * * Check out Remote Source first
+     * * If empty data or null returned throw empty set exception
+     * * If error occurred while fetching data from remote: Try to fetch data from db
+     * * If data is fetched from remote source: delete old data, save new data and return new data
+     * * If both network and db don't have any data throw empty set exception
+     *
+     */
+    @Nested
+    @DisplayName("Offline Last(Refresh) Tests")
+    inner class OffLineLastTest {
 
-       * Check out Remote Source first
-       * If empty data or null returned throw empty set exception
-       * If error occurred while fetching data from remote: Try to fetch data from db
-       * If data is fetched from remote source: delete old data, save new data and return new data
-       * If both network and db don't have any data throw empty set exception
+        @Test
+        fun `given list returned from Remote, Local should delete old, save and return list`() =
+            testCoroutineExtension.runBlockingTest {
 
-    */
-    @Test
-    fun `given list returned from Remote , Local should delete old, save and return Entity list`() =
-        testCoroutineExtension.runBlockingTest {
+                // GIVEN
+                coEvery { repository.fetchEntitiesFromRemote() } returns postEntityList
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { repository.getPostEntitiesFromLocal() } returns postEntityList
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
-            // GIVEN
-            coEvery { repository.fetchEntitiesFromRemote() } returns postEntityList
-            coEvery { repository.deletePostEntities() }
-            coEvery { repository.savePostEntities(postEntities = postEntityList) }
-            coEvery { repository.getPostEntitiesFromLocal() } returns postEntityList
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineLast().test(this)
 
-            // WHEN
-            val flow = useCase.getPostFlowOfflineLast()
+                // THEN
+                testObserver
+                    .assertComplete()
+                    .assertNoError()
+                    .assertValues {
+                        it.first().containsAll(postList)
+                    }
+                    .dispose()
 
-            // THEN
-            flow.collect {
-                println("List: $it")
+                coVerifyOrder {
+                    repository.fetchEntitiesFromRemote()
+                    repository.deletePostEntities()
+                    repository.savePostEntities(postEntityList)
+                    repository.getPostEntitiesFromLocal()
+                    entityToPostMapper.map(postEntityList)
+                }
             }
-        }
 
-    @Test
-    fun `given exception returned from Remote source, should check out Local source`() =
-        testCoroutineExtension.runBlockingTest {
+        @Test
+        fun `given exception returned from Remote source, should fetch data from Local source`() =
+            testCoroutineExtension.runBlockingTest {
 
-            // GIVEN
+                // GIVEN
+                coEvery {
+                    repository.fetchEntitiesFromRemote()
+                } throws Exception("Network Exception")
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { repository.getPostEntitiesFromLocal() } returns postEntityList
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
-            // WHEN
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineLast().test(this)
 
-            // THEN
-        }
+                // THEN
+                testObserver
+                    .assertComplete()
+                    .assertNoError()
+                    .assertValues {
+                        it.first().containsAll(postList)
+                    }
+                    .dispose()
 
-    @Test
-    fun `given empty data or null returned from Remote source, should check out Local source`() =
-        testCoroutineExtension.runBlockingTest {
+                coVerify(exactly = 1) { repository.fetchEntitiesFromRemote() }
+                coVerify(exactly = 1) { repository.getPostEntitiesFromLocal() }
+                coVerify(exactly = 0) { repository.deletePostEntities() }
+                coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
+                verify(exactly = 1) { entityToPostMapper.map(postEntityList) }
+            }
 
-            // GIVEN
+        @Test
+        fun `given empty data or null returned from Remote, should fetch data from Local `() =
+            testCoroutineExtension.runBlockingTest {
 
-            // WHEN
+                // GIVEN
+                coEvery { repository.fetchEntitiesFromRemote() } returns listOf()
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { repository.getPostEntitiesFromLocal() } returns postEntityList
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
-            // THEN
-        }
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineLast().test(this)
 
-    @Test
-    fun `given exception returned from Local source, should return an empty list`() =
-        testCoroutineExtension.runBlockingTest {
+                // THEN
+                testObserver
+                    .assertComplete()
+                    .assertNoError()
+                    .assertValues {
+                        it.first().containsAll(postList)
+                    }
+                    .dispose()
 
-            // GIVEN
+                coVerify(exactly = 1) { repository.fetchEntitiesFromRemote() }
+                coVerify(exactly = 1) { repository.getPostEntitiesFromLocal() }
+                coVerify(exactly = 0) { repository.deletePostEntities() }
+                coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
 
-            // WHEN
+                verify(exactly = 1) { entityToPostMapper.map(postEntityList) }
+            }
 
-            // THEN
-        }
+        @Test
+        fun `given exception returned from Local source, should throw DB exception`() =
+            testCoroutineExtension.runBlockingTest {
 
-    @Test
-    fun `given both Remote and Local source empty should return an empty list`() =
-        testCoroutineExtension.runBlockingTest {
+                // GIVEN
+                coEvery {
+                    repository.fetchEntitiesFromRemote()
+                } throws Exception("Network Exception")
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery {
+                    repository.getPostEntitiesFromLocal()
+                } throws SQLException("Database Exception")
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
-            // GIVEN
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineLast().test(this)
 
-            // WHEN
+                // THEN
+                testObserver
+                    .assertComplete()
+                    .assertError(SQLException::class.java)
+                    .dispose()
 
-            // THEN
-        }
+                coVerify(exactly = 1) { repository.fetchEntitiesFromRemote() }
+                coVerify(exactly = 1) { repository.getPostEntitiesFromLocal() }
+                coVerify(exactly = 0) { repository.deletePostEntities() }
+                coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
+
+                verify(exactly = 0) { entityToPostMapper.map(postEntityList) }
+            }
+
+        @Test
+        fun `given Remote error and Local source empty should throw EmptyDataException`() =
+            testCoroutineExtension.runBlockingTest {
+
+                // GIVEN
+                coEvery {
+                    repository.fetchEntitiesFromRemote()
+                } throws Exception("Network Exception")
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { repository.getPostEntitiesFromLocal() } returns listOf()
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
+
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineLast().test(this)
+
+                // THEN
+                testObserver
+                    .assertComplete()
+                    .assertError(EmptyDataException::class.java)
+                    .dispose()
+
+                coVerify(exactly = 1) { repository.fetchEntitiesFromRemote() }
+                coVerify(exactly = 1) { repository.getPostEntitiesFromLocal() }
+                coVerify(exactly = 0) { repository.deletePostEntities() }
+                coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
+
+                verify(exactly = 0) { entityToPostMapper.map(postEntityList) }
+            }
+    }
 
     @BeforeEach
     fun setUp() {
