@@ -1,6 +1,5 @@
 package com.smarttoolfactory.test_utils.test_observer
 
-import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +10,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
+import kotlin.coroutines.coroutineContext
 
 class FlowTestObserver<T>(
     private val coroutineScope: CoroutineScope,
@@ -26,7 +26,7 @@ class FlowTestObserver<T>(
 
     private lateinit var job: Job
 
-    private suspend fun initializeAndJoin() {
+    private suspend fun init() {
         job = createJob(coroutineScope)
 
         // Wait this job after end of possible delays
@@ -46,7 +46,7 @@ class FlowTestObserver<T>(
                     isCompleted = false
                 }
             } else {
-                initializeAndJoin()
+                job = createJob(coroutineScope)
             }
         }
     }
@@ -55,15 +55,9 @@ class FlowTestObserver<T>(
 
         val job = flow
             .onStart { isInitialized = true }
-            .onCompletion {
-                isCompleted = true
-            }
-            .catch { throwable ->
-                error = throwable
-            }
-            .onEach {
-                testValues.add(it)
-            }
+            .onCompletion { isCompleted = true }
+            .catch { throwable -> error = throwable }
+            .onEach { testValues.add(it) }
             .launchIn(scope)
         return job
     }
@@ -115,14 +109,12 @@ class FlowTestObserver<T>(
 
         val errorNotNull = exceptionNotNull()
 
-        if (!(
-            errorNotNull::class.java == throwable::class.java &&
-                errorNotNull.message == throwable.message
-            )
+        if (!(errorNotNull::class.java == throwable::class.java &&
+                    errorNotNull.message == throwable.message)
         )
             throw AssertionError(
                 "Assertion Error! " +
-                    "throwable: $throwable does not match $errorNotNull"
+                        "throwable: $throwable does not match $errorNotNull"
             )
         return this
     }
@@ -136,7 +128,7 @@ class FlowTestObserver<T>(
         if (errorNotNull::class.java != errorClass)
             throw AssertionError(
                 "Assertion Error! errorClass $errorClass" +
-                    " does not match ${errorNotNull::class.java}"
+                        " does not match ${errorNotNull::class.java}"
             )
         return this
     }
@@ -169,7 +161,7 @@ class FlowTestObserver<T>(
         testValues.forEach {
             if (it != null) throw AssertionError(
                 "Assertion Error! " +
-                    "There are more than one item that is not null"
+                        "There are more than one item that is not null"
             )
         }
 
@@ -182,7 +174,7 @@ class FlowTestObserver<T>(
 
         if (!isCompleted) throw AssertionError(
             "Assertion Error!" +
-                " Job is not completed yet!"
+                    " Job is not completed yet!"
         )
         return this
     }
@@ -231,7 +223,7 @@ class FlowTestObserver<T>(
  */
 suspend fun <T> Flow<T>.test(
     scope: CoroutineScope,
-    waitForDelay: Boolean = false
+    waitForDelay: Boolean = true
 ): FlowTestObserver<T> {
 
     return FlowTestObserver(scope, this@test, waitForDelay)

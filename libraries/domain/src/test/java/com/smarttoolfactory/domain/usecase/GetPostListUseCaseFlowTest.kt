@@ -80,11 +80,11 @@ class GetPostListUseCaseFlowTest {
      *
      */
     @Nested
-    @DisplayName("Offline Last(Refresh) Tests")
+    @DisplayName("Offline-Last(Refresh) Tests")
     inner class OffLineLastTest {
 
         @Test
-        fun `given list returned from Remote, Local should delete old, save and return list`() =
+        fun `given data returned from Remote, Local should delete old, save and return data`() =
             testCoroutineExtension.runBlockingTest {
 
                 // GIVEN
@@ -211,13 +211,14 @@ class GetPostListUseCaseFlowTest {
             }
 
         @Test
-        fun `given Remote error and Local source empty should throw EmptyDataException`() =
+        fun `given Remote error and Local source is empty, should throw EmptyDataException`() =
             testCoroutineExtension.runBlockingTest {
 
                 // GIVEN
                 coEvery {
                     repository.fetchEntitiesFromRemote()
                 } throws Exception("Network Exception")
+
                 coEvery { repository.deletePostEntities() } just runs
                 coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
                 coEvery { repository.getPostEntitiesFromLocal() } returns listOf()
@@ -238,6 +239,76 @@ class GetPostListUseCaseFlowTest {
                 coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
 
                 verify(exactly = 0) { entityToPostMapper.map(postEntityList) }
+            }
+    }
+
+    @Nested
+    @DisplayName("Offline-First Tests")
+    inner class OffLineFirstTest {
+
+        @Test
+        fun `given Local source has data, should return data`() =
+            testCoroutineExtension.runBlockingTest {
+
+                // GIVEN
+
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineFirst().test(this)
+
+                // THEN
+
+            }
+
+        @Test
+        fun `given Local source is empty, should fetch data from Remote`() =
+            testCoroutineExtension.runBlockingTest {
+
+                // GIVEN
+
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineFirst().test(this)
+
+                // THEN
+
+            }
+
+        @Test
+        fun `given exception returned from Local source should fetch data from Remote`() =
+            testCoroutineExtension.runBlockingTest {
+
+                // GIVEN
+
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineFirst().test(this)
+
+                // THEN
+
+            }
+
+        @Test
+        fun `given data fetched from Remote, Local should delete old, save and return data`() =
+            testCoroutineExtension.runBlockingTest {
+
+                // GIVEN
+
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineFirst().test(this)
+
+                // THEN
+
+            }
+
+        @Test
+        fun `given Local source is empty and Remote returned error, should throw exception`() =
+            testCoroutineExtension.runBlockingTest {
+
+                // GIVEN
+
+                // WHEN
+                val testObserver = useCase.getPostFlowOfflineFirst().test(this)
+
+                // THEN
+
             }
     }
 
