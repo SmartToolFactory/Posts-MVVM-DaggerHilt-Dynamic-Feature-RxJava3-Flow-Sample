@@ -44,12 +44,12 @@ class LiveDataTestObserver<T> constructor(
         return this
     }
 
-    fun assertValues(vararg predicates: T): LiveDataTestObserver<T> {
+    fun assertValue(vararg predicates: T): LiveDataTestObserver<T> {
         if (!testValues.containsAll(predicates.asList())) throw AssertionError("Assertion error!")
         return this
     }
 
-    fun assertValues(predicate: (List<T>) -> Boolean): LiveDataTestObserver<T> {
+    fun assertValue(predicate: (List<T>) -> Boolean): LiveDataTestObserver<T> {
         predicate(testValues)
         return this
     }

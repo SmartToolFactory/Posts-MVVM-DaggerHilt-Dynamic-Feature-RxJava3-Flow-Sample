@@ -101,7 +101,8 @@ class GetPostListUseCaseFlowTest {
                 // THEN
                 testObserver
                     .assertComplete()
-                    .assertNoError()
+                    .assertNoErrors()
+                    .assertValueAt(0, postList)
                     .assertValues {
                         it.first().containsAll(postList)
                     }
@@ -135,7 +136,7 @@ class GetPostListUseCaseFlowTest {
                 // THEN
                 testObserver
                     .assertComplete()
-                    .assertNoError()
+                    .assertNoErrors()
                     .assertValues {
                         it.first().containsAll(postList)
                     }
@@ -165,7 +166,7 @@ class GetPostListUseCaseFlowTest {
                 // THEN
                 testObserver
                     .assertComplete()
-                    .assertNoError()
+                    .assertNoErrors()
                     .assertValues {
                         it.first().containsAll(postList)
                     }
@@ -199,7 +200,7 @@ class GetPostListUseCaseFlowTest {
 
                 // THEN
                 testObserver
-                    .assertComplete()
+                    .assertNotComplete()
                     .assertError(SQLException::class.java)
                     .dispose()
 
@@ -230,7 +231,7 @@ class GetPostListUseCaseFlowTest {
 
                 // THEN
                 testObserver
-                    .assertComplete()
+                    .assertNotComplete()
                     .assertError(EmptyDataException::class.java)
                     .dispose()
 
@@ -260,7 +261,7 @@ class GetPostListUseCaseFlowTest {
                 // THEN
                 testObserver
                     .assertComplete()
-                    .assertNoError()
+                    .assertNoErrors()
                     .assertValues {
                         it.first().containsAll(postList)
                     }
@@ -288,7 +289,7 @@ class GetPostListUseCaseFlowTest {
                 // THEN
                 testObserver
                     .assertComplete()
-                    .assertNoError()
+                    .assertNoErrors()
                     .assertValues {
                         it.first().containsAll(postList)
                     }
@@ -322,7 +323,7 @@ class GetPostListUseCaseFlowTest {
                 // THEN
                 testObserver
                     .assertComplete()
-                    .assertNoError()
+                    .assertNoErrors()
                     .assertValues {
                         it.first().containsAll(postList)
                     }
@@ -348,8 +349,6 @@ class GetPostListUseCaseFlowTest {
                     repository.fetchEntitiesFromRemote()
                 } throws Exception("Network Exception")
 
-//                coEvery { repository.deletePostEntities() } just runs
-//                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
                 coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
                 // WHEN
@@ -357,7 +356,7 @@ class GetPostListUseCaseFlowTest {
 
                 // THEN
                 testObserver
-                    .assertComplete()
+                    .assertNotComplete()
                     .assertError(EmptyDataException::class.java)
                     .dispose()
 
@@ -365,12 +364,6 @@ class GetPostListUseCaseFlowTest {
                     repository.getPostEntitiesFromLocal()
                     repository.fetchEntitiesFromRemote()
                 }
-
-//                coVerify(exactly = 1) { repository.fetchEntitiesFromRemote() }
-//                coVerify(exactly = 1) { repository.getPostEntitiesFromLocal() }
-//                coVerify(exactly = 0) { repository.deletePostEntities() }
-//                coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
-//                verify(exactly = 0) { entityToPostMapper.map(postEntityList) }
             }
     }
 
