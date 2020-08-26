@@ -256,7 +256,6 @@ class GetPostListUseCaseFlowTest {
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
-
             }
 
         @Test
@@ -269,7 +268,6 @@ class GetPostListUseCaseFlowTest {
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
-
             }
 
         @Test
@@ -282,7 +280,6 @@ class GetPostListUseCaseFlowTest {
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
-
             }
 
         @Test
@@ -295,7 +292,6 @@ class GetPostListUseCaseFlowTest {
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
-
             }
 
         @Test
@@ -308,7 +304,6 @@ class GetPostListUseCaseFlowTest {
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
-
             }
     }
 
