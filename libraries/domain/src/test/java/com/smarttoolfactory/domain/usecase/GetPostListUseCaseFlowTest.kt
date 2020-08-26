@@ -16,6 +16,7 @@ import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.coVerifyOrder
+import io.mockk.coVerifySequence
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
@@ -251,11 +252,24 @@ class GetPostListUseCaseFlowTest {
             testCoroutineExtension.runBlockingTest {
 
                 // GIVEN
-
+                coEvery { repository.getPostEntitiesFromLocal() } returns postEntityList
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
                 // WHEN
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
+                testObserver
+                    .assertComplete()
+                    .assertNoError()
+                    .assertValues {
+                        it.first().containsAll(postList)
+                    }
+                    .dispose()
+
+                coVerifySequence {
+                    repository.getPostEntitiesFromLocal()
+                    entityToPostMapper.map(postEntityList)
+                }
             }
 
         @Test
@@ -263,11 +277,31 @@ class GetPostListUseCaseFlowTest {
             testCoroutineExtension.runBlockingTest {
 
                 // GIVEN
-
+                coEvery { repository.getPostEntitiesFromLocal() } returns listOf()
+                coEvery { repository.fetchEntitiesFromRemote() } returns postEntityList
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
                 // WHEN
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
+                testObserver
+                    .assertComplete()
+                    .assertNoError()
+                    .assertValues {
+                        it.first().containsAll(postList)
+                    }
+                    .dispose()
+
+                coVerifySequence {
+                    repository.getPostEntitiesFromLocal()
+                    repository.fetchEntitiesFromRemote()
+                    repository.deletePostEntities()
+                    repository.savePostEntities(postEntities = postEntityList)
+                    entityToPostMapper.map(postEntityList)
+                }
+
             }
 
         @Test
@@ -275,23 +309,33 @@ class GetPostListUseCaseFlowTest {
             testCoroutineExtension.runBlockingTest {
 
                 // GIVEN
+                coEvery {
+                    repository.getPostEntitiesFromLocal()
+                } throws SQLException("Database Exception")
+                coEvery { repository.fetchEntitiesFromRemote() } returns postEntityList
+                coEvery { repository.deletePostEntities() } just runs
+                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
                 // WHEN
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
-            }
+                testObserver
+                    .assertComplete()
+                    .assertNoError()
+                    .assertValues {
+                        it.first().containsAll(postList)
+                    }
+                    .dispose()
 
-        @Test
-        fun `given data fetched from Remote, Local should delete old, save and return data`() =
-            testCoroutineExtension.runBlockingTest {
-
-                // GIVEN
-
-                // WHEN
-                val testObserver = useCase.getPostFlowOfflineFirst().test(this)
-
-                // THEN
+                coVerifySequence {
+                    repository.getPostEntitiesFromLocal()
+                    repository.fetchEntitiesFromRemote()
+                    repository.deletePostEntities()
+                    repository.savePostEntities(postEntities = postEntityList)
+                    entityToPostMapper.map(postEntityList)
+                }
             }
 
         @Test
@@ -299,11 +343,35 @@ class GetPostListUseCaseFlowTest {
             testCoroutineExtension.runBlockingTest {
 
                 // GIVEN
+                coEvery { repository.getPostEntitiesFromLocal() } returns listOf()
+
+                coEvery {
+                    repository.fetchEntitiesFromRemote()
+                } throws Exception("Network Exception")
+
+//                coEvery { repository.deletePostEntities() } just runs
+//                coEvery { repository.savePostEntities(postEntities = postEntityList) } just runs
+                coEvery { entityToPostMapper.map(postEntityList) } returns postList
 
                 // WHEN
                 val testObserver = useCase.getPostFlowOfflineFirst().test(this)
 
                 // THEN
+                testObserver
+                    .assertComplete()
+                    .assertError(EmptyDataException::class.java)
+                    .dispose()
+
+                coVerifySequence {
+                    repository.getPostEntitiesFromLocal()
+                    repository.fetchEntitiesFromRemote()
+                }
+
+//                coVerify(exactly = 1) { repository.fetchEntitiesFromRemote() }
+//                coVerify(exactly = 1) { repository.getPostEntitiesFromLocal() }
+//                coVerify(exactly = 0) { repository.deletePostEntities() }
+//                coVerify(exactly = 0) { repository.savePostEntities(postEntityList) }
+//                verify(exactly = 0) { entityToPostMapper.map(postEntityList) }
             }
     }
 
