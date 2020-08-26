@@ -4,10 +4,10 @@ import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.internal.schedulers.ExecutorScheduler
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import java.util.concurrent.Executor
 import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-import java.util.concurrent.Executor
 
 /**
  * LifeCycle
