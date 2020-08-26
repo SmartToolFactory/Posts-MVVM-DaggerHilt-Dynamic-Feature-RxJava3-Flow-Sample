@@ -25,3 +25,18 @@ class DTOtoEntityMapper : ListMapper<PostDTO, PostEntity> {
         }
     }
 }
+
+/**
+ * Interface for marking models used for fetching data from REST
+ */
+interface IDataTransferObject
+
+/**
+ * Interface for marking models used for fetching data from database
+ */
+interface IEntity
+
+/**
+ * Interface for marking models used for presentation and ui
+ */
+interface IuiItem

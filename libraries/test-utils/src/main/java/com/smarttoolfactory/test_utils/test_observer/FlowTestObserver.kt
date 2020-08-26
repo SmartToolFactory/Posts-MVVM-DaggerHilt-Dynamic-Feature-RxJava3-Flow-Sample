@@ -26,7 +26,7 @@ class FlowTestObserver<T>(
 
     private lateinit var job: Job
 
-    private suspend fun initializeAndJoin() {
+    private suspend fun init() {
         job = createJob(coroutineScope)
 
         // Wait this job after end of possible delays
@@ -36,7 +36,6 @@ class FlowTestObserver<T>(
     private suspend fun initialize() {
 
         if (!isInitialized) {
-            isInitialized = true
 
             if (waitForDelay) {
                 try {
@@ -47,7 +46,7 @@ class FlowTestObserver<T>(
                     isCompleted = false
                 }
             } else {
-                initializeAndJoin()
+                job = createJob(coroutineScope)
             }
         }
     }
@@ -55,16 +54,10 @@ class FlowTestObserver<T>(
     private fun createJob(scope: CoroutineScope): Job {
 
         val job = flow
-            .onStart {}
-            .onCompletion {
-                isCompleted = true
-            }
-            .catch { throwable ->
-                error = throwable
-            }
-            .onEach {
-                testValues.add(it)
-            }
+            .onStart { isInitialized = true }
+            .onCompletion { isCompleted = true }
+            .catch { throwable -> error = throwable }
+            .onEach { testValues.add(it) }
             .launchIn(scope)
         return job
     }
@@ -128,7 +121,7 @@ class FlowTestObserver<T>(
         return this
     }
 
-    suspend fun assertError(errorClass: Class<Throwable>): FlowTestObserver<T> {
+    suspend fun assertError(errorClass: Class<out Throwable>): FlowTestObserver<T> {
 
         initialize()
 
@@ -232,7 +225,7 @@ class FlowTestObserver<T>(
  */
 suspend fun <T> Flow<T>.test(
     scope: CoroutineScope,
-    waitForDelay: Boolean = false
+    waitForDelay: Boolean = true
 ): FlowTestObserver<T> {
 
     return FlowTestObserver(scope, this@test, waitForDelay)
