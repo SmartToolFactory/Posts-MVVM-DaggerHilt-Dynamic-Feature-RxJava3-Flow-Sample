@@ -301,7 +301,6 @@ class GetPostListUseCaseFlowTest {
                     repository.savePostEntities(postEntities = postEntityList)
                     entityToPostMapper.map(postEntityList)
                 }
-
             }
 
         @Test

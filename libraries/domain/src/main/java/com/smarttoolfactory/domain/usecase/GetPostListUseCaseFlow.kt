@@ -6,6 +6,7 @@ import com.smarttoolfactory.domain.dispatcher.UseCaseDispatchers
 import com.smarttoolfactory.domain.error.EmptyDataException
 import com.smarttoolfactory.domain.mapper.EntityToPostMapper
 import com.smarttoolfactory.domain.model.Post
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emitAll
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 /**
  * UseCase for getting Post list with offline first or offline last approach.
