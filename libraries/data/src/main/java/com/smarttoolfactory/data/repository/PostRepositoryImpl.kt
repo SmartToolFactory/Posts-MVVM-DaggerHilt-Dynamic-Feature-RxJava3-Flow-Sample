@@ -8,6 +8,7 @@ import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutines
 import com.smarttoolfactory.data.source.RemotePostDataSourceRxJava3
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
 /**
  * Repository for persistence layer. Local Data source acts as Single Source of Truth
@@ -24,7 +25,7 @@ import io.reactivex.rxjava3.core.Single
  * this [PostRepositoryCoroutines] as dependency.
  *
  */
-class PostRepositoryCoroutinesImpl(
+class PostRepositoryCoroutinesImpl @Inject constructor(
     private val localPostDataSource: LocalPostDataSourceCoroutines,
     private val remotePostDataSource: RemotePostDataSourceCoroutines,
     private val mapper: DTOtoEntityMapper
@@ -48,7 +49,7 @@ class PostRepositoryCoroutinesImpl(
     }
 }
 
-class PostRepositoryRxJava3Impl(
+class PostRepositoryRxJava3Impl @Inject constructor(
     private val localPostDataSource: LocalPostDataSourceRxJava3,
     private val remotePostDataSource: RemotePostDataSourceRxJava3,
     private val mapper: DTOtoEntityMapper
