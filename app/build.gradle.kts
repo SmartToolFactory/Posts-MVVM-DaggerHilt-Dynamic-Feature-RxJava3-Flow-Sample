@@ -42,12 +42,40 @@ android {
 //        }
 //    }
 
-    flavorDimensions("debug")
-    productFlavors {
-    }
+    // Specifies one flavor dimension. Intend to use both reactive libraries as flavors as project develops
 
-    sourceSets {
-    }
+//    flavorDimensions("reactive")
+//
+//    productFlavors {
+//
+//        create("rxjava") {
+//            dimension = "reactive"
+//            applicationIdSuffix = ".rxjava"
+//            versionNameSuffix  = "-rxjava"
+//        }
+//        create("coroutines") {
+//            dimension = "reactive"
+//            applicationIdSuffix =".coroutines"
+//            versionNameSuffix = "-coroutines"
+//        }
+//    }
+
+//    sourceSets {
+//        val sharedTestDir =
+//            "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test-shared/java"
+//
+//        getByName("test") {
+//            java.srcDir(sharedTestDir)
+//        }
+//
+//        getByName("androidTest") {
+//            java.srcDir(sharedTestDir)
+//            resources.srcDir(
+//                "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
+//                        "/src/test/resources"
+//            )
+//        }
+//    }
 
     android.buildFeatures.dataBinding = true
 
@@ -65,13 +93,17 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation(project(Modules.AndroidLibrary.DOMAIN))
-    implementation(project(Modules.AndroidLibrary.DATA))
     implementation(project(Modules.AndroidLibrary.CORE))
+
+    implementation(project(Modules.AndroidLibrary.DOMAIN))
+    // TODO Solve Why doesn't work when DATA module is not added?
+    implementation(project(Modules.AndroidLibrary.DATA))
 
     addAppModuleDependencies()
 
-    testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
     addUnitTestDependencies()
+    testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
+
     addInstrumentationTestDependencies()
+    androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 }
