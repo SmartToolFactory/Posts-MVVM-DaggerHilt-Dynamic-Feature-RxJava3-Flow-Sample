@@ -41,6 +41,9 @@ object Version {
     // ViewPager2
     const val VIEWPAGER2_VERSION = "1.1.0-alpha01"
 
+    //SwipeRefreshLayout
+    const val SWIPE_REFRESH_LAYOUT_VERSION = "1.1.0"
+
     // Architecture MVVM & LiveData
     const val LIFECYCLE_VERSION = "2.2.0"
 
