@@ -7,6 +7,7 @@ import com.smarttoolfactory.data.repository.PostRepositoryRxJava3
 import com.smarttoolfactory.data.repository.PostRepositoryRxJava3Impl
 import com.smarttoolfactory.data.source.LocalDataSourceRxJava3Impl
 import com.smarttoolfactory.data.source.LocalPostDataSourceCoroutines
+import com.smarttoolfactory.data.source.LocalPostDataSourceCoroutinesImpl
 import com.smarttoolfactory.data.source.LocalPostDataSourceRxJava3
 import com.smarttoolfactory.data.source.RemoteDataSourceRxJava3Impl
 import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutines
@@ -33,7 +34,7 @@ interface DataModule {
 
     @Singleton
     @Binds
-    fun bindLocalDataSourceCoroutines(localDataSource: LocalPostDataSourceCoroutines):
+    fun bindLocalDataSourceCoroutines(localDataSource: LocalPostDataSourceCoroutinesImpl):
         LocalPostDataSourceCoroutines
 
     @Singleton

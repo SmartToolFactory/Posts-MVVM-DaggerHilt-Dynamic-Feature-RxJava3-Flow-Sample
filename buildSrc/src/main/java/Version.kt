@@ -68,6 +68,7 @@ object Version {
     // Dagger
     const val DAGGER_VERSION = "2.28"
     const val DAGGER_HILT_VERSION = "2.28.1-alpha"
+    const val DAGGER_HILT_ANDRIODX = "1.0.0-alpha02"
 
     // RxJava2
     const val RX_JAVA2_VERSION = "2.2.19"

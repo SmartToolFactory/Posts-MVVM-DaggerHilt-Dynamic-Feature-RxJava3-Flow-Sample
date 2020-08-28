@@ -70,6 +70,17 @@ class GetPostListUseCaseFlow @Inject constructor(
             }
     }
 
+    /**
+     * Function to retrieve data from repository with offline-first which checks
+     * local data source first.
+     *
+     * * Check out Local Source first
+     * * If empty data or null returned throw empty set exception
+     * * If error occurred while fetching data from remote: Try to fetch data from db
+     * * If data is fetched from remote source: delete old data, save new data and return new data
+     * * If both network and db don't have any data throw empty set exception
+     *
+     */
     fun getPostFlowOfflineFirst(): Flow<List<Post>> {
         return flow { emit(repository.getPostEntitiesFromLocal()) }
             .catch { throwable ->

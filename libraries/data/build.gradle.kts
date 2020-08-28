@@ -117,6 +117,7 @@ dependencies {
     implementation(Deps.RETROFIT_URL_MANAGER)
     // Gson
     implementation(Deps.GSON)
+    // Chucker
     implementation(Deps.CHUCKER_DEBUG)
 
     addUnitTestDependencies()

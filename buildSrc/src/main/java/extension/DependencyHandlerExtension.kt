@@ -32,9 +32,12 @@ fun DependencyHandler.addAppModuleDependencies() {
     implementation(Deps.NAVIGATION_RUNTIME)
     implementation(Deps.NAVIGATION_DYNAMIC)
 
-    // Dagger
+    // Dagger Hilt
     implementation(Deps.DAGGER_HILT_ANDROID)
     kapt(Deps.DAGGER_HILT_COMPILER)
+    // Dagger Hilt AndroidX & ViewModel
+    implementation(Deps.DAGGER_HILT_VIEWMODEL)
+    kapt(Deps.DAGGER_HILT_ANDROIDX_HILT_COMPILER)
 
     // RxJava
     implementation(Deps.RX_JAVA3)
@@ -47,6 +50,25 @@ fun DependencyHandler.addAppModuleDependencies() {
 
     // Leak Canary
     debugImplementation(Deps.LEAK_CANARY)
+
+    // Room
+    implementation(Deps.ROOM_RUNTIME)
+    // For Kotlin use kapt instead of annotationProcessor
+    kapt(Deps.ROOM_COMPILER)
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation(Deps.ROOM_KTX)
+    // optional - RxJava support for Room
+    implementation(Deps.ROOM_RXJAVA3)
+
+    // Retrofit
+    implementation(Deps.RETROFIT)
+    implementation(Deps.RETROFIT_GSON_CONVERTER)
+    implementation(Deps.RETROFIT_RX_JAVA3_ADAPTER)
+    // change base url runtime
+    implementation(Deps.RETROFIT_URL_MANAGER)
+    // Gson
+    implementation(Deps.GSON)
+    implementation(Deps.CHUCKER_DEBUG)
 }
 
 /**

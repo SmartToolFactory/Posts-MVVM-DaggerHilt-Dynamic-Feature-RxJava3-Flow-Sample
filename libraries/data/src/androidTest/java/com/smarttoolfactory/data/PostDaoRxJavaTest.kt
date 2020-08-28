@@ -156,7 +156,7 @@ class PostDaoRxJavaTest {
         // GIVEN
         val expected = listOf<PostEntity>()
 
-        // TODO await() not work with Observable
+        // 🔥 await() not work with Observable
 //        // WHEN
 //        val testObserver = postDao.getPosts().test()
 //
@@ -185,7 +185,7 @@ class PostDaoRxJavaTest {
         val expected = postEntityList
         postDao.insert(expected).blockingAwait()
 
-        // TODO await() not work with Observable
+        // 🔥 await() not work with Observable
 //         // WHEN
 //        val testObserver = postDao.getPosts().test()
 //
