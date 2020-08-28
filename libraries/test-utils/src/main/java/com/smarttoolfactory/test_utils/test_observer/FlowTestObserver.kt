@@ -26,7 +26,7 @@ class FlowTestObserver<T>(
 
     private lateinit var job: Job
 
-    private suspend fun initializeAndJoin() {
+    private suspend fun init() {
         job = createJob(coroutineScope)
 
         // Wait this job after end of possible delays
@@ -36,7 +36,6 @@ class FlowTestObserver<T>(
     private suspend fun initialize() {
 
         if (!isInitialized) {
-            isInitialized = true
 
             if (waitForDelay) {
                 try {
@@ -47,7 +46,7 @@ class FlowTestObserver<T>(
                     isCompleted = false
                 }
             } else {
-                initializeAndJoin()
+                job = createJob(coroutineScope)
             }
         }
     }
@@ -55,21 +54,19 @@ class FlowTestObserver<T>(
     private fun createJob(scope: CoroutineScope): Job {
 
         val job = flow
-            .onStart {}
-            .onCompletion {
-                isCompleted = true
+            .onStart { isInitialized = true }
+            .onCompletion { cause ->
+                isCompleted = (cause == null)
             }
             .catch { throwable ->
                 error = throwable
             }
-            .onEach {
-                testValues.add(it)
-            }
+            .onEach { testValues.add(it) }
             .launchIn(scope)
         return job
     }
 
-    suspend fun assertNoValues(): FlowTestObserver<T> {
+    suspend fun assertNoValue(): FlowTestObserver<T> {
 
         initialize()
 
@@ -110,6 +107,60 @@ class FlowTestObserver<T>(
         return this
     }
 
+    /**
+     * Asserts that this [FlowTestObserver] received exactly one [Flow.onEach] or [Flow.collect]
+     * value for which the provided predicate returns `true`.
+     */
+    suspend fun assertValue(predicate: (T) -> Boolean): FlowTestObserver<T> {
+        return assertValueAt(0, predicate)
+    }
+
+    suspend fun assertValueAt(index: Int, predicate: (T) -> Boolean): FlowTestObserver<T> {
+
+        initialize()
+
+        if (testValues.size == 0) throw AssertionError("Assertion error! No values")
+
+        if (index < 0) throw AssertionError(
+            "Assertion error! Index cannot be smaller than zero"
+        )
+
+        if (index > testValues.size) throw AssertionError(
+            "Assertion error! Invalid index: $index"
+        )
+
+        if (!predicate(testValues[index]))
+            throw AssertionError("Assertion error! At least one value does not match")
+
+        return this
+    }
+
+    suspend fun assertValueAt(index: Int, value: T): FlowTestObserver<T> {
+
+        initialize()
+
+        if (testValues.size == 0) throw AssertionError("Assertion error! No values")
+
+        if (index < 0) throw AssertionError(
+            "Assertion error! Index cannot be smaller than zero"
+        )
+
+        if (index > testValues.size) throw AssertionError(
+            "Assertion error! Invalid index: $index"
+        )
+
+        if (testValues[index] != value)
+            throw AssertionError("Assertion Error Objects don't match")
+
+        return this
+    }
+
+    /**
+     * Asserts that this [FlowTestObserver] received
+     * [Flow.catch] the exact same throwable. Since most exceptions don't implement `equals`
+     * it would be better to call overload to test against the class of
+     * an error instead of an instance of an error
+     */
     suspend fun assertError(throwable: Throwable): FlowTestObserver<T> {
 
         initialize()
@@ -128,7 +179,11 @@ class FlowTestObserver<T>(
         return this
     }
 
-    suspend fun assertError(errorClass: Class<Throwable>): FlowTestObserver<T> {
+    /**
+     * Asserts that this [FlowTestObserver] received
+     * [Flow.catch] which is an instance of the specified errorClass Class.
+     */
+    suspend fun assertError(errorClass: Class<out Throwable>): FlowTestObserver<T> {
 
         initialize()
 
@@ -142,6 +197,10 @@ class FlowTestObserver<T>(
         return this
     }
 
+    /**
+     *  Asserts that this [FlowTestObserver] received exactly [Flow.catch]  event for which
+     * the provided predicate returns `true`.
+     */
     suspend fun assertError(predicate: (Throwable) -> Boolean): FlowTestObserver<T> {
 
         initialize()
@@ -153,7 +212,7 @@ class FlowTestObserver<T>(
         return this
     }
 
-    suspend fun assertNoError(): FlowTestObserver<T> {
+    suspend fun assertNoErrors(): FlowTestObserver<T> {
 
         initialize()
 
@@ -177,17 +236,24 @@ class FlowTestObserver<T>(
         return this
     }
 
+    /**
+     * Assert that this [FlowTestObserver] received [Flow.onCompletion] event without a [Throwable]
+     */
     suspend fun assertComplete(): FlowTestObserver<T> {
 
         initialize()
 
         if (!isCompleted) throw AssertionError(
             "Assertion Error!" +
-                " Job is not completed yet!"
+                " Job is not completed or onCompletion called with a error!"
         )
         return this
     }
 
+    /**
+     * Assert that this [FlowTestObserver] either not received [Flow.onCompletion] event or
+     * received event with
+     */
     suspend fun assertNotComplete(): FlowTestObserver<T> {
 
         initialize()
@@ -222,7 +288,8 @@ class FlowTestObserver<T>(
 }
 
 /**
- * Creates a RxJava2 style test observer that uses `onStart`, `onEach`, `onCompletion`
+ * Creates a RxJava style test observer that uses [Flow.onStart], [Flow.onEach], [Flow.catch]
+ * and [Flow.onCompletion] to check states and test values
  *
  * * Set waitForDelay true for testing delay.
  *
@@ -232,7 +299,7 @@ class FlowTestObserver<T>(
  */
 suspend fun <T> Flow<T>.test(
     scope: CoroutineScope,
-    waitForDelay: Boolean = false
+    waitForDelay: Boolean = true
 ): FlowTestObserver<T> {
 
     return FlowTestObserver(scope, this@test, waitForDelay)

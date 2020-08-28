@@ -52,6 +52,12 @@ object Deps {
     const val DAGGER_HILT_COMPILER =
         "com.google.dagger:hilt-android-compiler:${Version.DAGGER_HILT_VERSION}"
 
+    // Dagger Hilt AndroidX
+    const val DAGGER_HILT_VIEWMODEL =
+        "androidx.hilt:hilt-lifecycle-viewmodel:${Version.DAGGER_HILT_ANDRIODX}"
+    const val DAGGER_HILT_ANDROIDX_HILT_COMPILER =
+        "androidx.hilt:hilt-compiler:${Version.DAGGER_HILT_ANDRIODX}"
+
     // RxJava2
     const val RX_JAVA2 = "io.reactivex.rxjava2:rxjava:${Version.RX_JAVA2_VERSION}"
 

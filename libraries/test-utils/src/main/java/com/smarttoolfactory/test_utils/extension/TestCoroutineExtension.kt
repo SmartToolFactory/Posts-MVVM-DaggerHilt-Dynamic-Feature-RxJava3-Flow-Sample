@@ -13,17 +13,17 @@ import org.junit.jupiter.api.extension.ExtensionContext
 /**
  * LifeCycle
  *
-BeforeAllCallback
-BeforeAll
-BeforeEachCallback
-BeforeEach
-BeforeTestExecutionCallback
-Test
-AfterTestExecutionCallback
-AfterEach
-AfterEachCallback
-AfterAll
-AfterAllCallback
+ * * BeforeAllCallback
+ * * BeforeAll
+ * * BeforeEachCallback
+ * * BeforeEach
+ * * BeforeTestExecutionCallback
+ * * Test
+ * * AfterTestExecutionCallback
+ * * AfterEach
+ * * AfterEachCallback
+ * * AfterAll
+ * * AfterAllCallback
  */
 class TestCoroutineExtension : BeforeEachCallback, AfterEachCallback {
 

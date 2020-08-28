@@ -25,22 +25,21 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PostRepositoryCoroutinesTest {
-
-    companion object {
-
-        val postDTOList =
-            convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
-
-        val postEntityList =
-            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
-    }
+internal class PostRepositoryCoroutinesTest {
 
     private lateinit var repository: PostRepositoryCoroutinesImpl
 
     private val localPostDataSource: LocalPostDataSourceCoroutines = mockk()
     private val remotePostDataSource: RemotePostDataSourceCoroutines = mockk()
     private val mapper: DTOtoEntityMapper = mockk()
+
+    companion object {
+        val postDTOList =
+            convertFromJsonToListOf<PostDTO>(getResourceAsText(RESPONSE_JSON_PATH))!!
+
+        val postEntityList =
+            convertFromJsonToListOf<PostEntity>(getResourceAsText(RESPONSE_JSON_PATH))!!
+    }
 
     @Test
     fun `given network error occurred, should throw Exception`() = runBlockingTest {
@@ -51,20 +50,21 @@ class PostRepositoryCoroutinesTest {
 
         // WHEN
         val expected = try {
-            remotePostDataSource.getPostDTOs()
+            repository.fetchEntitiesFromRemote()
         } catch (e: Exception) {
             e
         }
 
         // THEN
         Truth.assertThat(expected).isInstanceOf(Exception::class.java)
-        coVerify { remotePostDataSource.getPostDTOs() }
+        coVerify(exactly = 1) { remotePostDataSource.getPostDTOs() }
         verify(exactly = 0) { mapper.map(postDTOList) }
     }
 
     @Test
-    fun `given PostDTO list returned from remote source, should return postEntity list`() =
+    fun `given remote data source return PostDTO list, should return PostEntity list`() =
         runBlockingTest {
+
             // GIVEN
             val actual = postEntityList
             coEvery { remotePostDataSource.getPostDTOs() } returns postDTOList
@@ -75,7 +75,6 @@ class PostRepositoryCoroutinesTest {
 
             // THEN
             Truth.assertThat(expected).isEqualTo(actual)
-            // Check for order of call either
             coVerifyOrder {
                 remotePostDataSource.getPostDTOs()
                 mapper.map(postDTOList)
@@ -113,19 +112,22 @@ class PostRepositoryCoroutinesTest {
     }
 
     @Test
-    fun `given entities, should save entities to DB`() = runBlockingTest {
+    fun `given entities, should save entities`() = runBlockingTest {
 
         // GIVEN
         val idList = postEntityList.map {
             it.id.toLong()
         }
 
-        coEvery { localPostDataSource.saveEntities(postEntityList) } returns idList
+        coEvery {
+            localPostDataSource.saveEntities(postEntityList)
+        } returns idList
 
         // WHEN
-        repository.savePostEntities(postEntityList)
+        val result = localPostDataSource.saveEntities(postEntityList)
 
         // THEN
+        Truth.assertThat(result).containsExactlyElementsIn(idList)
         coVerify(exactly = 1) { localPostDataSource.saveEntities(postEntityList) }
     }
 
@@ -139,13 +141,14 @@ class PostRepositoryCoroutinesTest {
         repository.deletePostEntities()
 
         // THEN
-        coVerify(exactly = 1) { localPostDataSource.deletePostEntities() }
+        coVerify(exactly = 1) {
+            localPostDataSource.deletePostEntities()
+        }
     }
 
     @BeforeEach
     fun setUp() {
-        repository =
-            PostRepositoryCoroutinesImpl(localPostDataSource, remotePostDataSource, mapper)
+        repository = PostRepositoryCoroutinesImpl(localPostDataSource, remotePostDataSource, mapper)
     }
 
     @AfterEach
