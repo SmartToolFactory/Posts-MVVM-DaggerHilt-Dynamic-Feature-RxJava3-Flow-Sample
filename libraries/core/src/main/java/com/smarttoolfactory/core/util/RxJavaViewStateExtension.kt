@@ -2,6 +2,7 @@ package com.smarttoolfactory.core.util
 
 import com.smarttoolfactory.core.viewstate.Status
 import com.smarttoolfactory.core.viewstate.ViewState
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -22,7 +23,7 @@ fun <T> Single<T>.convertFromSingleToObservableViewState(): Observable<ViewState
         .convertToObservableViewState()
 }
 
-fun <T> Single<T>.convertToSingleViewState(): Single<ViewState<T>> {
+fun <T> Single<T>.convertToSingleViewState(): Single<ViewState<T>>? {
     return this
         .map { data ->
             ViewState(status = Status.SUCCESS, data = data)
@@ -30,4 +31,15 @@ fun <T> Single<T>.convertToSingleViewState(): Single<ViewState<T>> {
         .onErrorResumeNext { throwable: Throwable ->
             Single.just(ViewState(status = Status.ERROR, error = throwable))
         }
+}
+
+fun <T> Single<T>.convertFromSingletToFlowableViewState(): Flowable<ViewState<T>>? {
+    return this
+        .map { data ->
+            ViewState(status = Status.SUCCESS, data = data)
+        }
+        .onErrorResumeNext { throwable: Throwable ->
+            Single.just(ViewState(status = Status.ERROR, error = throwable))
+        }
+        .startWith(Single.just(ViewState(status = Status.LOADING)))
 }
