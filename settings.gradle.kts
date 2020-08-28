@@ -3,5 +3,6 @@ include(
     ":libraries:core",
     ":libraries:data",
     ":libraries:domain",
-    ":libraries:test-utils"
+    ":libraries:test-utils",
+    ":features:post_detail"
 )

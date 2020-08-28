@@ -87,6 +87,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    dynamicFeatures = mutableSetOf(Modules.DynamicFM.POST_DETAIL)
 }
 
 dependencies {
@@ -96,7 +97,7 @@ dependencies {
     implementation(project(Modules.AndroidLibrary.CORE))
 
     implementation(project(Modules.AndroidLibrary.DOMAIN))
-    // TODO Solve Why doesn't work when DATA module is not added?
+    // TODO Solve Why doesn't work when DATA module is not added to dagger Hilt?
     implementation(project(Modules.AndroidLibrary.DATA))
 
     addAppModuleDependencies()
