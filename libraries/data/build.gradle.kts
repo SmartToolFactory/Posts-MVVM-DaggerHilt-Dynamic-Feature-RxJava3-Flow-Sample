@@ -61,14 +61,18 @@ android {
             "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test-shared/java"
 
         getByName("test") {
-            java.srcDir(sharedTestDir)
+//            java.srcDir(sharedTestDir)
+            resources.srcDir(
+                "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
+                        "/src/test/resources"
+            )
         }
 
         getByName("androidTest") {
-            java.srcDir(sharedTestDir)
+//            java.srcDir(sharedTestDir)
             resources.srcDir(
                 "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
-                    "/src/test/resources"
+                        "/src/test/resources"
             )
         }
     }
@@ -77,6 +81,11 @@ android {
         resolutionStrategy {
             exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-debug")
         }
+    }
+
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-notice.md")
     }
 }
 
