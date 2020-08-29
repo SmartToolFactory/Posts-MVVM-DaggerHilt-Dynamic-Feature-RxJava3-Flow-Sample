@@ -2,16 +2,17 @@ package com.smarttoolfactory.postdynamichilt.postlist
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.smarttoolfactory.core.ui.base.BaseDataBindingFragment
+import com.smarttoolfactory.core.ui.base.DynamicNavigationFragment
 import com.smarttoolfactory.postdynamichilt.R
 import com.smarttoolfactory.postdynamichilt.databinding.FragmentPostListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PostListFragment : BaseDataBindingFragment<FragmentPostListBinding>() {
+class PostListFragment : DynamicNavigationFragment<FragmentPostListBinding>() {
 
     override fun getLayoutRes(): Int = R.layout.fragment_post_list
 
@@ -57,14 +58,15 @@ class PostListFragment : BaseDataBindingFragment<FragmentPostListBinding>() {
 
         viewModel.goToDetailScreen.observe(
             viewLifecycleOwner,
-            Observer {
+            {
 
                 it.getContentIfNotHandled()?.let { post ->
-//                val bundle = bundleOf("post" to post)
-//                findNavController().navigate(
-//                    R.id.nav_graph_post_detail,
-//                    bundle
-//                )
+                    val bundle = bundleOf("post" to post)
+
+                    findNavController().navigate(
+                        R.id.nav_graph_post_detail,
+                        bundle
+                    )
                 }
             }
         )

@@ -102,9 +102,11 @@ dependencies {
 
     addAppModuleDependencies()
 
+    // Unit Tests
     addUnitTestDependencies()
     testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 
+    // Instrumentation Tests
     addInstrumentationTestDependencies()
     androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 }

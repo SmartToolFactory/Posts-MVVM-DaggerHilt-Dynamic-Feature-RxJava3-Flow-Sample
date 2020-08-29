@@ -34,6 +34,10 @@ android {
             )
         }
     }
+
+    dataBinding.isEnabled = true
+//    android.buildFeatures.viewBinding = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,6 +53,7 @@ dependencies {
 
     implementation(project(Modules.APP))
     implementation(project(Modules.AndroidLibrary.CORE))
+    implementation(project(Modules.AndroidLibrary.DOMAIN))
 
     addBaseDynamicFeatureModuleDependencies()
 
@@ -60,7 +65,15 @@ dependencies {
     // Lifecycle, LiveData, ViewModel
     implementation(Deps.LIFECYCLE_EXTENSIONS)
 
-    addUnitTestDependencies()
+    // Glide
+    implementation(Deps.GLIDE)
+    kapt(Deps.GLIDE_COMPILER)
 
+    // Unit Tests
+    addUnitTestDependencies()
+    testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
+
+    // Instrumentation Tests
     addInstrumentationTestDependencies()
+    androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 }
