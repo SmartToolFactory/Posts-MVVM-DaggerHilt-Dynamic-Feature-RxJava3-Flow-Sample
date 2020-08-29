@@ -13,6 +13,6 @@ object Modules {
      * Dynamic Feature Modules
      */
     object DynamicFM {
-
+        const val POST_DETAIL = ":features:post_detail"
     }
 }

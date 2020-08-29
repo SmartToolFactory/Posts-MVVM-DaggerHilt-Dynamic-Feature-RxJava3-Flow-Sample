@@ -1,5 +1,6 @@
 package com.smarttoolfactory.core.ui.base
 
+import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -12,7 +13,7 @@ import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 /**
  * Fragment with [DynamicInstallMonitor] to navigate with dynamic features based on [SplitInstallSessionStatus]
  */
-abstract class DynamicInstallFragment<ViewBinding : ViewDataBinding> :
+abstract class DynamicNavigationFragment<ViewBinding : ViewDataBinding> :
     BaseDataBindingFragment<ViewBinding>() {
 
     /**
@@ -21,7 +22,11 @@ abstract class DynamicInstallFragment<ViewBinding : ViewDataBinding> :
      */
     private val installMonitor = DynamicInstallMonitor()
 
-    fun navigateWithInstallMonitor(navController: NavController, @IdRes destinationId: Int) {
+    fun navigateWithInstallMonitor(
+        navController: NavController,
+        @IdRes destinationId: Int,
+        bundle: Bundle? = null
+    ) {
 
         navController.navigate(
             destinationId,
