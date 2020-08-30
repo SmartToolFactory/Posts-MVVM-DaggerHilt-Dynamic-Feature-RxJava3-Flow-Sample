@@ -2,7 +2,7 @@ package com.smarttoolfactory.data.source
 
 import com.smarttoolfactory.data.api.PostApi
 import com.smarttoolfactory.data.api.PostApiRxJava
-import com.smarttoolfactory.data.db.PostDao
+import com.smarttoolfactory.data.db.PostDaoCoroutines
 import com.smarttoolfactory.data.db.PostDaoRxJava3
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
@@ -21,8 +21,8 @@ class RemotePostDataSourceCoroutinesImpl @Inject constructor(private val postApi
     }
 }
 
-class LocalPostDataSourceCoroutinesImpl @Inject constructor(private val postDao: PostDao) :
-    LocalPostDataSourceCoroutines {
+class LocalPostDataSourceCoroutinesImpl
+@Inject constructor(private val postDao: PostDaoCoroutines) : LocalPostDataSourceCoroutines {
 
     override suspend fun getPostEntities(): List<PostEntity> {
         return postDao.getPostList()

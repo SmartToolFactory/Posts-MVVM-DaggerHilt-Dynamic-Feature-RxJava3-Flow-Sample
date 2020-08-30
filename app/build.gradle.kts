@@ -21,6 +21,18 @@ android {
         versionCode = AndroidVersion.VERSION_CODE
         versionName = AndroidVersion.VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // TODO Scheme is  created in data module but with which one, find out
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -42,8 +54,7 @@ android {
 //        }
 //    }
 
-    // Specifies one flavor dimension. Intend to use both reactive libraries as flavors as project develops
-
+    // Specifies one flavor dimension.
 //    flavorDimensions("reactive")
 //
 //    productFlavors {
@@ -57,23 +68,6 @@ android {
 //            dimension = "reactive"
 //            applicationIdSuffix =".coroutines"
 //            versionNameSuffix = "-coroutines"
-//        }
-//    }
-
-//    sourceSets {
-//        val sharedTestDir =
-//            "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test-shared/java"
-//
-//        getByName("test") {
-//            java.srcDir(sharedTestDir)
-//        }
-//
-//        getByName("androidTest") {
-//            java.srcDir(sharedTestDir)
-//            resources.srcDir(
-//                "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
-//                        "/src/test/resources"
-//            )
 //        }
 //    }
 

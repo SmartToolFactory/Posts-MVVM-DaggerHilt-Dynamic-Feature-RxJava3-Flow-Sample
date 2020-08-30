@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class PostDaoRxJavaTest {
+class PostDaoCoroutinesRxJavaTest {
 
     companion object {
         val postEntityList =

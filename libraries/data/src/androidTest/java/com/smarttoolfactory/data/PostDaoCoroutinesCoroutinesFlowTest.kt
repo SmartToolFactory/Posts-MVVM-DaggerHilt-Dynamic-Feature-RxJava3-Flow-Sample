@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth
-import com.smarttoolfactory.data.db.PostDao
+import com.smarttoolfactory.data.db.PostDaoCoroutines
 import com.smarttoolfactory.data.db.PostDatabase
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
@@ -20,7 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class PostDaoCoroutinesFlowTest {
+class PostDaoCoroutinesCoroutinesFlowTest {
 
     companion object {
         val postEntityList =
@@ -38,7 +38,7 @@ class PostDaoCoroutinesFlowTest {
     /**
      * This is the SUT
      */
-    private lateinit var postDao: PostDao
+    private lateinit var postDao: PostDaoCoroutines
 
     /*
         Insert

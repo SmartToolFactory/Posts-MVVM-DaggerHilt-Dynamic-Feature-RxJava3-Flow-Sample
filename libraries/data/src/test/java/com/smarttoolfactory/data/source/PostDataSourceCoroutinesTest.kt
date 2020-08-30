@@ -2,7 +2,7 @@ package com.smarttoolfactory.data.source
 
 import com.google.common.truth.Truth
 import com.smarttoolfactory.data.api.PostApi
-import com.smarttoolfactory.data.db.PostDao
+import com.smarttoolfactory.data.db.PostDaoCoroutines
 import com.smarttoolfactory.data.model.PostDTO
 import com.smarttoolfactory.data.model.PostEntity
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
@@ -86,7 +86,7 @@ class PostDataSourceCoroutinesTest {
     @Nested
     inner class LocalDataSourceTest {
 
-        private val postDao = mockk<PostDao>()
+        private val postDao = mockk<PostDaoCoroutines>()
 
         private lateinit var localPostDataSource: LocalPostDataSourceCoroutinesImpl
 
