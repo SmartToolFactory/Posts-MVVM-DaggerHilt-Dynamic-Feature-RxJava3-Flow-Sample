@@ -35,6 +35,10 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude("META-INF/AL2.0")
+    }
+
     dataBinding.isEnabled = true
 //    android.buildFeatures.viewBinding = true
 
