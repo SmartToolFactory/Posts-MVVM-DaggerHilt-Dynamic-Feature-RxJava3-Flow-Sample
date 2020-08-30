@@ -41,12 +41,53 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:singleLine="true"
                 android:text="@{item.title}"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivAvatar"
                 app:layout_constraintTop_toTopOf="@+id/ivAvatar"
+                app:layout_constraintVertical_bias="0.3"
                 tools:text="Sample Title" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDisplayImage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_baseline_personal_video_24"
+                android:tint="#FDD835"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDisplayCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{item.displayCount + ` times`}"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ivDisplayImage"
+                app:layout_constraintStart_toEndOf="@+id/ivDisplayImage"
+                app:layout_constraintTop_toTopOf="@+id/ivDisplayImage"
+                tools:text="0 times" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/ivLike"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="16dp"
+                android:padding="2dp"
+                android:background="#00ffffff"
+                android:src="@drawable/ic_outline_thumb_up_24"
+                android:tint="#29B6F6"
+                app:layout_constraintBottom_toBottomOf="@+id/ivDisplayImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivDisplayImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

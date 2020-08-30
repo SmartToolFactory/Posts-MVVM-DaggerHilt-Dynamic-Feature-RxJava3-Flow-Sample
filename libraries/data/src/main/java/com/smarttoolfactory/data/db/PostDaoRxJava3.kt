@@ -54,22 +54,22 @@ interface PostDaoRxJava3 {
      * Get list of [PostEntity] that contains [keyword] in title or body of the post
      */
 //    @Query("SELECT * FROM post WHERE title LIKE '%' || :keyword  || '%' OR  body LIKE '%' || :keyword  || '%'")
-//    fun searchPostsByKeyword(keyword: String): Single<List<PostEntity>>
+//    suspend fun searchPostsByKeyword(keyword: String): List<PostEntity>
 //
 //    /**
 //     * Search [PostEntity] that belong to user with [posterId]
 //     */
 //    @Query("SELECT * FROM post WHERE userId =:posterId")
-//    fun searchPostsByUser(posterId: Int)
+//    suspend fun searchPostsByUser(posterId: Int)
 //
 //    /**
-//     * Get most visited posts in descending order
+//     * Get most displayed posts in descending order
 //     */
-//    @Query("SELECT * FROM post ORDER BY visitCount DESC")
-//    fun getMostVisitedPosts(): Single<List<PostEntity>>
+//    @Query("SELECT * FROM post ORDER BY displayCount DESC")
+//    suspend fun getDisplayedMostPosts(): List<PostEntity>
 
     /**
-     * Update a post's favorite or visit count status.
+     * Update a post's favorite or display count status.
      */
     @Update
     fun updatePostFavoriteOrSelectStatus(postEntity: PostEntity)

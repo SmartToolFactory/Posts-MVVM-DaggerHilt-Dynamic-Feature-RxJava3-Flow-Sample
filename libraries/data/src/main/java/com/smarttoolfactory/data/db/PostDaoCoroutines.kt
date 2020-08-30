@@ -53,13 +53,13 @@ interface PostDaoCoroutines {
 //    suspend fun searchPostsByUser(posterId: Int)
 //
 //    /**
-//     * Get most visited posts in descending order
+//     * Get most displayed posts in descending order
 //     */
-//    @Query("SELECT * FROM post ORDER BY visitCount DESC")
-//    suspend fun getMostVisitedPosts(): List<PostEntity>
+//    @Query("SELECT * FROM post ORDER BY displayCount DESC")
+//    suspend fun getDisplayedMostPosts(): List<PostEntity>
 
     /**
-     * Update a post's favorite or visit count status.
+     * Update a post's favorite or display count status.
      */
     @Update
     suspend fun updatePostFavoriteOrSelectStatus(postEntity: PostEntity)
