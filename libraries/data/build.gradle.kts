@@ -64,7 +64,7 @@ android {
 //            java.srcDir(sharedTestDir)
             resources.srcDir(
                 "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
-                        "/src/test/resources"
+                    "/src/test/resources"
             )
         }
 
@@ -72,7 +72,7 @@ android {
 //            java.srcDir(sharedTestDir)
             resources.srcDir(
                 "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
-                        "/src/test/resources"
+                    "/src/test/resources"
             )
         }
     }
