@@ -77,6 +77,19 @@ android {
 //        }
 //    }
 
+//    configurations.all {
+//        resolutionStrategy {
+//            exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-debug")
+//        }
+//    }
+
+    packagingOptions {
+        exclude("**/attach_hotspot_windows.dll")
+        exclude("META-INF/licenses/**")
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+    }
+
     android.buildFeatures.dataBinding = true
 
     compileOptions {
@@ -87,6 +100,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    dynamicFeatures = mutableSetOf(Modules.DynamicFM.POST_DETAIL)
 }
 
 dependencies {
@@ -96,14 +110,16 @@ dependencies {
     implementation(project(Modules.AndroidLibrary.CORE))
 
     implementation(project(Modules.AndroidLibrary.DOMAIN))
-    // TODO Solve Why doesn't work when DATA module is not added?
+    // TODO Solve Why doesn't work when DATA module is not added to dagger Hilt?
     implementation(project(Modules.AndroidLibrary.DATA))
 
     addAppModuleDependencies()
 
+    // Unit Tests
     addUnitTestDependencies()
     testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 
+    // Instrumentation Tests
     addInstrumentationTestDependencies()
     androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 }

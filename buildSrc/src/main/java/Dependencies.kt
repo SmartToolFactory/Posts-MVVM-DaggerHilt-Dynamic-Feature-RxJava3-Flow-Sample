@@ -20,6 +20,10 @@ object Deps {
     // ViewPager2
     const val VIEWPAGER2 = "androidx.viewpager2:viewpager2:${Version.VIEWPAGER2_VERSION}"
 
+    // SwipeRefreshLayout
+    const val SWIPE_REFRESH_LAYOUT =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Version.SWIPE_REFRESH_LAYOUT_VERSION}"
+
 
     // Lifecycle, ViewModel and LiveData
     const val LIFECYCLE_LIVEDATA_KTX =

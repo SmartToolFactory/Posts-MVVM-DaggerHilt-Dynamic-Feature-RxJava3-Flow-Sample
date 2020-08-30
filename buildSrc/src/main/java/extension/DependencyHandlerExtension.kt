@@ -20,6 +20,7 @@ fun DependencyHandler.addAppModuleDependencies() {
     implementation(Deps.CONSTRAINT_LAYOUT)
     implementation(Deps.RECYCLER_VIEW)
     implementation(Deps.VIEWPAGER2)
+    implementation(Deps.SWIPE_REFRESH_LAYOUT)
 
     // Lifecycle, LiveData, ViewModel
     implementation(Deps.LIFECYCLE_LIVEDATA_KTX)
@@ -69,6 +70,10 @@ fun DependencyHandler.addAppModuleDependencies() {
     // Gson
     implementation(Deps.GSON)
     implementation(Deps.CHUCKER_DEBUG)
+
+    // Glide
+    implementation(Deps.GLIDE)
+    kapt(Deps.GLIDE_COMPILER)
 }
 
 /**
