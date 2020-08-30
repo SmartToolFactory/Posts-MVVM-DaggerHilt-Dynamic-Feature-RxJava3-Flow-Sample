@@ -25,7 +25,6 @@ class PostDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // Get RepoListItem from navigation component arguments
         val post = arguments?.get("post") as? Post?
 

@@ -100,7 +100,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    dynamicFeatures = mutableSetOf(Modules.DynamicFM.POST_DETAIL)
+    dynamicFeatures = mutableSetOf(
+        Modules.DynamicFeature.POST_DETAIL,
+        Modules.DynamicFeature.SEARCH
+    )
 }
 
 dependencies {
