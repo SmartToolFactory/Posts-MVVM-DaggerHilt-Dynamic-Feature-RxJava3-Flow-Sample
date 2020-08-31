@@ -22,5 +22,4 @@ class PostDetailModule {
 
     @Provides
     fun provideCoroutineScope() = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
-
 }

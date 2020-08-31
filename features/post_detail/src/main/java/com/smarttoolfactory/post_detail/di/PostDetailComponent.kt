@@ -1,6 +1,5 @@
 package com.smarttoolfactory.post_detail.di
 
-import android.app.Application
 import androidx.fragment.app.Fragment
 import com.smarttoolfactory.domain.di.DomainModuleDependencies
 import com.smarttoolfactory.post_detail.PostDetailFragment

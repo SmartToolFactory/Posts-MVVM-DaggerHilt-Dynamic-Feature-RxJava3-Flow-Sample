@@ -71,7 +71,7 @@ class PostStatusViewModel @ViewModelInject constructor(
             .launchIn(coroutineScope)
     }
 
-    fun updatePostStatus(post: Post) {
+    private fun updatePostStatus(post: Post) {
         getPostsUseCase.updatePostStatus(post)
             .onStart { println("⏰ PostStatusViewModel updatePostStatus() catch() onStart") }
             .catch { throwable ->
@@ -80,7 +80,7 @@ class PostStatusViewModel @ViewModelInject constructor(
             .onCompletion { cause: Throwable? ->
                 println(
                     "💀 PostStatusViewModel updatePostStatus() " +
-                        "onCompletion() error: ${cause != null}"
+                            "onCompletion() error: ${cause != null}"
                 )
             }
             .launchIn(coroutineScope)
