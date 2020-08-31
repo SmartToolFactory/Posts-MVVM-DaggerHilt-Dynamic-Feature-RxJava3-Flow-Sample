@@ -66,9 +66,6 @@ dependencies {
     implementation(Deps.MATERIAL)
     implementation(Deps.CONSTRAINT_LAYOUT)
 
-    // Lifecycle, LiveData, ViewModel
-    implementation(Deps.LIFECYCLE_EXTENSIONS)
-
     // Glide
     implementation(Deps.GLIDE)
     kapt(Deps.GLIDE_COMPILER)

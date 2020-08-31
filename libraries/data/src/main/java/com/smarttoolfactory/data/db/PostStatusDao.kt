@@ -2,6 +2,8 @@ package com.smarttoolfactory.data.db
 
 import androidx.room.Dao
 import androidx.room.Embedded
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Relation
 import androidx.room.Transaction
@@ -15,8 +17,14 @@ interface PostStatusDao {
     /**
      * Update a post's favorite or display count status.
      */
-//    @Update
-//    suspend fun updatePostStatus(postStatus: PostStatus)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrUpdatePostStatus(postStatus: PostStatus)
+
+    /**
+     * Get status belong to current user for this [PostEntity] with [PostEntity.id]
+     */
+    @Query("SELECT * FROM post_status WHERE userAccountId =:userId AND postId =:postId")
+    suspend fun getUpdateStatus(userId: Int, postId: Int): PostStatus?
 
     /**
      * This method uses [Embedded] and [Relation] annotations to create a class that contains

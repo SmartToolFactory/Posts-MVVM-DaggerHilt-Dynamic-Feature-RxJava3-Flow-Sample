@@ -9,7 +9,8 @@ import javax.inject.Inject
 
 interface LocalPostStatusSource : PostDataSource {
     suspend fun getPostWithStatus(): List<PostAndStatus>
-    suspend fun updatePostStatus(postStatus: PostStatus): Int
+    suspend fun updatePostStatus(postStatus: PostStatus)
+    suspend fun getPostStatus(userAccountId: Int, postId: Int): PostStatus?
     suspend fun savePostEntities(postEntities: List<PostEntity>)
     suspend fun deletePostEntities()
 }
@@ -24,9 +25,12 @@ class LocalPostStatusSourceImpl @Inject constructor(
         return postStatusDao.getPostWithStatus()
     }
 
-    override suspend fun updatePostStatus(postStatus: PostStatus): Int {
-//        postStatusDao.updatePostStatus(postStatus)
-        return 1
+    override suspend fun updatePostStatus(postStatus: PostStatus) {
+        postStatusDao.insertOrUpdatePostStatus(postStatus)
+    }
+
+    override suspend fun getPostStatus(userAccountId: Int, postId: Int): PostStatus? {
+        return postStatusDao.getUpdateStatus(userAccountId, postId)
     }
 
     override suspend fun savePostEntities(postEntities: List<PostEntity>) {

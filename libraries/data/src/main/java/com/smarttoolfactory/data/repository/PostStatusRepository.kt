@@ -14,7 +14,9 @@ interface PostStatusRepository {
 
     suspend fun getPostWithStatusFromLocal(): List<PostAndStatus>
 
-    suspend fun updatePostStatus(postStatus: PostStatus): Int
+    suspend fun updatePostStatus(postStatus: PostStatus)
+
+    suspend fun getPostStatus(userAccountId: Int, postId: Int): PostStatus?
 
     suspend fun savePostEntities(postEntities: List<PostEntity>)
 
@@ -38,8 +40,12 @@ class PostStatusRepositoryImpl
         return localPostDataSource.getPostWithStatus()
     }
 
-    override suspend fun updatePostStatus(postStatus: PostStatus): Int {
-        return localPostDataSource.updatePostStatus(postStatus)
+    override suspend fun updatePostStatus(postStatus: PostStatus) {
+        localPostDataSource.updatePostStatus(postStatus)
+    }
+
+    override suspend fun getPostStatus(userAccountId: Int, postId: Int): PostStatus? {
+        return localPostDataSource.getPostStatus(userAccountId, postId)
     }
 
     override suspend fun savePostEntities(postEntities: List<PostEntity>) {

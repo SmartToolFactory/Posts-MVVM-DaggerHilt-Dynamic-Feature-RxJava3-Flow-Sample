@@ -31,6 +31,40 @@ class GetPostsWithStatusUseCaseFlow @Inject constructor(
     private val dispatcherProvider: UseCaseDispatchers
 ) {
 
+    fun updatePostStatus(post: Post): Flow<Unit> {
+
+        return flow {
+            emit(
+                postRepository.getPostStatus(
+                    userAccountId = -1,
+                    postId = post.id
+                )
+            )
+        }
+            .map { postStatus ->
+
+                // There is a Post status saved previously
+                val newStatus = if (postStatus != null) {
+                    PostStatus(
+                        id = postStatus.id,
+                        postId = postStatus.postId,
+                        userAccountId = postStatus.userAccountId,
+                        displayCount = post.displayCount,
+                        isFavorite = post.isFavorite
+                    )
+                } else {
+                    PostStatus(
+                        postId = post.id,
+                        userAccountId = -1,
+                        displayCount = post.displayCount,
+                        isFavorite = post.isFavorite
+                    )
+                }
+
+                postRepository.updatePostStatus(newStatus)
+            }
+    }
+
     fun getPostFlowOfflineLast(): Flow<List<Post>> {
         return flow { emit(postRepository.fetchEntitiesFromRemote()) }
             .map {

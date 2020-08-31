@@ -43,7 +43,7 @@ data class PostEntity(
 )
 data class PostStatus(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val userAccountId: Int = -1,
     val postId: Int,
     val displayCount: Int = 0,

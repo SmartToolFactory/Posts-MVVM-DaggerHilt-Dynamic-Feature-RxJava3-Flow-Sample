@@ -11,7 +11,9 @@ import com.smarttoolfactory.core.viewstate.ViewState
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.domain.usecase.GetPostsWithStatusUseCaseFlow
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 
@@ -69,7 +71,28 @@ class PostStatusViewModel @ViewModelInject constructor(
             .launchIn(coroutineScope)
     }
 
+    fun updatePostStatus(post: Post) {
+        getPostsUseCase.updatePostStatus(post)
+            .onStart { println("⏰ PostStatusViewModel updatePostStatus() catch() onStart") }
+            .catch { throwable ->
+                println("❌ PostStatusViewModel updatePostStatus() catch(): ${throwable.message}")
+            }
+            .onCompletion { cause: Throwable? ->
+                println(
+                    "💀 PostStatusViewModel updatePostStatus() " +
+                        "onCompletion() error: ${cause != null}"
+                )
+            }
+            .launchIn(coroutineScope)
+    }
+
+    fun onLikeButtonClick(post: Post) {
+        updatePostStatus(post = post)
+    }
+
     override fun onClick(post: Post) {
+        post.displayCount++
+        updatePostStatus(post)
         _goToDetailScreen.value = Event(post)
     }
 }

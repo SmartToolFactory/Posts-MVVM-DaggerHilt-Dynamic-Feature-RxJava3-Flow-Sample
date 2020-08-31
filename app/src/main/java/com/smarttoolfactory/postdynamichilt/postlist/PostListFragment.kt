@@ -16,7 +16,7 @@ class PostListFragment : DynamicNavigationFragment<FragmentPostListBinding>() {
 
     override fun getLayoutRes(): Int = R.layout.fragment_post_list
 
-//    private val viewModel: PostListViewModel by viewModels()
+    //    private val viewModel: PostListViewModel by viewModels()
     private val viewModel: PostStatusViewModel by viewModels()
 
     private lateinit var postListAdapter: PostListAdapter
@@ -27,7 +27,6 @@ class PostListFragment : DynamicNavigationFragment<FragmentPostListBinding>() {
     }
 
     override fun bindViews() {
-
         dataBinding.viewModel = viewModel
 
         dataBinding.recyclerView.apply {
@@ -38,7 +37,8 @@ class PostListFragment : DynamicNavigationFragment<FragmentPostListBinding>() {
 
             postListAdapter = PostListAdapter(
                 R.layout.row_post,
-                viewModel::onClick
+                viewModel::onClick,
+                viewModel::onLikeButtonClick
             )
 
             // Set RecyclerViewAdapter

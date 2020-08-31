@@ -58,6 +58,7 @@ dependencies {
     implementation(project(Modules.APP))
     implementation(project(Modules.AndroidLibrary.CORE))
     implementation(project(Modules.AndroidLibrary.DOMAIN))
+    implementation(project(Modules.AndroidLibrary.DATA))
 
     addBaseDynamicFeatureModuleDependencies()
 
@@ -65,9 +66,6 @@ dependencies {
     implementation(Deps.APPCOMPAT)
     implementation(Deps.MATERIAL)
     implementation(Deps.CONSTRAINT_LAYOUT)
-
-    // Lifecycle, LiveData, ViewModel
-    implementation(Deps.LIFECYCLE_EXTENSIONS)
 
     // Glide
     implementation(Deps.GLIDE)

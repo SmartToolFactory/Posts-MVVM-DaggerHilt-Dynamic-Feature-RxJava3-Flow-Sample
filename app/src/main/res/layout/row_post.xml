@@ -81,6 +81,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="16dp"
+                favoriteImageSrc="@{item.isFavorite}"
                 android:padding="2dp"
                 android:background="#00ffffff"
                 android:src="@drawable/ic_outline_thumb_up_24"
