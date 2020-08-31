@@ -6,7 +6,7 @@ import org.junit.runners.Suite
 // Runs all unit tests with JUnit4.
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    PostDaoCoroutinesFlowTest::class,
-    PostDaoRxJavaTest::class
+    PostDaoCoroutinesCoroutinesFlowTest::class,
+    PostDaoCoroutinesRxJavaTest::class
 )
-class PostDaoTestSuite
+class PostDaoCoroutinesTestSuite

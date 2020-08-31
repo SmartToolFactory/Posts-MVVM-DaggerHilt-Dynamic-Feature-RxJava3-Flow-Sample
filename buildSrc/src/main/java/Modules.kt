@@ -12,7 +12,8 @@ object Modules {
     /**
      * Dynamic Feature Modules
      */
-    object DynamicFM {
-
+    object DynamicFeature {
+        const val POST_DETAIL = ":features:post_detail"
+        const val SEARCH = ":features:search"
     }
 }

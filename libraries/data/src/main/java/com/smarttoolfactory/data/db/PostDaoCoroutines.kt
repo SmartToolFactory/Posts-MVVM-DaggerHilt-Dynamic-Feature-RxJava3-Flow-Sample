@@ -1,29 +1,15 @@
 package com.smarttoolfactory.data.db
 
 import androidx.room.Dao
-import androidx.room.Database
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.RoomDatabase
 import com.smarttoolfactory.data.model.PostEntity
 import kotlinx.coroutines.flow.Flow
 
-const val DATABASE_NAME = "post.db"
-
-@Database(
-    entities = [PostEntity::class],
-    version = 1,
-    exportSchema = false
-)
-abstract class PostDatabase : RoomDatabase() {
-    abstract fun postDao(): PostDao
-    abstract fun postDaoRxJava(): PostDaoRxJava3
-}
-
 @Dao
-interface PostDao {
+interface PostDaoCoroutines {
 
     /*
         ***** Coroutines ******
@@ -49,9 +35,26 @@ interface PostDao {
      *
      * *If database is empty returns empty list []
      */
-    // Suspend
     @Query("SELECT * FROM post")
     suspend fun getPostList(): List<PostEntity>
+
+    /**
+     * Get list of [PostEntity] that contains [keyword] in title or body of the post
+     */
+//    @Query("SELECT * FROM post WHERE title LIKE '%' || :keyword  || '%' OR  body LIKE '%' || :keyword  || '%'")
+//    suspend fun searchPostsByKeyword(keyword: String): List<PostEntity>
+//
+//    /**
+//     * Search [PostEntity] that belong to user with [posterId]
+//     */
+//    @Query("SELECT * FROM post WHERE userId =:posterId")
+//    suspend fun searchPostsByUser(posterId: Int)
+//
+//    /**
+//     * Get most displayed posts in descending order
+//     */
+//    @Query("SELECT * FROM post ORDER BY displayCount DESC")
+//    suspend fun getDisplayedMostPosts(): List<PostEntity>
 
     /*
         ***** Flow ******

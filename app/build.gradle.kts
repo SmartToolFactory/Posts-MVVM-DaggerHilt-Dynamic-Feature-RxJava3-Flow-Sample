@@ -21,6 +21,18 @@ android {
         versionCode = AndroidVersion.VERSION_CODE
         versionName = AndroidVersion.VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // TODO Scheme is  created in data module but with which one, find out
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -42,8 +54,7 @@ android {
 //        }
 //    }
 
-    // Specifies one flavor dimension. Intend to use both reactive libraries as flavors as project develops
-
+    // Specifies one flavor dimension.
 //    flavorDimensions("reactive")
 //
 //    productFlavors {
@@ -60,22 +71,18 @@ android {
 //        }
 //    }
 
-//    sourceSets {
-//        val sharedTestDir =
-//            "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test-shared/java"
-//
-//        getByName("test") {
-//            java.srcDir(sharedTestDir)
-//        }
-//
-//        getByName("androidTest") {
-//            java.srcDir(sharedTestDir)
-//            resources.srcDir(
-//                "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
-//                        "/src/test/resources"
-//            )
+//    configurations.all {
+//        resolutionStrategy {
+//            exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-debug")
 //        }
 //    }
+
+    packagingOptions {
+        exclude("**/attach_hotspot_windows.dll")
+        exclude("META-INF/licenses/**")
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+    }
 
     android.buildFeatures.dataBinding = true
 
@@ -87,6 +94,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    dynamicFeatures = mutableSetOf(
+        Modules.DynamicFeature.POST_DETAIL,
+        Modules.DynamicFeature.SEARCH
+    )
 }
 
 dependencies {
@@ -96,14 +107,16 @@ dependencies {
     implementation(project(Modules.AndroidLibrary.CORE))
 
     implementation(project(Modules.AndroidLibrary.DOMAIN))
-    // TODO Solve Why doesn't work when DATA module is not added?
+    // TODO Solve Why doesn't work when DATA module is not added to dagger Hilt?
     implementation(project(Modules.AndroidLibrary.DATA))
 
     addAppModuleDependencies()
 
+    // Unit Tests
     addUnitTestDependencies()
     testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 
+    // Instrumentation Tests
     addInstrumentationTestDependencies()
     androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 }

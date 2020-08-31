@@ -18,6 +18,18 @@ android {
         versionCode = AndroidVersion.VERSION_CODE
         versionName = AndroidVersion.VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -61,11 +73,15 @@ android {
             "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}/src/test-shared/java"
 
         getByName("test") {
-            java.srcDir(sharedTestDir)
+//            java.srcDir(sharedTestDir)
+            resources.srcDir(
+                "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
+                    "/src/test/resources"
+            )
         }
 
         getByName("androidTest") {
-            java.srcDir(sharedTestDir)
+//            java.srcDir(sharedTestDir)
             resources.srcDir(
                 "${project(Modules.AndroidLibrary.TEST_UTILS).projectDir}" +
                     "/src/test/resources"
@@ -77,6 +93,11 @@ android {
         resolutionStrategy {
             exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-debug")
         }
+    }
+
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-notice.md")
     }
 }
 

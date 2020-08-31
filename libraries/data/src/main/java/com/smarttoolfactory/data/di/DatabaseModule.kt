@@ -3,9 +3,11 @@ package com.smarttoolfactory.data.di
 import android.app.Application
 import androidx.room.Room
 import com.smarttoolfactory.data.db.DATABASE_NAME
-import com.smarttoolfactory.data.db.PostDao
+import com.smarttoolfactory.data.db.MIGRATION_1_2
+import com.smarttoolfactory.data.db.PostDaoCoroutines
 import com.smarttoolfactory.data.db.PostDaoRxJava3
 import com.smarttoolfactory.data.db.PostDatabase
+import com.smarttoolfactory.data.db.PostStatusDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,17 +25,19 @@ class DatabaseModule {
             application,
             PostDatabase::class.java,
             DATABASE_NAME
-        ).build()
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
     }
 
     @Singleton
     @Provides
-    fun provideWPostDao(appDatabase: PostDatabase): PostDao {
-        return appDatabase.postDao()
-    }
+    fun providePostDao(appDatabase: PostDatabase): PostDaoCoroutines = appDatabase.postDao()
 
     @Provides
-    fun provideWPostDaoRxJava3(appDatabase: PostDatabase): PostDaoRxJava3 {
-        return appDatabase.postDaoRxJava()
-    }
+    fun providePostDaoRxJava3(appDatabase: PostDatabase): PostDaoRxJava3 =
+        appDatabase.postDaoRxJava()
+
+    @Provides
+    fun providePostStatusDao(appDatabase: PostDatabase): PostStatusDao = appDatabase.postStatusDao()
 }
