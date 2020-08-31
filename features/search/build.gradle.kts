@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
 
-        applicationId = "com.smarttoolfactory.post_detail"
+        applicationId = "com.smarttoolfactory.search"
 
         minSdkVersion(AndroidVersion.MIN_SDK_VERSION)
         targetSdkVersion(AndroidVersion.TARGET_SDK_VERSION)
@@ -58,7 +58,6 @@ dependencies {
     implementation(project(Modules.APP))
     implementation(project(Modules.AndroidLibrary.CORE))
     implementation(project(Modules.AndroidLibrary.DOMAIN))
-    implementation(project(Modules.AndroidLibrary.DATA))
 
     addBaseDynamicFeatureModuleDependencies()
 

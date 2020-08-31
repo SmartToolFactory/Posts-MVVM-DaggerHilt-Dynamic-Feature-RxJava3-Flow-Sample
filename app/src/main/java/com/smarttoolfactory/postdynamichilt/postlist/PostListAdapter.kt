@@ -2,6 +2,7 @@ package com.smarttoolfactory.postdynamichilt.postlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -10,12 +11,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.postdynamichilt.BR
+import com.smarttoolfactory.postdynamichilt.R
+import kotlinx.android.synthetic.main.row_post.view.*
 
 class PostListAdapter(
 
     @LayoutRes private val layoutId: Int,
-    private val onItemClicked: ((Post) -> Unit)? = null
-
+    private val onItemClicked: ((Post) -> Unit)? = null,
+    private val onLikeButtonClicked: ((Post) -> Unit)? = null
 ) :
     ListAdapter<Post, PostListAdapter.CustomViewHolder<Post>>(
         PostDiffCallback()
@@ -34,9 +37,7 @@ class PostListAdapter(
                 false
             )
 
-        return CustomViewHolder<Post>(
-            binding
-        )
+        return CustomViewHolder<Post>(binding)
             .apply {
                 onViewHolderCreated(this, binding)
             }
@@ -54,6 +55,25 @@ class PostListAdapter(
         binding.root.setOnClickListener {
             onItemClicked?.let {
                 it((getItem(viewHolder.bindingAdapterPosition)))
+            }
+        }
+
+        binding.root.ivLike.setOnClickListener { likeButton ->
+            onLikeButtonClicked?.let { onLikeButtonClick ->
+
+                getItem(viewHolder.bindingAdapterPosition).apply {
+                    // Change like status of Post
+                    isFavorite = !isFavorite
+                    onLikeButtonClick(this)
+
+                    // Set image source of like button
+                    val imageResource = if (isFavorite) {
+                        R.drawable.ic_baseline_thumb_up_24
+                    } else {
+                        R.drawable.ic_outline_thumb_up_24
+                    }
+                    (likeButton as? ImageButton)?.setImageResource(imageResource)
+                }
             }
         }
     }

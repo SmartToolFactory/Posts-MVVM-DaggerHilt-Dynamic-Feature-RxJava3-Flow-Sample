@@ -23,7 +23,6 @@ interface LocalPostDataSourceCoroutines : PostDataSource {
 /*
     RxJava3
  */
-
 interface RemotePostDataSourceRxJava3 : PostDataSource {
     fun getPostDTOs(): Single<List<PostDTO>>
 }

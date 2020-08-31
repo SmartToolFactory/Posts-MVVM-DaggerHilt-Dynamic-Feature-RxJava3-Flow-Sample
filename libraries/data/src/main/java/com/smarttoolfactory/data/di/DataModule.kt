@@ -5,10 +5,14 @@ import com.smarttoolfactory.data.repository.PostRepositoryCoroutines
 import com.smarttoolfactory.data.repository.PostRepositoryCoroutinesImpl
 import com.smarttoolfactory.data.repository.PostRepositoryRxJava3
 import com.smarttoolfactory.data.repository.PostRepositoryRxJava3Impl
+import com.smarttoolfactory.data.repository.PostStatusRepository
+import com.smarttoolfactory.data.repository.PostStatusRepositoryImpl
 import com.smarttoolfactory.data.source.LocalDataSourceRxJava3Impl
 import com.smarttoolfactory.data.source.LocalPostDataSourceCoroutines
 import com.smarttoolfactory.data.source.LocalPostDataSourceCoroutinesImpl
 import com.smarttoolfactory.data.source.LocalPostDataSourceRxJava3
+import com.smarttoolfactory.data.source.LocalPostStatusSource
+import com.smarttoolfactory.data.source.LocalPostStatusSourceImpl
 import com.smarttoolfactory.data.source.RemoteDataSourceRxJava3Impl
 import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutines
 import com.smarttoolfactory.data.source.RemotePostDataSourceCoroutinesImpl
@@ -59,6 +63,19 @@ interface DataModule {
     @Binds
     fun bindRepositoryRxJava3(repository: PostRepositoryRxJava3Impl):
         PostRepositoryRxJava3
+
+    /*
+        Post Status
+     */
+    @Singleton
+    @Binds
+    fun bindLocalPostStatusSource(localDataSource: LocalPostStatusSourceImpl):
+        LocalPostStatusSource
+
+    @Singleton
+    @Binds
+    fun bindPostStatusRepository(repository: PostStatusRepositoryImpl):
+        PostStatusRepository
 }
 
 /**

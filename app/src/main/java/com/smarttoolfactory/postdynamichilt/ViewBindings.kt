@@ -1,6 +1,7 @@
 package com.smarttoolfactory.postdynamichilt
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
@@ -78,4 +79,13 @@ fun setImageUrl(view: ImageView, userId: Int) {
 @BindingAdapter("visibilityBasedOn")
 fun View.visibilityBasedOn(condition: Boolean) {
     visibility = if (condition) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("favoriteImageSrc")
+fun ImageButton.setFavoriteImageSrc(favorite: Boolean) {
+
+    val imageResource = if (favorite) R.drawable.ic_baseline_thumb_up_24
+    else R.drawable.ic_outline_thumb_up_24
+
+    setImageResource(imageResource)
 }
