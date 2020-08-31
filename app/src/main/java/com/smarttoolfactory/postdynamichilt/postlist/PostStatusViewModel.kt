@@ -91,8 +91,6 @@ class PostStatusViewModel @ViewModelInject constructor(
     }
 
     override fun onClick(post: Post) {
-        post.displayCount++
-        updatePostStatus(post)
         _goToDetailScreen.value = Event(post)
     }
 }

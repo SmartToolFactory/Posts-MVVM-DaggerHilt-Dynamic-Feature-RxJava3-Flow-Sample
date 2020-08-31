@@ -1,6 +1,7 @@
 package com.smarttoolfactory.post_detail.di
 
 import android.app.Application
+import androidx.fragment.app.Fragment
 import com.smarttoolfactory.domain.di.DomainModuleDependencies
 import com.smarttoolfactory.post_detail.PostDetailFragment
 import dagger.BindsInstance
@@ -17,8 +18,8 @@ interface PostDetailComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            dataModuleDependencies: DomainModuleDependencies,
-            @BindsInstance application: Application
+            dependentModule: DomainModuleDependencies,
+            @BindsInstance fragment: Fragment
         ): PostDetailComponent
     }
 }

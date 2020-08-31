@@ -7,10 +7,12 @@ import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.post_detail.databinding.FragmentPostDetailBinding
 import com.smarttoolfactory.post_detail.di.DaggerPostDetailComponent
 import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
 class PostDetailFragment : DynamicNavigationFragment<FragmentPostDetailBinding>() {
 
-//    private val viewModel: PostDetailViewModel by viewModels()
+    @Inject
+    lateinit var viewModel: PostDetailViewModel
 
     override fun getLayoutRes(): Int = R.layout.fragment_post_detail
 
@@ -18,7 +20,7 @@ class PostDetailFragment : DynamicNavigationFragment<FragmentPostDetailBinding>(
         // Get Post from navigation component arguments
         val post = arguments?.get("post") as Post
         dataBinding.item = post
-//        viewModel.updatePostStatus(post)
+        viewModel.updatePostStatus(post)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +36,8 @@ class PostDetailFragment : DynamicNavigationFragment<FragmentPostDetailBinding>(
         )
 
         DaggerPostDetailComponent.factory().create(
-            coreModuleDependencies,
-            requireActivity().application
+            dependentModule = coreModuleDependencies,
+            fragment = this
         )
             .inject(this)
     }
