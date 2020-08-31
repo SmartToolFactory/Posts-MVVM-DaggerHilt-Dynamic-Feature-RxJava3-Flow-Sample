@@ -107,7 +107,6 @@ dependencies {
     implementation(project(Modules.AndroidLibrary.CORE))
 
     implementation(project(Modules.AndroidLibrary.DOMAIN))
-    // TODO Solve Why doesn't work when DATA module is not added to dagger Hilt?
     implementation(project(Modules.AndroidLibrary.DATA))
 
     addAppModuleDependencies()
