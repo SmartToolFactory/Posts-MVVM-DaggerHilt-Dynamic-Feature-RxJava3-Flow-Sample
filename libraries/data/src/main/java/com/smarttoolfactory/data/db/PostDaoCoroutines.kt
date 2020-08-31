@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.smarttoolfactory.data.model.PostEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -36,7 +35,6 @@ interface PostDaoCoroutines {
      *
      * *If database is empty returns empty list []
      */
-    // Suspend
     @Query("SELECT * FROM post")
     suspend fun getPostList(): List<PostEntity>
 
@@ -57,12 +55,6 @@ interface PostDaoCoroutines {
 //     */
 //    @Query("SELECT * FROM post ORDER BY displayCount DESC")
 //    suspend fun getDisplayedMostPosts(): List<PostEntity>
-
-    /**
-     * Update a post's favorite or display count status.
-     */
-    @Update
-    suspend fun updatePostFavoriteOrSelectStatus(postEntity: PostEntity)
 
     /*
         ***** Flow ******

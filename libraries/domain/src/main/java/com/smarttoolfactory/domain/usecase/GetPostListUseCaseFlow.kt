@@ -38,7 +38,7 @@ class GetPostListUseCaseFlow @Inject constructor(
 
     /**
      * Function to retrieve data from repository with offline-last which checks
-     * remote data source first.
+     * REMOTE data source first.
      *
      * * Check out Remote Source first
      * * If empty data or null returned throw empty set exception
@@ -72,7 +72,7 @@ class GetPostListUseCaseFlow @Inject constructor(
 
     /**
      * Function to retrieve data from repository with offline-first which checks
-     * local data source first.
+     * LOCAL data source first.
      *
      * * Check out Local Source first
      * * If empty data or null returned throw empty set exception
@@ -82,6 +82,33 @@ class GetPostListUseCaseFlow @Inject constructor(
      *
      */
     fun getPostFlowOfflineFirst(): Flow<List<Post>> {
+        return flow { emit(repository.getPostEntitiesFromLocal()) }
+            .catch { throwable ->
+                emitAll(flowOf(listOf()))
+            }
+            .map {
+                if (it.isEmpty()) {
+                    repository.run {
+                        val data = fetchEntitiesFromRemote()
+                        deletePostEntities()
+                        savePostEntities(data)
+                        data
+                    }
+                } else {
+                    it
+                }
+            }
+            .flowOn(dispatcherProvider.ioDispatcher)
+            .catch { throwable ->
+                emitAll(flowOf(listOf()))
+            }
+            .map {
+                toPostListOrError(it)
+            }
+    }
+
+    fun getPostWithStatusFlowOfflineFirst(): Flow<List<Post>> {
+
         return flow { emit(repository.getPostEntitiesFromLocal()) }
             .catch { throwable ->
                 emitAll(flowOf(listOf()))

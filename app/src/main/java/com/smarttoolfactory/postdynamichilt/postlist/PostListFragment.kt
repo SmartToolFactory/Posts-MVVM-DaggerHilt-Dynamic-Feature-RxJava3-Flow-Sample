@@ -16,7 +16,8 @@ class PostListFragment : DynamicNavigationFragment<FragmentPostListBinding>() {
 
     override fun getLayoutRes(): Int = R.layout.fragment_post_list
 
-    private val viewModel: PostListViewModel by viewModels()
+//    private val viewModel: PostListViewModel by viewModels()
+    private val viewModel: PostStatusViewModel by viewModels()
 
     private lateinit var postListAdapter: PostListAdapter
 

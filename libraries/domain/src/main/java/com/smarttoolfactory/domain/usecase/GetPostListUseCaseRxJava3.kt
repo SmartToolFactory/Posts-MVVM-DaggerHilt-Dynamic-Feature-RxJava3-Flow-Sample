@@ -16,7 +16,7 @@ class GetPostListUseCaseRxJava3 @Inject constructor(
 
     /**
      * Function to retrieve data from repository with offline-last which checks
-     * remote data source first.
+     * REMOTE data source first.
      *
      * * Check out Remote Source first
      * * If empty data or null returned throw empty set exception
@@ -47,7 +47,7 @@ class GetPostListUseCaseRxJava3 @Inject constructor(
 
     /**
      * Function to retrieve data from repository with offline-first which checks
-     * local data source first.
+     * LOCAL data source first.
      *
      * * Check out Local Source first
      * * If empty data or null returned throw empty set exception
