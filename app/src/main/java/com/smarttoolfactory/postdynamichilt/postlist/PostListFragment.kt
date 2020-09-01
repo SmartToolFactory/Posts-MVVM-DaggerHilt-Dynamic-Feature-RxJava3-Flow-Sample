@@ -6,7 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.smarttoolfactory.core.ui.base.DynamicNavigationFragment
+import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
 import com.smarttoolfactory.postdynamichilt.R
 import com.smarttoolfactory.postdynamichilt.databinding.FragmentPostListBinding
 import dagger.hilt.android.AndroidEntryPoint

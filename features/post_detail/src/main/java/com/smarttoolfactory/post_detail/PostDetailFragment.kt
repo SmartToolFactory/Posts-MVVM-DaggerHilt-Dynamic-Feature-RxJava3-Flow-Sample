@@ -2,7 +2,7 @@ package com.smarttoolfactory.post_detail
 
 import android.os.Bundle
 import com.smarttoolfactory.core.di.CoreModuleDependencies
-import com.smarttoolfactory.core.ui.base.DynamicNavigationFragment
+import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.post_detail.databinding.FragmentPostDetailBinding
 import com.smarttoolfactory.post_detail.di.DaggerPostDetailComponent

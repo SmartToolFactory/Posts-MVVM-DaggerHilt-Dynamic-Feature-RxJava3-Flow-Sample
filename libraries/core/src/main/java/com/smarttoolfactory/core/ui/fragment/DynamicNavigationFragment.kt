@@ -1,4 +1,4 @@
-package com.smarttoolfactory.core.ui.base
+package com.smarttoolfactory.core.ui.fragment
 
 import android.os.Bundle
 import androidx.annotation.IdRes
