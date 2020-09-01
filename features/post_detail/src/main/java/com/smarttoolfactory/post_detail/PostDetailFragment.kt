@@ -1,33 +1,44 @@
 package com.smarttoolfactory.post_detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import com.smarttoolfactory.core.di.CoreModuleDependencies
+import com.smarttoolfactory.core.ui.base.DynamicNavigationFragment
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.post_detail.databinding.FragmentPostDetailBinding
+import com.smarttoolfactory.post_detail.di.DaggerPostDetailComponent
+import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
-class PostDetailFragment : Fragment() {
+class PostDetailFragment : DynamicNavigationFragment<FragmentPostDetailBinding>() {
 
-    private lateinit var dataBinding: FragmentPostDetailBinding
+    @Inject
+    lateinit var viewModel: PostDetailViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dataBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_post_detail, container, false)
-        return dataBinding.root
+    override fun getLayoutRes(): Int = R.layout.fragment_post_detail
+
+    override fun bindViews() {
+        // Get Post from navigation component arguments
+        val post = arguments?.get("post") as Post
+        dataBinding.item = post
+        viewModel.updatePostStatus(post)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // Get RepoListItem from navigation component arguments
-        val post = arguments?.get("post") as? Post?
+    override fun onCreate(savedInstanceState: Bundle?) {
+        initCoreDependentInjection()
+        super.onCreate(savedInstanceState)
+    }
 
-        dataBinding.item = post
+    private fun initCoreDependentInjection() {
+
+        val coreModuleDependencies = EntryPointAccessors.fromApplication(
+            requireActivity().applicationContext,
+            CoreModuleDependencies::class.java
+        )
+
+        DaggerPostDetailComponent.factory().create(
+            dependentModule = coreModuleDependencies,
+            fragment = this
+        )
+            .inject(this)
     }
 }

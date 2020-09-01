@@ -1,5 +1,7 @@
-package com.smarttoolfactory.data.di
+package com.smarttoolfactory.core.di
 
+import com.smarttoolfactory.data.di.DatabaseModule
+import com.smarttoolfactory.data.di.NetworkModule
 import com.smarttoolfactory.data.mapper.DTOtoEntityMapper
 import com.smarttoolfactory.data.repository.PostRepositoryCoroutines
 import com.smarttoolfactory.data.repository.PostRepositoryCoroutinesImpl

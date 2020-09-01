@@ -98,6 +98,10 @@ android {
         Modules.DynamicFeature.POST_DETAIL,
         Modules.DynamicFeature.SEARCH
     )
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -105,9 +109,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(project(Modules.AndroidLibrary.CORE))
-
     implementation(project(Modules.AndroidLibrary.DOMAIN))
-    // TODO Solve Why doesn't work when DATA module is not added to dagger Hilt?
     implementation(project(Modules.AndroidLibrary.DATA))
 
     addAppModuleDependencies()
