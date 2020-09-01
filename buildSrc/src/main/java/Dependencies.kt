@@ -115,6 +115,9 @@ object Deps {
     const val GLIDE = "com.github.bumptech.glide:glide:${Version.GLIDE_VERSION}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Version.GLIDE_VERSION}"
 
+    // Lottie
+    const val LOTTIE = "com.airbnb.android:lottie:${Version.LOTTIE_VERSION}"
+
     // Preference Manager
     const val PREFERENCE_MANAGER =
         "androidx.preference:preference-ktx:${Version.PREFERENCE_MANAGER_VERSION}"

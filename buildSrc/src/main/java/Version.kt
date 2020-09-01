@@ -86,6 +86,9 @@ object Version {
     // Glide
     const val GLIDE_VERSION = "4.9.0"
 
+    // Lottie
+    const val LOTTIE_VERSION ="3.4.2"
+
     // Preference Manager
     const val PREFERENCE_MANAGER_VERSION ="1.1.1"
 
