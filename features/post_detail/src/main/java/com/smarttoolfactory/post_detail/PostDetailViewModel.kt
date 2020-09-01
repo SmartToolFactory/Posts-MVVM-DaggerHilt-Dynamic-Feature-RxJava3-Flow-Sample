@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.domain.usecase.GetPostsWithStatusUseCaseFlow
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
-import javax.inject.Inject
 
 class PostDetailViewModel @Inject constructor(
     private val coroutineScope: CoroutineScope,

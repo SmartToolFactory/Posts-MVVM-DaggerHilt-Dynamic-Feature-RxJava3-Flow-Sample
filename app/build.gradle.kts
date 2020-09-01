@@ -98,6 +98,10 @@ android {
         Modules.DynamicFeature.POST_DETAIL,
         Modules.DynamicFeature.SEARCH
     )
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -105,7 +109,6 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(project(Modules.AndroidLibrary.CORE))
-
     implementation(project(Modules.AndroidLibrary.DOMAIN))
     implementation(project(Modules.AndroidLibrary.DATA))
 
