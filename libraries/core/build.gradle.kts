@@ -41,15 +41,24 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(project(Modules.AndroidLibrary.DOMAIN))
+    implementation(project(Modules.AndroidLibrary.DATA))
+
     addCoreModuleDependencies()
 
     addUnitTestDependencies()
+    testImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 
     addInstrumentationTestDependencies()
+    androidTestImplementation(project(Modules.AndroidLibrary.TEST_UTILS))
 }

@@ -1,8 +1,8 @@
 object PluginVersion {
     const val KOTLIN_VERSION = "1.4.0"
-    const val GRADLE_VERSION = "4.1.0-rc01"
+    const val GRADLE_VERSION = "4.1.0-rc02"
 
-    const val NAVIGATION_SAFE_ARGS = "2.3.0-alpha06"
+    const val NAV_SAFE_ARGS_VERSION = "2.3.0"
     const val KTLINT_VERSION = "9.3.0"
     const val DETEKT_VERSION = "1.10.0"
 }
@@ -19,21 +19,20 @@ object AndroidVersion {
 
 object Version {
 
-    const val CORE_KTX_VERSION = "1.1.0"
-    const val FRAGMENT_VERSION = "1.1.0-alpha07"
+    const val CORE_KTX_VERSION = "1.3.1"
     const val FRAGMENT_KTX_VERSION = "1.1.0-rc01"
 
     // Appcompat
-    const val APPCOMPAT_VERSION = "1.1.0"
+    const val APPCOMPAT_VERSION = "1.2.0"
 
     // Material
     const val MATERIAL_VERSION = "1.3.0-alpha01"
 
     // ConstraintLayout
-    const val CONSTRAINT_LAYOUT_VERSION = "1.1.3"
+    const val CONSTRAINT_LAYOUT_VERSION = "2.0.1"
 
     // RecyclerView
-    const val RECYCLER_VIEW_VERSION = "1.2.0-alpha01"
+    const val RECYCLER_VIEW_VERSION = "1.2.0-alpha05"
 
     // CardView
     const val CARD_VIEW_VERSION = "1.0.0"

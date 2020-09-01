@@ -36,8 +36,8 @@ object Deps {
 
     // Navigation Components
     const val NAVIGATION_FRAGMENT =
-        "androidx.navigation:navigation-fragment:${Version.NAVIGATION_VERSION}"
-    const val NAVIGATION_UI = "androidx.navigation:navigation-ui:${Version.NAVIGATION_VERSION}"
+        "androidx.navigation:navigation-fragment-ktx:${Version.NAVIGATION_VERSION}"
+    const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Version.NAVIGATION_VERSION}"
     const val NAVIGATION_RUNTIME =
         "androidx.navigation:navigation-runtime-ktx:${Version.NAVIGATION_VERSION}"
 
