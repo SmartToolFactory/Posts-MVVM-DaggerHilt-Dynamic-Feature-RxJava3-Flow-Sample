@@ -81,6 +81,7 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    excludes: ['**/NavigationExtensions.kt']
   LongParameterList:
     active: true
     functionThreshold: 6

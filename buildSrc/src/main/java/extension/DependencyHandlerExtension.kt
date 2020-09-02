@@ -22,6 +22,9 @@ fun DependencyHandler.addAppModuleDependencies() {
     implementation(Deps.VIEWPAGER2)
     implementation(Deps.SWIPE_REFRESH_LAYOUT)
 
+    // Views, Animations
+    implementation(Deps.LOTTIE)
+
     // Lifecycle, LiveData, ViewModel
     implementation(Deps.LIFECYCLE_LIVEDATA_KTX)
     implementation(Deps.LIFECYCLE_VIEWMODEL_KTX)

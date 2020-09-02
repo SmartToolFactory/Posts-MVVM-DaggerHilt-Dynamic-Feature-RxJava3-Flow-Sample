@@ -39,7 +39,7 @@ class MainFragment : BaseDataBindingFragment<FragmentMainBinding>() {
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                R.id.nav_graph_dashboard -> {
+                R.id.nav_graph_dashboard_start -> {
                     viewPager2.setCurrentItem(1, false)
                     return@setOnNavigationItemSelectedListener true
                 }

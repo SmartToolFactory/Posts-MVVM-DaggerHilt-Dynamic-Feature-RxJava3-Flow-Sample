@@ -7,17 +7,17 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/nav_graph_dashboard"
+        android:id="@+id/nav_graph_dashboard_start"
         android:icon="@drawable/ic_baseline_dashboard_24"
         android:title="Dashboard" />
 
     <item
-        android:id="@+id/nav_graph_notification"
+        android:id="@+id/nav_graph_notification_start"
         android:icon="@drawable/ic_baseline_notifications_24"
         android:title="Notification" />
 
     <item
-        android:id="@+id/nav_graph_account"
+        android:id="@+id/nav_graph_account_start"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Login" />
 

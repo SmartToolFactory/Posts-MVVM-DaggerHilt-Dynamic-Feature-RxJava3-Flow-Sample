@@ -10,4 +10,18 @@
         android:name="com.smarttoolfactory.postdynamichilt.postlist.PostListFragment"
         android:label="PostListFragment"
         tools:layout="@layout/fragment_post_list" />
+
+    <!-- Post Detail  dynamic feature module -->
+    <include-dynamic
+        android:id="@+id/nav_graph_post_detail"
+        android:name="com.smarttoolfactory.post_detail"
+        app:graphResName="nav_graph_post_detail"
+        app:moduleName="post_detail">
+
+        <argument
+            android:name="post"
+            app:argType="com.smarttoolfactory.domain.model.Post" />
+
+    </include-dynamic>
+
 </navigation>
