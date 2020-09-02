@@ -18,6 +18,10 @@ import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
 import kotlin.reflect.KProperty
 
 /**
+ *
+ * Container fragment for a [NavHostFragment] with a specified layout resource and
+ * id of of [NavHostFragment] in layout belong to this fragment.
+ *
  * Fragment created via layout resource that belong to a layout that contains a [NavHostFragment]
  *
  * Requires a [FragmentFactory] to be able to create this fragment which does not posses
@@ -97,7 +101,7 @@ class NavHostContainerFragment() : Fragment() {
         const val DEFAULT_LAYOUT_ID = "default"
 
         @JvmStatic
-        fun newInstance(
+        fun createNavHostContainerFragment(
             @LayoutRes layoutRes: Int,
             @IdRes navHostFragmentId: Int,
             fragmentTag: String? = null
@@ -112,10 +116,6 @@ class NavHostContainerFragment() : Fragment() {
             }
         }
     }
-}
-
-var NavHostFragment.viewModel: NavControllerViewModel by FieldProperty {
-    NavControllerViewModel()
 }
 
 class FieldProperty<R, T : Any>(

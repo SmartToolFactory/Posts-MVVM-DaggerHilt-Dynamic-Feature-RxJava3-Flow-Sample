@@ -96,7 +96,8 @@ android {
     }
     dynamicFeatures = mutableSetOf(
         Modules.DynamicFeature.POST_DETAIL,
-        Modules.DynamicFeature.SEARCH
+        Modules.DynamicFeature.SEARCH,
+        Modules.DynamicFeature.DASHBOARD
     )
 
     testOptions {

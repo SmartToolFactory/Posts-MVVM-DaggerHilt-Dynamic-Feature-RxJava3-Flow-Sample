@@ -5,5 +5,6 @@ include(
     ":libraries:domain",
     ":libraries:test-utils",
     ":features:post_detail",
-    ":features:search"
+    ":features:search",
+    ":features:dashboard"
 )

@@ -2,4 +2,5 @@
     <string name="app_name">Poster</string>
     <string name="title_post_detail">Post Detail</string>
     <string name="title_search">Search</string>
+    <string name="title_dashboard">Dashboard</string>
 </resources>
