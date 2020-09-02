@@ -15,6 +15,9 @@ object Modules {
     object DynamicFeature {
         const val POST_DETAIL = ":features:post_detail"
         const val SEARCH = ":features:search"
+        const val HOME = ":features:home"
         const val DASHBOARD = ":features:dashboard"
+        const val NOTIFICATION = ":features:notification"
+        const val ACCOUNT = ":features:account"
     }
 }

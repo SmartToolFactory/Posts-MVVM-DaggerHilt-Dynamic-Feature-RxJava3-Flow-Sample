@@ -3,4 +3,6 @@
     <string name="title_post_detail">Post Detail</string>
     <string name="title_search">Search</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_notification">Notification</string>
+    <string name="title_account">Account</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.smarttoolfactory.postdynamichilt.account
+package com.smarttoolfactory.postdynamichilt.home
 
 import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
 import com.smarttoolfactory.postdynamichilt.R

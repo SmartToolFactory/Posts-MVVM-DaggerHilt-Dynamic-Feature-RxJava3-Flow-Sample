@@ -1,8 +1,7 @@
-package com.smarttoolfactory.postdynamichilt.account
+package com.smarttoolfactory.notification
 
 import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
-import com.smarttoolfactory.postdynamichilt.R
-import com.smarttoolfactory.postdynamichilt.databinding.FragmentNotificationBinding
+import com.smarttoolfactory.notification.databinding.FragmentNotificationBinding
 
 class NotificationFragment : DynamicNavigationFragment<FragmentNotificationBinding>() {
 

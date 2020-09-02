@@ -1,8 +1,7 @@
-package com.smarttoolfactory.postdynamichilt.account
+package com.smarttoolfactory.account
 
+import com.smarttoolfactory.account.databinding.FragmentAccountBinding
 import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
-import com.smarttoolfactory.postdynamichilt.R
-import com.smarttoolfactory.postdynamichilt.databinding.FragmentAccountBinding
 
 class AccountFragment : DynamicNavigationFragment<FragmentAccountBinding>() {
 

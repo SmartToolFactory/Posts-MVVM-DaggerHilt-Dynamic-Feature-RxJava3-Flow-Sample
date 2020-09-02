@@ -10,7 +10,7 @@ import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
 
 /**
  * [NavHostFragment] creator class which
- * uses [BaseNavHostFragment.createDynamicNavHostFragment] function with navigation graph
+ * uses [BaseNavHostFragment.createNavHostFragment] function with navigation graph
  * parameter.
  *
  * ### Parameter keys are taken from [NavHostFragment] so it's not necessary to
@@ -19,14 +19,6 @@ import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
 class BaseNavHostFragment : NavHostFragment() {
 
     private val navControllerViewModel by activityViewModels<NavControllerViewModel>()
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        val navResId = arguments?.get(KEY_GRAPH_ID) as Int
-//        val startDestinationArgs = arguments?.get(KEY_START_DESTINATION_ARGS) as? Bundle
-//
-//        findNavController().setGraph(navResId, startDestinationArgs)
-//    }
 
     override fun onResume() {
         super.onResume()
@@ -54,7 +46,7 @@ class BaseNavHostFragment : NavHostFragment() {
          */
 
         @JvmStatic
-        fun createDynamicNavHostFragment(
+        fun createNavHostFragment(
             @NavigationRes graphResId: Int,
             startDestinationArgs: Bundle? = null
         ): BaseNavHostFragment {

@@ -6,5 +6,7 @@ include(
     ":libraries:test-utils",
     ":features:post_detail",
     ":features:search",
-    ":features:dashboard"
+    ":features:dashboard",
+    ":features:notification",
+    ":features:account"
 )

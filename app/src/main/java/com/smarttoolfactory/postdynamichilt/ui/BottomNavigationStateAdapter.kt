@@ -10,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter.FragmentTransactionCallback.OnPostEventListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smarttoolfactory.core.ui.fragment.navhost.BaseDynamicNavHostFragment
+import com.smarttoolfactory.core.ui.fragment.navhost.BaseNavHostFragment
 import com.smarttoolfactory.postdynamichilt.R
 
 /**
@@ -82,23 +83,23 @@ class BottomNavigationStateAdapter(fragmentManager: FragmentManager, lifecycle: 
 
             // Home nav graph
             0 ->
-                BaseDynamicNavHostFragment
-                    .createDynamicNavHostFragment(R.navigation.nav_graph_home)
+                BaseNavHostFragment
+                    .createNavHostFragment(R.navigation.nav_graph_home)
 
             // Dashboard nav graph
             1 ->
                 BaseDynamicNavHostFragment
-                    .createDynamicNavHostFragment(R.navigation.nav_graph_dashboard)
+                    .createDynamicNavHostFragment(R.navigation.nav_graph_dashboard_start)
 
             // Notification nav graph
             2 ->
-                BaseDynamicNavHostFragment
-                    .createDynamicNavHostFragment(R.navigation.nav_graph_notification)
+                BaseNavHostFragment
+                    .createNavHostFragment(R.navigation.nav_graph_notification_start)
 
             // Account nav graph
             else ->
-                BaseDynamicNavHostFragment
-                    .createDynamicNavHostFragment(R.navigation.nav_graph_account)
+                BaseNavHostFragment
+                    .createNavHostFragment(R.navigation.nav_graph_account_start)
         }
     }
 }
