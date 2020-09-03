@@ -88,6 +88,11 @@ fun DependencyHandler.addCoreModuleDependencies() {
 
     // Support and Widgets
     implementation(Deps.APPCOMPAT)
+    implementation(Deps.MATERIAL)
+    implementation(Deps.CONSTRAINT_LAYOUT)
+    implementation(Deps.RECYCLER_VIEW)
+    implementation(Deps.VIEWPAGER2)
+    implementation(Deps.SWIPE_REFRESH_LAYOUT)
 
     // Lifecycle, LiveData, ViewModel
     implementation(Deps.LIFECYCLE_LIVEDATA_KTX)

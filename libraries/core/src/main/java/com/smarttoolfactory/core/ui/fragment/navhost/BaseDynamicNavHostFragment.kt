@@ -1,9 +1,6 @@
 package com.smarttoolfactory.core.ui.fragment.navhost
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.NavigationRes
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
@@ -30,14 +27,6 @@ class BaseDynamicNavHostFragment : DynamicNavHostFragment() {
 //
 //        findNavController().setGraph(navResId, startDestinationArgs)
 //    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun onResume() {
         super.onResume()

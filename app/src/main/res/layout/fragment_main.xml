@@ -11,17 +11,34 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+            app:layout_constraintBottom_toTopOf="@id/bottomNav"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+        <!--            android:id="@+id/bottomNav"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:menu="@menu/menu_bottom" />-->
+
+        <!-- Alternative to display with only BottomNavigationView -->
+        <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+        <!--            android:id="@+id/bottomNav"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:menu="@menu/menu_bottom_nav" />-->
+
+        <!-- Alternative to display with only  ViewPager -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav"
+            android:id="@+id/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_bottom_nav" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.smarttoolfactory.core.ui.fragment.BaseDataBindingFragment
 import com.smarttoolfactory.postdynamichilt.R
 import com.smarttoolfactory.postdynamichilt.databinding.FragmentMainBinding
-import com.smarttoolfactory.postdynamichilt.ui.BottomNavigationStateAdapter
+import com.smarttoolfactory.postdynamichilt.ui.DynamicBottomNavigationStateAdapter
 
 class MainFragment : BaseDataBindingFragment<FragmentMainBinding>() {
 
@@ -27,7 +27,7 @@ class MainFragment : BaseDataBindingFragment<FragmentMainBinding>() {
 
         // Set viewpager adapter
         viewPager2.adapter =
-            BottomNavigationStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+            DynamicBottomNavigationStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
 
         // Listen bottom navigation tabs change
         bottomNavigationView.setOnNavigationItemSelectedListener {
