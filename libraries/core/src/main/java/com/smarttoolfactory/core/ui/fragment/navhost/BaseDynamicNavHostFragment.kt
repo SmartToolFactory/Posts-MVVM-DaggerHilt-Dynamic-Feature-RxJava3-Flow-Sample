@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.NavigationRes
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
+import androidx.navigation.fragment.NavHostFragment
 import com.smarttoolfactory.core.error.NavigationException
 import com.smarttoolfactory.core.util.Event
 import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
@@ -13,20 +14,9 @@ import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
  * uses [BaseDynamicNavHostFragment.createDynamicNavHostFragment] function with navigation graph
  * parameter
  */
-class BaseDynamicNavHostFragment : DynamicNavHostFragment() {
+class BaseDynamicNavHostFragment : NavHostFragment() {
 
     private val navControllerViewModel by activityViewModels<NavControllerViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        val navResId = arguments?.get(KEY_GRAPH_ID) as Int
-//        val startDestinationArgs = arguments?.get(KEY_START_DESTINATION_ARGS) as? Bundle
-//
-//        findNavController().setGraph(navResId, startDestinationArgs)
-//    }
 
     override fun onResume() {
         super.onResume()

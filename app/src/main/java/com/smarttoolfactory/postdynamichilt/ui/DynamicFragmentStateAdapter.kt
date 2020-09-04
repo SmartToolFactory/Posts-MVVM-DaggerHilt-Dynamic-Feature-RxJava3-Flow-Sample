@@ -19,17 +19,17 @@ class DynamicFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle: L
             // Dashboard nav graph
             0 ->
                 BaseDynamicNavHostFragment
-                    .createDynamicNavHostFragment(R.navigation.nav_graph_dashboard_start)
+                    .createDynamicNavHostFragment(R.navigation.nav_graph_home)
 
             // Notification nav graph
             1 ->
                 BaseNavHostFragment
-                    .createNavHostFragment(R.navigation.nav_graph_notification_start)
+                    .createNavHostFragment(R.navigation.nav_graph_home)
 
             // Account nav graph
             else ->
                 BaseNavHostFragment
-                    .createNavHostFragment(R.navigation.nav_graph_account_start)
+                    .createNavHostFragment(R.navigation.nav_graph_home)
         }
     }
 }

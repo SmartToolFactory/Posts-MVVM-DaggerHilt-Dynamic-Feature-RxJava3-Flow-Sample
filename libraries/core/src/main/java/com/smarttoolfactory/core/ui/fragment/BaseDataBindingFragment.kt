@@ -88,7 +88,8 @@ abstract class BaseDataBindingFragment<ViewBinding : ViewDataBinding> : Fragment
     }
 
     /**
-     * Called from [Fragment.onViewCreated]
+     * Called from [Fragment.onCreateView] to implement bound ui items and set properties
      */
-    abstract fun bindViews()
+    open fun bindViews() {
+    }
 }

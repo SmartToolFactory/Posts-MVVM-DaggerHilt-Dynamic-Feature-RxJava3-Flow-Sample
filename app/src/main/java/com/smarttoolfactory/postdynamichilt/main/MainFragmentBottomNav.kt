@@ -2,12 +2,22 @@ package com.smarttoolfactory.postdynamichilt.main
 
 import android.os.Bundle
 import android.view.View
-import com.smarttoolfactory.core.ui.fragment.BaseDataBindingFragment
+import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
+import com.smarttoolfactory.core.ui.fragment.navhost.BaseDynamicNavHostFragment
 import com.smarttoolfactory.core.util.setupWithNavController
 import com.smarttoolfactory.postdynamichilt.R
 import com.smarttoolfactory.postdynamichilt.databinding.FragmentMainBottomNavBinding
 
-class MainFragmentBottomNav : BaseDataBindingFragment<FragmentMainBottomNavBinding>() {
+/**
+ * Alternative of MainFragment with only [BottomNavigationView]
+ * that has [DynamicNavHostFragment]s as root fragment of each
+ * tab with [BaseDynamicNavHostFragment]s that extend [DynamicNavHostFragment].
+ *
+ *
+ */
+class MainFragmentBottomNav : DynamicNavigationFragment<FragmentMainBottomNavBinding>() {
     override fun getLayoutRes(): Int = R.layout.fragment_main_bottom_nav
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,9 +57,5 @@ class MainFragmentBottomNav : BaseDataBindingFragment<FragmentMainBottomNavBindi
             containerId = R.id.nav_host_container,
             intent = requireActivity().intent
         )
-    }
-
-    override fun bindViews() {
-        println("")
     }
 }

@@ -3,12 +3,12 @@ package com.smarttoolfactory.postdynamichilt.main
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.smarttoolfactory.core.ui.fragment.BaseDataBindingFragment
+import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
 import com.smarttoolfactory.postdynamichilt.R
 import com.smarttoolfactory.postdynamichilt.databinding.FragmentMainBinding
 import com.smarttoolfactory.postdynamichilt.ui.DynamicBottomNavigationStateAdapter
 
-class MainFragment : BaseDataBindingFragment<FragmentMainBinding>() {
+class MainFragment : DynamicNavigationFragment<FragmentMainBinding>() {
 
     override fun getLayoutRes(): Int = R.layout.fragment_main
 
@@ -56,10 +56,6 @@ class MainFragment : BaseDataBindingFragment<FragmentMainBinding>() {
             }
         }
         false
-    }
-
-    override fun bindViews() {
-        println("")
     }
 
     override fun onDestroyView() {
