@@ -13,7 +13,7 @@ import com.smarttoolfactory.core.util.Event
 import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
 import com.smarttoolfactory.postdynamichilt.R
 import com.smarttoolfactory.postdynamichilt.databinding.FragmentMainViewpager2Binding
-import com.smarttoolfactory.postdynamichilt.ui.ChildFragmentStateAdapter
+import com.smarttoolfactory.postdynamichilt.ui.BottomNavigationFragmentStateAdapter
 
 class MainFragmentViewPager2 : DynamicNavigationFragment<FragmentMainViewpager2Binding>() {
 
@@ -38,7 +38,7 @@ class MainFragmentViewPager2 : DynamicNavigationFragment<FragmentMainViewpager2B
             https://stackoverflow.com/questions/61779776/leak-canary-detects-memory-leaks-for-tablayout-with-viewpager2
          */
         viewPager.adapter =
-            ChildFragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+            BottomNavigationFragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
 
         // Bind tabs and viewpager
         TabLayoutMediator(tabLayout, viewPager, tabConfigurationStrategy).attach()

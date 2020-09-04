@@ -4,6 +4,7 @@ include(
     ":libraries:data",
     ":libraries:domain",
     ":libraries:test-utils",
+    ":features:home",
     ":features:post_detail",
     ":features:search",
     ":features:dashboard",

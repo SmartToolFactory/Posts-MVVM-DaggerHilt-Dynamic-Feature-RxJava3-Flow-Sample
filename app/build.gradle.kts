@@ -95,6 +95,7 @@ android {
         jvmTarget = "1.8"
     }
     dynamicFeatures = mutableSetOf(
+        Modules.DynamicFeature.HOME,
         Modules.DynamicFeature.POST_DETAIL,
         Modules.DynamicFeature.SEARCH,
         Modules.DynamicFeature.DASHBOARD,

@@ -1,3 +1,4 @@
+/*
 package com.smarttoolfactory.postdynamichilt.postlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -25,19 +26,23 @@ import org.junit.Test
 class PostListViewModelRxJava3Test {
 
     // Run tasks synchronously
-    /**
-     * Not using this causes java.lang.RuntimeException: Method getMainLooper in android.os.Looper
-     * not mocked when `this.observeForever(observer)` is called
-     */
+    */
+/**
+ * Not using this causes java.lang.RuntimeException: Method getMainLooper in android.os.Looper
+ * not mocked when `this.observeForever(observer)` is called
+ *//*
+
     @Rule
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    /**
-     * Changes schedulers of this test to specified [Scheduler]
-     * Without this rule [Observable.observeOn] with AndroidSchedulers.mainThread
-     * returns ExceptionInInitializerError
-     */
+    */
+/**
+ * Changes schedulers of this test to specified [Scheduler]
+ * Without this rule [Observable.observeOn] with AndroidSchedulers.mainThread
+ * returns ExceptionInInitializerError
+ *//*
+
     @Rule
     @JvmField
     val rxImmediateSchedulerRule = RxImmediateSchedulerRule()
@@ -45,15 +50,19 @@ class PostListViewModelRxJava3Test {
     private val postList =
         convertFromJsonToListOf<Post>(getResourceAsText(RESPONSE_JSON_PATH))!!
 
-    /*
+    */
+/*
         Mocks
-     */
+     *//*
+
     private val useCase: GetPostListUseCaseRxJava3 = mockk()
     private val savedStateHandle: SavedStateHandle = spyk()
 
-    /**
-     * ViewModel to test post list which is SUT
-     */
+    */
+/**
+ * ViewModel to test post list which is SUT
+ *//*
+
     private lateinit var viewModel: PostListViewModelRxJava3
 
     @Test
@@ -166,3 +175,4 @@ class PostListViewModelRxJava3Test {
         clearMocks(useCase, savedStateHandle)
     }
 }
+*/

@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_graph_home"
+        android:id="@+id/nav_graph_dfm_home_start"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home" />
 
     <item
-        android:id="@+id/nav_graph_dashboard_start"
+        android:id="@+id/nav_graph_dfm_dashboard_start"
         android:icon="@drawable/ic_baseline_dashboard_24"
         android:title="Dashboard" />
 
@@ -17,7 +17,7 @@
         android:title="Notification" />
 
     <item
-        android:id="@+id/nav_graph_account_start"
+        android:id="@+id/nav_graph_dfm_account_start"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Login" />
 
