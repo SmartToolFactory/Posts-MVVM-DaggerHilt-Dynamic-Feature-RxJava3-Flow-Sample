@@ -11,7 +11,6 @@
 // import com.smarttoolfactory.home.databinding.FragmentPostListBinding
 // import dagger.hilt.android.AndroidEntryPoint
 //
-// @AndroidEntryPoint
 // class PostListFlowFragment : DynamicNavigationFragment<FragmentPostListBinding>() {
 //
 //    override fun getLayoutRes(): Int = R.layout.fragment_post_list

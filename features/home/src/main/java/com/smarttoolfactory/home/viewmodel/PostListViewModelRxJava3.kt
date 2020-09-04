@@ -1,4 +1,4 @@
-// package com.smarttoolfactory.home.postlist
+// package com.smarttoolfactory.home.viewmodel
 //
 // import androidx.hilt.Assisted
 // import androidx.hilt.lifecycle.ViewModelInject

@@ -15,8 +15,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.smarttoolfactory.core.ui.fragment.DynamicNavigationFragment
 import com.smarttoolfactory.core.util.Event
 import com.smarttoolfactory.core.viewmodel.NavControllerViewModel
+import com.smarttoolfactory.home.adapter.HomeViewPager2FragmentStateAdapter
 import com.smarttoolfactory.home.databinding.FragmentHomeBinding
-import com.smarttoolfactory.home.postlist.adapter.PostPagesFragmentStateAdapter
 
 /**
  * Fragment that contains [ViewPager2] and [TabLayout].
@@ -57,7 +57,7 @@ class HomeFragment : DynamicNavigationFragment<FragmentHomeBinding>() {
             https://stackoverflow.com/questions/61779776/leak-canary-detects-memory-leaks-for-tablayout-with-viewpager2
          */
         viewPager.adapter =
-            PostPagesFragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+            HomeViewPager2FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
 
         // Bind tabs and viewpager
         TabLayoutMediator(tabLayout, viewPager, tabConfigurationStrategy).attach()

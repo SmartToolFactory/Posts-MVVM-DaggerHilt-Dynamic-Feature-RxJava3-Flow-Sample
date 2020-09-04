@@ -6,6 +6,7 @@ import com.google.common.truth.Truth
 import com.smarttoolfactory.core.viewstate.Status
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.domain.usecase.GetPostListUseCaseFlow
+import com.smarttoolfactory.home.viewmodel.PostListViewModel
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
 import com.smarttoolfactory.test_utils.rule.TestCoroutineRule
 import com.smarttoolfactory.test_utils.test_observer.test

@@ -1,4 +1,4 @@
-package com.smarttoolfactory.home.postlist
+package com.smarttoolfactory.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smarttoolfactory.domain.model.Post
+import com.smarttoolfactory.home.BR
 import com.smarttoolfactory.home.R
 import kotlinx.android.synthetic.main.row_post.view.*
 
@@ -91,7 +92,7 @@ class PostListAdapter(
             item: T
         ) {
             // Bind item to layout to dispatch data to layout
-//            binding.setVariable(BR.item, item)
+            binding.setVariable(BR.item, item)
             binding.executePendingBindings()
         }
     }

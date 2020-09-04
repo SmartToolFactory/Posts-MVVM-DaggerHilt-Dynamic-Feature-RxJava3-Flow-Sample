@@ -1,4 +1,4 @@
-package com.smarttoolfactory.home.postlist
+package com.smarttoolfactory.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

@@ -1,9 +1,8 @@
-package com.smarttoolfactory.home.postlist
+package com.smarttoolfactory.home.viewmodel
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.MutableLiveData
 import com.smarttoolfactory.core.util.Event
 import com.smarttoolfactory.core.util.convertToFlowViewState
 import com.smarttoolfactory.core.viewstate.Status
@@ -17,18 +16,23 @@ import kotlinx.coroutines.flow.onStart
 
 class PostStatusViewModel @ViewModelInject constructor(
     private val coroutineScope: CoroutineScope,
-    private val getPostsUseCase: GetPostsWithStatusUseCaseFlow,
-    @Assisted savedStateHandle: SavedStateHandle
+    private val getPostsUseCase: GetPostsWithStatusUseCaseFlow
+
 ) : AbstractPostListVM() {
 
-    private val _goToDetailScreen =
-        savedStateHandle.getLiveData<Event<Post>>(POST_DETAIL)
+    // TODO Add SavedStateHandle to ViewModelFactory and uncomment
+//    private val _goToDetailScreen =
+//        savedStateHandle.getLiveData<Event<Post>>(POST_DETAIL)
+
+    private val _goToDetailScreen = MutableLiveData<Event<Post>>()
 
     override val goToDetailScreen: LiveData<Event<Post>>
         get() = _goToDetailScreen
 
-    private val _postViewState =
-        savedStateHandle.getLiveData<ViewState<List<Post>>>(POST_LIST)
+//    private val _postViewState =
+//        savedStateHandle.getLiveData<ViewState<List<Post>>>(POST_LIST)
+
+    private val _postViewState = MutableLiveData<ViewState<List<Post>>>()
 
     override val postViewState: LiveData<ViewState<List<Post>>>
         get() = _postViewState
