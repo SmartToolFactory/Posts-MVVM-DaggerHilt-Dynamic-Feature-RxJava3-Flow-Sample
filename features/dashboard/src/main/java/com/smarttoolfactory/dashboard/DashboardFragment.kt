@@ -6,8 +6,4 @@ import com.smarttoolfactory.dashboard.databinding.FragmentDashboardBinding
 class DashboardFragment : DynamicNavigationFragment<FragmentDashboardBinding>() {
 
     override fun getLayoutRes(): Int = R.layout.fragment_dashboard
-
-    override fun bindViews() {
-        println("")
-    }
 }

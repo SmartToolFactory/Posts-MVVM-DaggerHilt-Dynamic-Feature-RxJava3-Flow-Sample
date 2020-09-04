@@ -27,22 +27,22 @@ class DynamicBottomNavigationStateAdapter(fragmentManager: FragmentManager, life
             // Home nav graph
             0 ->
                 BaseNavHostFragment
-                    .createNavHostFragment(R.navigation.nav_graph_home)
+                    .createNavHostFragment(R.navigation.nav_graph_dfm_home_start)
 
             // Dashboard nav graph
             1 ->
                 BaseDynamicNavHostFragment
-                    .createDynamicNavHostFragment(R.navigation.nav_graph_dashboard_start)
+                    .createDynamicNavHostFragment(R.navigation.nav_graph_dfm_dashboard_start)
 
             // Notification nav graph
             2 ->
                 BaseNavHostFragment
-                    .createNavHostFragment(R.navigation.nav_graph_notification_start)
+                    .createNavHostFragment(R.navigation.nav_graph_dfm_notification_start)
 
             // Account nav graph
             else ->
                 BaseNavHostFragment
-                    .createNavHostFragment(R.navigation.nav_graph_account_start)
+                    .createNavHostFragment(R.navigation.nav_graph_dfm_account_start)
         }
     }
 }

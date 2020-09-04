@@ -5,10 +5,37 @@
     android:id="@+id/nav_graph_main"
     app:startDestination="@id/mainFragment">
 
-
+    <!-- 🔥 Actual Implementation -->
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.smarttoolfactory.postdynamichilt.main.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main" />
+
+    <!-- 🔥 Alternative only with BottomNavigationView-->
+    <fragment
+        android:id="@+id/mainFragmenBottomNav"
+        android:name="com.smarttoolfactory.postdynamichilt.main.MainFragmentBottomNav"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main_bottom_nav" />
+
+    <!-- 🔥 Alternative only with ViewPager2-->
+    <fragment
+        android:id="@+id/mainFragmentViewPager2"
+        android:name="com.smarttoolfactory.postdynamichilt.main.MainFragmentViewPager2"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main_viewpager2" />
+
+    <!-- Post Detail  dynamic feature module -->
+    <include-dynamic
+        android:id="@+id/nav_graph_post_detail"
+        android:name="com.smarttoolfactory.post_detail"
+        app:graphResName="nav_graph_post_detail"
+        app:moduleName="post_detail">
+
+        <argument
+            android:name="post"
+            app:argType="com.smarttoolfactory.domain.model.Post" />
+
+    </include-dynamic>
 </navigation>
