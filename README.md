@@ -7,7 +7,7 @@
 
 Sample project that build with MVVM clean architure and various cool tech stack including RxJava3 and Coroutines Flow, Dynamic Feature modules as base of BottomNavigationView or ViewPager2, with both OfflineFirst and OfflineLast approaches as database Single Source of Truth
 
-| Posts with Stautus        | RxJava3   | Flow  | Dashboard
+| Posts with Stautus        | Flow   | RxJava3  | Dashboard
 | ------------------|-------------| -----|--------------|
 | <img src="./screenshots/post_with_status.png"/> | <img src="./screenshots/post_flow.png"/> | <img src="./screenshots/post_rxjava3.png"/> |<img src="./screenshots/dashboard.png"/> |
 
