@@ -6,7 +6,7 @@ import com.google.common.truth.Truth
 import com.smarttoolfactory.core.viewstate.Status
 import com.smarttoolfactory.domain.model.Post
 import com.smarttoolfactory.domain.usecase.GetPostListUseCaseFlow
-import com.smarttoolfactory.home.viewmodel.PostListViewModel
+import com.smarttoolfactory.home.viewmodel.PostListViewModelFlow
 import com.smarttoolfactory.test_utils.RESPONSE_JSON_PATH
 import com.smarttoolfactory.test_utils.rule.TestCoroutineRule
 import com.smarttoolfactory.test_utils.test_observer.test
@@ -55,7 +55,7 @@ class PostListViewModelTest {
     /**
      * ViewModel to test post list which is SUT
      */
-    private lateinit var viewModel: PostListViewModel
+    private lateinit var viewModel: PostListViewModelFlow
 
     @Test
     fun `given exception returned from useCase, should have ViewState ERROR offlineFirst`() =
@@ -171,7 +171,7 @@ class PostListViewModelTest {
     @Before
     fun setUp() {
         viewModel =
-            PostListViewModel(testCoroutineRule.testCoroutineScope, useCase, savedStateHandle)
+            PostListViewModelFlow(testCoroutineRule.testCoroutineScope, useCase, savedStateHandle)
     }
 
     @After
