@@ -24,7 +24,7 @@ class HomeViewPager2FragmentStateAdapter(fragmentManager: FragmentManager, lifec
 
         return when (position) {
 
-            // Post List with Rxjava3
+            // Post List with Status
             0 -> NavHostContainerFragment.createNavHostContainerFragment(
                 R.layout.fragment_navhost_post_list,
                 R.id.nested_nav_host_fragment_post_list
@@ -32,13 +32,13 @@ class HomeViewPager2FragmentStateAdapter(fragmentManager: FragmentManager, lifec
 
             // Post List with Flow
             1 -> NavHostContainerFragment.createNavHostContainerFragment(
-                R.layout.fragment_navhost_post_list,
+                R.layout.fragment_navhost_post_list_flow,
                 R.id.nested_nav_host_fragment_post_list
             )
 
-            // Post List with Status
+            // Post List with Rxjava3
             else -> NavHostContainerFragment.createNavHostContainerFragment(
-                R.layout.fragment_navhost_post_list,
+                R.layout.fragment_navhost_post_list_rxjava3,
                 R.id.nested_nav_host_fragment_post_list
             )
         }

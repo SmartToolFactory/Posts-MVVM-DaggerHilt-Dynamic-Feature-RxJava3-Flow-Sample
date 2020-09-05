@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/postListFragment"
-        android:name="com.smarttoolfactory.home.postlist.PostListWithStatusFragment"
-        android:label="Posts with Status + Flow"
+        android:name="com.smarttoolfactory.home.postlist.PostListFlowFragment"
+        android:label="Posts with Flow"
         tools:layout="@layout/fragment_post_list">
 
         <action

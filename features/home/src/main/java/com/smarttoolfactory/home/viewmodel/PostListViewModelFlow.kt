@@ -8,15 +8,16 @@ import com.smarttoolfactory.core.util.convertToFlowViewState
 import com.smarttoolfactory.core.viewstate.Status
 import com.smarttoolfactory.core.viewstate.ViewState
 import com.smarttoolfactory.domain.model.Post
-import com.smarttoolfactory.domain.usecase.GetPostsWithStatusUseCaseFlow
+import com.smarttoolfactory.domain.usecase.GetPostListUseCaseFlow
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 
-class PostStatusViewModel @ViewModelInject constructor(
+class PostListViewModelFlow @ViewModelInject constructor(
     private val coroutineScope: CoroutineScope,
-    private val getPostsUseCase: GetPostsWithStatusUseCaseFlow
+    private val getPostsUseCase: GetPostListUseCaseFlow
 //    @Assisted savedStateHandle: SavedStateHandle
 ) : AbstractPostListVM() {
 
@@ -54,6 +55,11 @@ class PostStatusViewModel @ViewModelInject constructor(
             .convertToFlowViewState()
             .onStart {
                 _postViewState.value = ViewState(status = Status.LOADING)
+                /*
+                    🔥 This is artificial delay since db fetches data quickly and looks like a lag
+                    when navigating from previous ViewPager2 page
+                 */
+                delay(250)
             }
             .onEach {
                 _postViewState.value = it
@@ -71,15 +77,6 @@ class PostStatusViewModel @ViewModelInject constructor(
                 _postViewState.value = it
             }
             .launchIn(coroutineScope)
-    }
-
-    private fun updatePostStatus(post: Post) {
-        getPostsUseCase.updatePostStatus(post)
-            .launchIn(coroutineScope)
-    }
-
-    fun onLikeButtonClick(post: Post) {
-        updatePostStatus(post = post)
     }
 
     override fun onClick(post: Post) {

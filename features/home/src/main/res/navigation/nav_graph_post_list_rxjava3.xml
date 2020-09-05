@@ -7,9 +7,10 @@
 
     <fragment
         android:id="@+id/postListFragment"
-        android:name="com.smarttoolfactory.home.postlist.PostListWithStatusFragment"
-        android:label="Posts with Status + Flow"
+        android:name="com.smarttoolfactory.home.postlist.PostListRxJava3Fragment"
+        android:label="Posts with RxJava3"
         tools:layout="@layout/fragment_post_list">
+
 
         <action
             android:id="@+id/action_postListFragment_to_nav_graph_post_detail"
