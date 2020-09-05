@@ -14,6 +14,16 @@ fun <T> Observable<T>.convertToObservableViewState(): Observable<ViewState<T>> {
         .onErrorResumeNext { throwable: Throwable ->
             Observable.just(ViewState(status = Status.ERROR, error = throwable))
         }
+}
+
+fun <T> Observable<T>.convertToObservableViewStateWithLoading(): Observable<ViewState<T>> {
+    return this
+        .map { data ->
+            ViewState(status = Status.SUCCESS, data = data)
+        }
+        .onErrorResumeNext { throwable: Throwable ->
+            Observable.just(ViewState(status = Status.ERROR, error = throwable))
+        }
         .startWith(Observable.just(ViewState(status = Status.LOADING)))
 }
 
@@ -21,6 +31,12 @@ fun <T> Single<T>.convertFromSingleToObservableViewState(): Observable<ViewState
     return this
         .toObservable()
         .convertToObservableViewState()
+}
+
+fun <T> Single<T>.convertFromSingleToObservableViewStateWithLoading(): Observable<ViewState<T>> {
+    return this
+        .toObservable()
+        .convertToObservableViewStateWithLoading()
 }
 
 fun <T> Single<T>.convertToSingleViewState(): Single<ViewState<T>>? {

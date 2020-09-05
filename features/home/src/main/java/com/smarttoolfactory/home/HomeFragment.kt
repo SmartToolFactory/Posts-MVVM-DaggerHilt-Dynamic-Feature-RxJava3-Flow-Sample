@@ -107,9 +107,9 @@ class HomeFragment : DynamicNavigationFragment<FragmentHomeBinding>() {
     private val tabConfigurationStrategy =
         TabLayoutMediator.TabConfigurationStrategy { tab, position ->
             when (position) {
-                0 -> tab.text = "RxJava3"
-                1 -> tab.text = "Flow"
-                else -> tab.text = "Posts with Status"
+                0 -> tab.text = "Posts with Status"
+                1 -> tab.text = "Posts With Flow"
+                else -> tab.text = "Posts With RxJava3"
             }
         }
 }
