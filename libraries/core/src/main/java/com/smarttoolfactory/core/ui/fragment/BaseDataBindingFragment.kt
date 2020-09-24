@@ -33,7 +33,7 @@ abstract class BaseDataBindingFragment<ViewBinding : ViewDataBinding> : Fragment
 
     private var _dataBinding: ViewBinding? = null
 
-    lateinit var dataBinding: ViewBinding
+    val dataBinding: ViewBinding get() = _dataBinding!!
 
     /**
      * This method gets the layout id from the derived fragment to bind to that layout via data-binding
@@ -53,13 +53,13 @@ abstract class BaseDataBindingFragment<ViewBinding : ViewDataBinding> : Fragment
         savedInstanceState: Bundle?
     ): View? {
 
+        println("🤣 ${this.javaClass.simpleName} #${this.hashCode()} onCreateView()")
+
         // Each fragment can have it's separate toolbar menu
         setHasOptionsMenu(true)
 
         _dataBinding =
             DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
-
-        dataBinding = _dataBinding!!
 
         /**
          *   🔥🔥 Using viewLifecycleOwner instead of this(fragment) makes sure that
@@ -77,19 +77,32 @@ abstract class BaseDataBindingFragment<ViewBinding : ViewDataBinding> : Fragment
             dimensions.y = rootView.height
         }
 
-        bindViews()
-
         return rootView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindViews()
+    }
+
     override fun onDestroyView() {
-        _dataBinding = null
         super.onDestroyView()
+        _dataBinding = null
+        println("🥵 ${this.javaClass.simpleName} #${this.hashCode()}  onDestroyView()")
     }
 
     /**
-     * Called from [Fragment.onCreateView] to implement bound ui items and set properties
+     * Called from [Fragment.onViewCreated] to implement bound ui items and set properties
      */
-    open fun bindViews() {
+    open fun bindViews() = Unit
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        println("😀 ${this.javaClass.simpleName} #${this.hashCode()}  onCreate()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("🥶 ${this.javaClass.simpleName} #${this.hashCode()}  onDestroy()")
     }
 }

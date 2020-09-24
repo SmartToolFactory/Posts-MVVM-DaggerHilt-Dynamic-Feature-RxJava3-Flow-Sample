@@ -28,6 +28,15 @@ data class PostEntity(
  *
  * * Status of the [PostEntity] with [PostEntity.id] or [PostStatus.postId] belong to current user
  * logged in with [PostStatus.userAccountId] or -1 if any user hasn't logged in
+ *
+ * * 🔥 Raw STATEMENT:  "CREATE TABLE IF NOT EXISTS `post_status`
+ *  (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+ *  `userAccountId` INTEGER NOT NULL,
+ *  `postId` INTEGER NOT NULL,
+ *  `displayCount` INTEGER NOT NULL,
+ *  `isFavorite` INTEGER NOT NULL,
+ *  FOREIGN KEY(`postId`) REFERENCES `post`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )"
+ *
  */
 @Entity(
     tableName = "post_status",

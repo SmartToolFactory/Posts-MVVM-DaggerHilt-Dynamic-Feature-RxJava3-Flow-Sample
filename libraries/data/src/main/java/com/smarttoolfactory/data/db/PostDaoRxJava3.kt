@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.smarttoolfactory.data.model.PostEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
@@ -68,10 +67,4 @@ interface PostDaoRxJava3 {
 //     */
 //    @Query("SELECT * FROM post ORDER BY displayCount DESC")
 //    suspend fun getDisplayedMostPosts(): List<PostEntity>
-
-    /**
-     * Update a post's favorite or display count status.
-     */
-    @Update
-    fun updatePostFavoriteOrSelectStatus(postEntity: PostEntity)
 }

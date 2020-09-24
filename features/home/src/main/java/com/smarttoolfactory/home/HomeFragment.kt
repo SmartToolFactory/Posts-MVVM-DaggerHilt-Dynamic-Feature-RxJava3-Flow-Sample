@@ -73,7 +73,7 @@ class HomeFragment : DynamicNavigationFragment<FragmentHomeBinding>() {
                 it?.let { event: Event<NavController?> ->
                     event.getContentIfNotHandled()?.let { navController ->
                         val appBarConfig = AppBarConfiguration(navController.graph)
-                        dataBinding!!.toolbar.setupWithNavController(navController, appBarConfig)
+                        dataBinding.toolbar.setupWithNavController(navController, appBarConfig)
                     }
                 }
             }

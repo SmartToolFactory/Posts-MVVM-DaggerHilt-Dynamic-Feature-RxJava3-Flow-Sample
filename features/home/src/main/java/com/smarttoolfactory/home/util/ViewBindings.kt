@@ -21,8 +21,13 @@ import com.smarttoolfactory.home.R
 @BindingAdapter("app:items")
 fun RecyclerView.setItems(items: List<Post>?) {
 
-    items?.let {
-        (adapter as ListAdapter<Post, *>)?.submitList(items)
+    try {
+        items?.let {
+            (adapter as? ListAdapter<Post, *>)?.submitList(items)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        println("ViewBindings exception: ${e.message}")
     }
 }
 

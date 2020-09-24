@@ -1,6 +1,5 @@
 package com.smarttoolfactory.core.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -53,6 +52,7 @@ abstract class BaseListAdapter<ItemType>(
         position: Int,
         payloads: MutableList<Any>
     ) {
+        super.onBindViewHolder(holder, position, payloads)
 
         val item: ItemType? = currentList.getOrNull(position)
 
@@ -63,10 +63,7 @@ abstract class BaseListAdapter<ItemType>(
         }
     }
 
-    override fun onBindViewHolder(holder: BaseItemViewHolder, position: Int) {
-        println("🔥🔥")
-        Log.d(BaseListAdapter::class.toString(), "onBindViewHolder")
-    }
+    override fun onBindViewHolder(holder: BaseItemViewHolder, position: Int) = Unit
 
     /**
      * Called when a ViewHolder is created. ViewHolder is either created first time or

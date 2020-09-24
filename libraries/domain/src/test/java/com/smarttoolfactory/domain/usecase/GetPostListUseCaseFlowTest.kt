@@ -50,8 +50,6 @@ class GetPostListUseCaseFlowTest {
         @RegisterExtension
         val testCoroutineExtension = TestCoroutineExtension()
 
-        val testCoroutineScope = testCoroutineExtension.testCoroutineScope
-
         /*
             Mock Post data
          */
